@@ -50,6 +50,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
+                  'Log in',
                   style: TextStyle(fontSize: 20),
                 )),
             Container(
