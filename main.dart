@@ -100,6 +100,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => SignUp(),
+                    )
+                    );
                     //signup screen
                   },
                 )
@@ -108,5 +112,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ],
         ));
+  }
+}
+
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+    );
   }
 }
