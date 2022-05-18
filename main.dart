@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
- 
+
 void main() => runApp(const MyApp());
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
- 
-  static const String _title = 'User Login';
- 
+
+  static const String _title = 'Sample App';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,18 +18,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 
+
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
- 
+
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
- 
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
- 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,9 +40,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'SleepLah!',
+                  'TutorialKart',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 101, 184, 252),
+                      color: Colors.blue,
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -50,7 +50,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Log in',
+                  'Sign in',
                   style: TextStyle(fontSize: 20),
                 )),
             Container(
@@ -93,13 +93,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             Row(
               children: <Widget>[
-                const Text('Does not have account?'),
+                const Text("Don't have an account?"),
                 TextButton(
                   child: const Text(
-                    'Sign up',
+                    'Sign Up',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => SignUp(),
+                    )
+                    );
                     //signup screen
                   },
                 )
@@ -108,5 +112,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ],
         ));
+  }
+}
+
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+    );
   }
 }
