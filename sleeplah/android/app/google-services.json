@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "691967678435",
+    "project_id": "orbital-8ba35",
+    "storage_bucket": "orbital-8ba35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691967678435:android:5a15cf4269ac6b273732d6",
+        "android_client_info": {
+          "package_name": "com.orbital.sleeplah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691967678435-njc46054lv0ohm3o8735dv4sfi7qsv0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVWejWhB6zzCGpISXjqAlunZlA4FIqoBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691967678435-njc46054lv0ohm3o8735dv4sfi7qsv0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
