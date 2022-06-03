@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sleeplah/Screens/Garden.dart';
 import 'package:sleeplah/Screens/Login_Screen.dart';
+import 'package:sleeplah/Screens/Neighbourhood.dart';
+import 'package:sleeplah/Screens/Settings.dart';
+import 'package:sleeplah/Screens/Statistics.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,31 +21,76 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: const Text("SleepLah!")),
+      body: const Center(
+        child: Text('Welcome to the homepage!'),
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
           children: [
-            Text('You have logged in Successfuly'),
-            SizedBox(height: 50),
-            Container(
-              height: 60,
-              width: 150,
-              child: ElevatedButton(
-                  clipBehavior: Clip.hardEdge,
-                  child: Center(
-                    child: Text('Log out'),
-                  ),
-                  onPressed: () async {
-                    await _signOut();
-                    if (_firebaseAuth.currentUser == null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    }
-                  }),
-            )
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('SleepLah!'),
+            ),
+            ListTile(
+              title: const Text('Garden'),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const Garden())
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Statistics'),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const Statistics())
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Neighbourhood'),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const Neighbourhood())
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Settings'),
+              onTap: () {
+                // Update the state of the app
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const Settings())
+                );
+                // Then close the drawer
+                //Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              onTap: () async {
+                // Update the state of the app
+                await _signOut();
+                if (_firebaseAuth.currentUser == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),
