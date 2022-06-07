@@ -108,6 +108,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                     setState(() {
                                       isloading = false;
                                     });
+                                  } on PlatformException catch (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        title: Text("Ops! Login Failed"),
+                                        content: Text('${e.message}'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: Text('Okay'),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                    print(e);
                                   } on FirebaseAuthException catch (e) {
                                     showDialog(
                                       context: context,
