@@ -102,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Logout'),
               onTap: () async {
-                // Update the state of the app
                 await _signOut();
                 if (_firebaseAuth.currentUser == null) {
                   Navigator.push(
