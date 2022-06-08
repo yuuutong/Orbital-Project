@@ -4,6 +4,15 @@ import 'package:sleeplah/Screens/Home_Screen.dart';
 
 import 'Screens/Login_Screen.dart';
 
+
+import 'package:firebase_auth/firebase_auth.dart'; // new
+// import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';           // new
+
+import 'firebase_options.dart';                    // new
+// import 'src/authentication.dart';                  // new
+// import 'src/widgets.dart';
+
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
