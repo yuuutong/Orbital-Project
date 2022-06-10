@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // new
-// import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';           // new
-import 'firebase_options.dart';                    // new
-// import 'src/authentication.dart';                  // new
-// import 'src/widgets.dart';
 
-import 'package:sleeplah/Screens/Home_Screen.dart';
-import 'package:sleeplah/Screens/Login_Screen.dart';
+import 'login/log_in.dart';
 
-void main()async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
@@ -23,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SleepLah!',
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.blue,
       ),
-      home: HomeScreen() //LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'package:sleeplah/Screens/Garden.dart';
-import 'package:sleeplah/Screens/Login_Screen.dart';
+import 'package:sleeplah/login/log_in.dart';
 import 'package:sleeplah/Screens/Neighbourhood.dart';
 import 'package:sleeplah/Screens/Settings.dart';
 import 'package:sleeplah/Screens/Statistics.dart';
-import 'package:sleeplah/Component/time_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,27 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("SleepLah!")),
-      body: Stack(children: [
-        const Positioned.fill(child: 
-          Image(image: AssetImage("assets/images/background.png"), fit: BoxFit.fitHeight,)
-        ),
-        Column(children: [
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 1,
-            child: TimePicker()
-          ),
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 3,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: const Image(image: AssetImage("assets/images/field.png"))
-            )
-          )
-        ]
-      )
-      ]),
+      body: const Center(
+        child: Text('Welcome to the homepage!'),
+      ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -102,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Logout'),
               onTap: () async {
+                // Update the state of the app
                 await _signOut();
                 if (_firebaseAuth.currentUser == null) {
                   Navigator.push(
