@@ -23,7 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("SleepLah!")),
+      appBar: AppBar(
+        title: const Text("Homepage"),
+        backgroundColor: Colors.lightBlue,
+        centerTitle: true,
+      ),
       body: Stack(children: [
         const Positioned.fill(
             child: Image(
