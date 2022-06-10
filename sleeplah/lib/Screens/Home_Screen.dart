@@ -5,6 +5,8 @@ import 'package:sleeplah/login/log_in.dart';
 import 'package:sleeplah/Screens/Neighbourhood.dart';
 import 'package:sleeplah/Screens/Settings.dart';
 import 'package:sleeplah/Screens/Statistics.dart';
+import 'package:sleeplah/Component/time_picker.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,9 +24,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("SleepLah!")),
-      body: const Center(
-        child: Text('Welcome to the homepage!'),
-      ),
+      body: Stack(children: [
+        const Positioned.fill(
+            child: Image(
+          image: AssetImage("assets/images/background.png"),
+          fit: BoxFit.fitHeight,
+        )),
+        Column(children: [
+          Flexible(fit: FlexFit.tight, flex: 1, child: TimePicker()),
+          Flexible(
+              fit: FlexFit.tight,
+              flex: 3,
+              child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Image(
+                      image: AssetImage("assets/images/field.png"))))
+        ])
+      ]),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -42,38 +58,34 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Garden'),
               onTap: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const Garden())
-                );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Garden()));
               },
             ),
             ListTile(
               title: const Text('Statistics'),
               onTap: () {
                 Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const Statistics())
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Statistics()));
               },
             ),
             ListTile(
               title: const Text('Neighbourhood'),
               onTap: () {
                 Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const Neighbourhood())
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Neighbourhood()));
               },
             ),
             ListTile(
               title: const Text('Settings'),
               onTap: () {
                 // Update the state of the app
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const Settings())
-                );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Settings()));
                 // Then close the drawer
                 //Navigator.pop(context);
               },
