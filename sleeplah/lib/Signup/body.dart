@@ -25,7 +25,7 @@ class _BodyState extends State<Body> {
       final bool exist = await DatabaseService().isUserNameExist(_userName);
 
       if (!exist) {
-        DatabaseService().addUser(appUser, newUser.user!.uid);
+        DatabaseService().addUser(appUser, newUser.user!.uid); //newUser.user.uid
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginScreen()));
       } else {

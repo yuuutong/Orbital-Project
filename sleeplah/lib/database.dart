@@ -1,8 +1,10 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:sleeplah/Login/log_in.dart';
 import 'package:sleeplah/models/app_user.dart';
+import 'package:intl/intl.dart';
 
 class DatabaseService {
   late CollectionReference userCollection;
@@ -26,11 +28,12 @@ class DatabaseService {
 
     userCollection = instance.collection('users');
     userDoc = instance.collection('users').doc(uid);
+    // bedTimeCollection = instance.collection('users').doc(uid).collection('timings');
   }
 
   Future<void> addUser(AppUser user, String uid) async {
     await userCollection.doc(uid).set({
-      'uid': user.uid,
+      'uid': uid,
       'email': user.email,
       'nickname': user.nickName,
     }).then((value) {
@@ -50,7 +53,6 @@ class DatabaseService {
     });
     return name;
   }
-  
 
   Future<bool> isUserNameExist(String receiverName) async {
     bool exist = true;
@@ -62,7 +64,21 @@ class DatabaseService {
         exist = false;
       }
     });
-
     return exist;
+  }
+
+  Future<void> setTimer(
+      TimeOfDay timeOfDay, String uid, String sleepOrWake) async {
+    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
+    await bedTimeCollection
+        .doc(today)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (!documentSnapshot.exists) {
+        bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
+      }
+    });
+    bedTimeCollection.doc(today).update({sleepOrWake: timeOfDay.toString()});
   }
 }

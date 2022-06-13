@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sleeplah/database.dart';
+import 'package:sleeplah/login/log_in.dart';
 
 class TimePicker extends StatefulWidget {
   @override
@@ -23,6 +26,7 @@ class TimePickerState extends State<TimePicker> {
           child: FittedBox(
             child: _buildTimePick("Start", true, startTime, (x) {
               setState(() {
+                DatabaseService().setTimer(x, FirebaseAuth.instance.currentUser.uid, "sleep");
                 startTime = x;
                 print("The picked time is: $x");
               });
@@ -36,6 +40,7 @@ class TimePickerState extends State<TimePicker> {
           child: FittedBox(
             child: _buildTimePick("End", true, endTime, (x) {
               setState(() {
+                DatabaseService().setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
                 endTime = x;
                 print("The picked time is: $x");
               });
