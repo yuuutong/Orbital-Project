@@ -14,39 +14,38 @@ class TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Row( //sets up the two clocks side by side
+    return Row(
+      //sets up the two clocks side by side
       mainAxisAlignment: MainAxisAlignment.center,
       // mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Spacer(flex: 1),
         Flexible(
-          fit: FlexFit.tight,
-          flex: 3,
-          child: FittedBox(
-            child: _buildTimePick("Start", true, startTime, (x) {
+            fit: FlexFit.tight,
+            flex: 3,
+            child: FittedBox(
+                child: _buildTimePick("Start", true, startTime, (x) {
               setState(() {
-                DatabaseService().setTimer(x, FirebaseAuth.instance.currentUser.uid, "sleep");
+                DatabaseService().setTimer(
+                    x, FirebaseAuth.instance.currentUser.uid, "sleep");
                 startTime = x;
                 print("The picked time is: $x");
               });
-            })
-          )
-        ),
+            }))),
         const Spacer(flex: 1),
         Flexible(
-          fit: FlexFit.tight,
-          flex: 3,
-          child: FittedBox(
-            child: _buildTimePick("End", true, endTime, (x) {
+            fit: FlexFit.tight,
+            flex: 3,
+            child: FittedBox(
+                child: _buildTimePick("End", true, endTime, (x) {
               setState(() {
-                DatabaseService().setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
+                DatabaseService()
+                    .setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
                 endTime = x;
                 print("The picked time is: $x");
               });
-            })
-          )
-        ),
+            }))),
         const Spacer(flex: 1),
       ],
     );
@@ -69,7 +68,8 @@ class TimePickerState extends State<TimePicker> {
       children: [
         Text(title),
         Container(
-          padding: const EdgeInsets.all(8.0), //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: const EdgeInsets.all(
+              8.0), //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           decoration: BoxDecoration(
             color: Colors.lightBlueAccent,
             border: Border.all(),

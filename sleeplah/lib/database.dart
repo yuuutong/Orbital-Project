@@ -81,4 +81,20 @@ class DatabaseService {
     });
     bedTimeCollection.doc(today).update({sleepOrWake: timeOfDay.toString()});
   }
+
+  Future<String> getSleepTime(String date) async {
+    String sleepTime = '';
+    await bedTimeCollection.doc(date).get().then((DocumentSnapshot documentSnapshot) {
+      sleepTime = documentSnapshot.get("sleep");
+    });
+    return sleepTime;
+  }
+
+  Future<String> getWakeTime(String date) async {
+    String wakeTime = '';
+    await bedTimeCollection.doc(date).get().then((DocumentSnapshot documentSnapshot) {
+      wakeTime = documentSnapshot.get("wake");
+    });
+    return wakeTime;
+  }
 }
