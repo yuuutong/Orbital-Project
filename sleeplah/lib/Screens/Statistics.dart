@@ -12,10 +12,16 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Statistics")
-        ),
-      body: BarChartSample1(),
+      appBar: AppBar(title: const Text("Statistics")),
+      body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/background.png"),
+                fit: BoxFit.cover),
+          ),
+          child: BarChartSample1()),
     );
   }
 }
