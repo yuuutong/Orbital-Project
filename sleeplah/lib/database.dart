@@ -142,5 +142,14 @@ class DatabaseService {
     return DateTime(getYear(date), getMonth(date), getDay(date), getHour(time), getMinute(time));
   }
 
-  
+  Future<num> sleepDuration(String wake, String sleep, String date) async {
+    DateTime wakeTime = DateTime(getYear(date), getMonth(date), getDay(date), getHour(wake), getMinute(wake));
+    DateTime sleepTime = DateTime(getYear(date), getMonth(date), getDay(date), getHour(sleep), getMinute(sleep));
+    Duration whenAwake = sleepTime.difference(wakeTime);
+    Duration whenInSleep = const Duration(hours: 24, minutes: 0) - whenAwake;
+    num numOfHours = whenInSleep.inHours; // int
+    num fractionInHours = num.parse((whenInSleep.inMinutes / 60).toStringAsFixed(1)); // num
+    num totalDuration = numOfHours + fractionInHours;
+    return totalDuration;
+  }
 }
