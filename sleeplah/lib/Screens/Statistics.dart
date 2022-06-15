@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleeplah/Component/chart.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -14,9 +15,7 @@ class _StatisticsState extends State<Statistics> {
       appBar: AppBar(
         title: const Text("Statistics")
         ),
-      body: const Center(
-        child: Text('Welcome to the Statistics!'),
-      ),
+      body: BarChartSample1(),
     );
   }
 }
