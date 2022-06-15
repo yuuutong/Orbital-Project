@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
+import 'dart:core';
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -10,7 +13,7 @@ class DatabaseService {
   late CollectionReference userCollection;
   late DocumentReference userDoc;
   late CollectionReference bedTimeCollection;
-  late CollectionReference wakeUpTimeCollection;
+  // late CollectionReference wakeUpTimeCollection;
   // late CollectionReference tagsCollection;
   // late CollectionReference townCollection;
 
@@ -97,4 +100,47 @@ class DatabaseService {
     });
     return wakeTime;
   }
+
+  int getYear(String date) {
+    List<String> fullDate = date.split("-");
+    String year = fullDate.first;
+    int intYear = int.parse(year);
+    return intYear;
+  }
+
+  int getDay(String date) {
+    List<String> fullDate = date.split("-");
+    String day = fullDate.last;
+    int intDay = int.parse(day);
+    return intDay;
+  }
+
+  int getMonth(String date) {
+    List<String> fullDate = date.split("-");
+    String month = fullDate.elementAt(1);
+    int intMonth = int.parse(month);
+    return intMonth;
+  }
+
+  int getHour(String time) {
+    List<String> fullTime = time.split("");
+    List<String> hour = fullTime.sublist(10, 12);
+    String hourString = hour.join();
+    int intHour = int.parse(hourString);
+    return intHour;
+  }
+
+  int getMinute(String time) {
+    List<String> fullTime = time.split("");
+    List<String> minute = fullTime.sublist(13, 15);
+    String minuteString = minute.join();
+    int intMinute = int.parse(minuteString);
+    return intMinute;
+  }
+
+  Future<DateTime> convertToDateTime(String date, String time) async {
+    return DateTime(getYear(date), getMonth(date), getDay(date), getHour(time), getMinute(time));
+  }
+
+  
 }
