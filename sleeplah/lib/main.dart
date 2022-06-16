@@ -17,11 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SleepLah!',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginScreen() //HomeScreen(),
-    );
+        title: 'SleepLah!',
+        theme: ThemeData(
+          fontFamily: 'IndieFlower',
+          primarySwatch: Colors.blue,
+        ),
+        home: LoginScreen() //HomeScreen(),
+        );
   }
 }

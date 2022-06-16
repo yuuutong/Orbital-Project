@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sleeplah/Component/startSleepingButton.dart';
+import 'package:sleeplah/Component/wakeUpButton.dart';
 import 'package:sleeplah/Screens/Garden.dart';
 import 'package:sleeplah/login/log_in.dart';
 import 'package:sleeplah/Screens/Neighbourhood.dart';
@@ -36,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
         )),
         Column(children: [
           Flexible(fit: FlexFit.tight, flex: 1, child: TimePicker()),
+          Flexible(fit: FlexFit.tight, flex: 1, child: startSleepingButton("Sleep Now")),
+          Flexible(fit: FlexFit.tight, flex: 1, child: wakeUpButton("I'm awake!")),
           Flexible(
               fit: FlexFit.tight,
               flex: 3,
