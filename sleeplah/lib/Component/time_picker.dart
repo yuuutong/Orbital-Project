@@ -68,8 +68,7 @@ class TimePickerState extends State<TimePicker> {
       children: [
         Text(title),
         Container(
-          padding: const EdgeInsets.all(
-              8.0), //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: const EdgeInsets.all(8.0), //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           decoration: BoxDecoration(
             color: Colors.lightBlueAccent,
             border: Border.all(),

@@ -21,7 +21,7 @@ class startSleepingButtonState extends State<startSleepingButton> {
 
   @override
   Widget build(BuildContext context) {
-    double defaultSize = SizeConfig?.defaultSize ?? 1;
+    double defaultSize = SizeConfig.defaultSize ?? 1;
     return Container(
         alignment: Alignment.center,
         child: Container(

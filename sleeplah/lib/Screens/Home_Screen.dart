@@ -32,14 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(children: [
         const Positioned.fill(
-            child: Image(
-          image: AssetImage("assets/images/background.png"),
-          fit: BoxFit.fitHeight,
-        )),
+          child: Image(
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
         Column(children: [
           Flexible(fit: FlexFit.tight, flex: 1, child: TimePicker()),
-          Flexible(fit: FlexFit.tight, flex: 1, child: startSleepingButton("Sleep Now")),
-          Flexible(fit: FlexFit.tight, flex: 1, child: wakeUpButton("I'm awake!")),
+          Flexible(
+              fit: FlexFit.tight,
+              flex: 1,
+              child: startSleepingButton("Sleep Now")),
+          Flexible(
+              fit: FlexFit.tight, flex: 1, child: wakeUpButton("I'm awake!")),
           Flexible(
               fit: FlexFit.tight,
               flex: 3,
