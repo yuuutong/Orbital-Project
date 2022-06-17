@@ -13,7 +13,7 @@ class DatabaseService {
   late CollectionReference userCollection;
   late DocumentReference userDoc;
   late CollectionReference bedTimeCollection;
-  // late CollectionReference wakeUpTimeCollection;
+  late CollectionReference actualTimeCollection;
   // late CollectionReference tagsCollection;
   // late CollectionReference townCollection;
 
@@ -31,7 +31,8 @@ class DatabaseService {
 
     userCollection = instance.collection('users');
     userDoc = instance.collection('users').doc(uid);
-    bedTimeCollection = instance.collection('users').doc(uid).collection('bedTimeCollection');
+    bedTimeCollection =
+        instance.collection('users').doc(uid).collection('bedTimeCollection');
   }
 
   Future<void> addUser(AppUser user, String uid) async {
@@ -87,6 +88,22 @@ class DatabaseService {
     bedTimeCollection.doc(today).update({sleepOrWake: timeOfDay.toString()});
   }
 
+  Future<void> recordActualTime(
+      TimeOfDay timeOfDay, String uid, String sleepOrWake) async {
+    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    actualTimeCollection =
+        userCollection.doc(uid).collection('actualTimeCollection');
+    await actualTimeCollection
+        .doc(today)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (!documentSnapshot.exists) {
+        actualTimeCollection.doc(today).set({"sleep": "", "wake": ""});
+      }
+    });
+    actualTimeCollection.doc(today).update({sleepOrWake: timeOfDay.toString()});
+  }
+
   Future<bool> doesDateExist(String date) async {
     bool exist = false;
     try {
@@ -110,6 +127,17 @@ class DatabaseService {
   Future<String> getSleepTime(String date) async {
     String sleepTime = '';
     await bedTimeCollection
+        .doc(date)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      sleepTime = documentSnapshot.get("sleep");
+    });
+    return sleepTime;
+  }
+
+  Future<String> getActualSleepTime(String date) async {
+    String sleepTime = '';
+    await actualTimeCollection
         .doc(date)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
@@ -144,6 +172,17 @@ class DatabaseService {
     return wakeTime;
   }
 
+  Future<String> getActualWakeTime(String date) async {
+    String wakeTime = '';
+    await actualTimeCollection
+        .doc(date)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      wakeTime = documentSnapshot.get("wake");
+    });
+    return wakeTime;
+  }
+
   Future<String> getWake(String date) async {
     String time = '';
     DocumentReference docRef = bedTimeCollection.doc(date);
@@ -168,7 +207,7 @@ class DatabaseService {
 
   Future<int> getDay(String date) async {
     List<String> fullDate = date.split("-");
-    String day = fullDate.last.substring(0,1);
+    String day = fullDate.last.substring(0, 1);
     int intDay = int.parse(day);
     return intDay;
   }
@@ -197,15 +236,15 @@ class DatabaseService {
   }
 
   Future<DateTime> convertToDateTime(String date, String time) async {
-    return DateTime(await getYear(date), await getMonth(date), await getDay(date), await getHour(time),
-        await getMinute(time));
+    return DateTime(await getYear(date), await getMonth(date),
+        await getDay(date), await getHour(time), await getMinute(time));
   }
 
   Future<double> sleepDuration(String wake, String sleep, String date) async {
-    DateTime wakeTime = DateTime(await getYear(date), await getMonth(date), await getDay(date),
-        await getHour(wake), await getMinute(wake));
-    DateTime sleepTime = DateTime(await getYear(date), await getMonth(date), await getDay(date),
-        await getHour(sleep), await getMinute(sleep));
+    DateTime wakeTime = DateTime(await getYear(date), await getMonth(date),
+        await getDay(date), await getHour(wake), await getMinute(wake));
+    DateTime sleepTime = DateTime(await getYear(date), await getMonth(date),
+        await getDay(date), await getHour(sleep), await getMinute(sleep));
     Duration whenAwake = sleepTime.difference(wakeTime);
     Duration whenInSleep = const Duration(hours: 24, minutes: 0) - whenAwake;
     num numOfHours = whenInSleep.inHours; // int
@@ -215,7 +254,7 @@ class DatabaseService {
     return totalDuration as double;
   }
 
-  String nDaysAgo(int n)  {
+  String nDaysAgo(int n) {
     DateTime pastDate = DateTime.now().subtract(new Duration(days: n));
     return pastDate.toString();
   }
@@ -227,7 +266,8 @@ class DatabaseService {
     // String sleep = '';
     // getWake(date).then((value) => setState(() {String wake = value;}));
     // getSleep(date).then((value) => String sleep = value);
-    sleepDuration(await getWake(date), await getSleep(date), date).then((value) {
+    sleepDuration(await getWake(date), await getSleep(date), date)
+        .then((value) {
       totalDuration = value;
     });
     return totalDuration;

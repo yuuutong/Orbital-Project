@@ -10,8 +10,7 @@ class wakeUpButton extends StatefulWidget {
   wakeUpButton(this._buttonText);
 
   @override
-  State<wakeUpButton> createState() =>
-      wakeUpButtonState(_buttonText);
+  State<wakeUpButton> createState() => wakeUpButtonState(_buttonText);
   //_startSleepingButtonState createState() => _startSleepingButtonState(_buttonText);
 }
 
@@ -41,6 +40,12 @@ class wakeUpButtonState extends State<wakeUpButton> {
                 {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const awake()));
+                  setState(() {
+                    DatabaseService().recordActualTime(
+                        TimeOfDay.fromDateTime(DateTime.now()),
+                        FirebaseAuth.instance.currentUser.uid,
+                        "wake");
+                  });
                 }
               }),
         ));
