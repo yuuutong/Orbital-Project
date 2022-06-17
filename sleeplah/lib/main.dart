@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
           fontFamily: 'IndieFlower',
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen() //HomeScreen(),
+        home: 
+          // LoginScreen(), 
+          HomeScreen(),
         );
   }
 }

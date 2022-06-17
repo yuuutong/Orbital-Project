@@ -46,12 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
               fit: FlexFit.tight, flex: 1, child: wakeUpButton("I'm awake!")),
           Flexible(
-              fit: FlexFit.tight,
-              flex: 3,
-              child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Image(
-                      image: AssetImage("assets/images/field.png"))))
+            fit: FlexFit.tight,
+            flex: 3,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: const <Widget>[
+                  Image(image: AssetImage("assets/images/field.png")),
+                  Image(image: AssetImage("assets/images/sunflower.png")),
+                ],
+              ),
+            ),
+          )
         ])
       ]),
       drawer: Drawer(
