@@ -75,7 +75,7 @@ class DatabaseService {
   Future<void> setTimer(
       TimeOfDay timeOfDay, String uid, String sleepOrWake) async {
     String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    // bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
+    bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
     await bedTimeCollection
         .doc(today)
         .get()
