@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/Component/startSleepingButton.dart';
 import 'package:sleeplah/Component/wakeUpButton.dart';
-import 'package:sleeplah/Screens/Garden.dart';
+import 'package:sleeplah/Screens/FlowerCollection.dart';
 import 'package:sleeplah/login/log_in.dart';
 import 'package:sleeplah/Screens/Neighbourhood.dart';
 import 'package:sleeplah/Screens/Settings.dart';
@@ -53,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Stack(
                 alignment: Alignment.center,
                 children: const <Widget>[
-                  Image(image: AssetImage("assets/images/field.png")),
+                  Image(
+                      image: AssetImage("assets/images/field.png"),
+                      fit: BoxFit.fitWidth),
                   Image(image: AssetImage("assets/images/sunflower.png")),
                 ],
               ),
@@ -76,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('SleepLah!'),
             ),
             ListTile(
-              title: const Text('Garden'),
+              title: const Text('Flower Collection'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Garden()));
+                    MaterialPageRoute(builder: (context) => const FlowerCollection()));
               },
             ),
             ListTile(
