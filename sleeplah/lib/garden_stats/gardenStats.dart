@@ -32,6 +32,8 @@ class _gardenStatsState extends State<gardenStats> {
             detail("Rose", "rose.png", 0),
             detail("Daisy", "daisy.png", 0),
             detail("Lilac", "lilac.png", 0),
+            detail("Coins", "coin.png", 0),
+            detail("Days of Consecutive Sleep", "shanna_asleep.png", 0)
           ],
         )
       ]),
