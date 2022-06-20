@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/Component/background.dart';
+import 'package:sleeplah/configurations/background.dart';
 import '../size_config.dart';
 import '../constant.dart';
 

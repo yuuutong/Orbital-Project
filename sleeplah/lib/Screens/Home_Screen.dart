@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/Component/startSleepingButton.dart';
 import 'package:sleeplah/Component/wakeUpButton.dart';
-import 'package:sleeplah/Screens/FlowerCollection.dart';
+import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login/log_in.dart';
 import 'package:sleeplah/Screens/Neighbourhood.dart';
 import 'package:sleeplah/Screens/Settings.dart';
-import 'package:sleeplah/Screens/Statistics.dart';
+import 'package:sleeplah/sleeping_stats/Statistics.dart';
 import 'package:sleeplah/Component/time_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sleeplah/garden_stats/gardenStats.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -82,6 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const FlowerCollection()));
+              },
+            ),
+            ListTile(
+              title: const Text('Garden Statistics Dashboard'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const gardenStats()));
               },
             ),
             ListTile(

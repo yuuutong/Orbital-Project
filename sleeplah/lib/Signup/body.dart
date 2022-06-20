@@ -1,4 +1,4 @@
-import 'package:sleeplah/Component/rounded_empty_field.dart';
+import 'package:sleeplah/configurations/rounded_empty_field.dart';
 import 'package:sleeplah/login/log_in.dart';
 import '../constant.dart';
 import '../database.dart';
@@ -6,7 +6,7 @@ import 'package:sleeplah/models/app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sleeplah/Component/background.dart';
+import 'package:sleeplah/configurations/background.dart';
 
 class Body extends StatefulWidget {
   @override

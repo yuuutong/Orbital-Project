@@ -1,8 +1,8 @@
-import 'package:sleeplah/Component/background.dart';
+import 'package:sleeplah/configurations/background.dart';
 import 'package:sleeplah/Signup/sign_up.dart';
-import 'package:sleeplah/Component/rounded_button.dart';
-import 'package:sleeplah/Component/rounded_input_field.dart';
-import 'package:sleeplah/Component/rounded_password_field.dart';
+import 'package:sleeplah/configurations/rounded_button.dart';
+import 'package:sleeplah/configurations/rounded_input_field.dart';
+import 'package:sleeplah/configurations/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/Screens/Home_Screen.dart';
