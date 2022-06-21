@@ -8,7 +8,7 @@ import 'package:sleeplah/models/app_user.dart';
 import 'package:sleeplah/database.dart';
 
 class check {
-  bool ifOnTime = false;
+  //bool ifOnTime = false;
 
   Future<bool> compareTime(String date) async {
     String sleepTimeSet = await DatabaseService().getSleepTime(date);
@@ -35,6 +35,6 @@ class check {
         await DatabaseService().convertToDateTime(date, wakeTimeSet);
     DateTime wakeActual =
         await DatabaseService().convertToDateTime(date, wakeTimeActual);
-    return (sleepActual.isBefore(sleepSet) && wakeActual.isBefore(wakeSet));
+    return ((!sleepActual.isAfter(sleepSet)) && (!wakeActual.isAfter(wakeSet)));
   }
 }
