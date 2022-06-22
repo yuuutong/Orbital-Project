@@ -27,7 +27,7 @@ class TimePickerState extends State<TimePicker> {
             child: FittedBox(
                 child: _buildTimePick("Start", true, startTime, (x) {
               setState(() {
-                DatabaseService().setTimer(
+                DB().setTimer(
                     x, FirebaseAuth.instance.currentUser.uid, "sleep");
                 startTime = x;
                 print("The picked time is: $x");
@@ -40,7 +40,7 @@ class TimePickerState extends State<TimePicker> {
             child: FittedBox(
                 child: _buildTimePick("End", true, endTime, (x) {
               setState(() {
-                DatabaseService()
+                DB()
                     .setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
                 endTime = x;
                 print("The picked time is: $x");

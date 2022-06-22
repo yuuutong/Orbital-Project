@@ -91,14 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Garden Statistics Dashboard'),
               onTap: () {
-                setState(() {
-                  DatabaseService()
-                      .setFlower(FirebaseAuth.instance.currentUser.uid);
-                  DatabaseService()
-                      .setNumOfCoins(FirebaseAuth.instance.currentUser.uid);
-                  DatabaseService()
-                      .setDays(FirebaseAuth.instance.currentUser.uid);
-                });
+                // setState(() {
+                //   DB()
+                //       .setFlower(FirebaseAuth.instance.currentUser.uid);
+                //   DB()
+                //       .setNumOfCoins(FirebaseAuth.instance.currentUser.uid);
+                //   DB()
+                //       .setDays(FirebaseAuth.instance.currentUser.uid);
+                // });
                 Navigator.push(
                     context,
                     MaterialPageRoute(

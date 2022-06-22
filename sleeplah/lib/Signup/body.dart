@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:sleeplah/configurations/rounded_empty_field.dart';
 import 'package:sleeplah/login/log_in.dart';
 import '../constant.dart';
@@ -22,10 +24,10 @@ class _BodyState extends State<Body> {
       final newUser = await auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
       AppUser appUser = new AppUser(email: _email, nickName: _userName);
-      final bool exist = await DatabaseService().isUserNameExist(_userName);
+      final bool exist = await DB().isUserNameExist(_userName);
 
       if (!exist) {
-        DatabaseService().addUser(appUser, newUser.user!.uid); //newUser.user.uid
+        DB().addUser(appUser, newUser.user!.uid); //newUser.user.uid
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginScreen()));
       } else {
@@ -35,7 +37,7 @@ class _BodyState extends State<Body> {
       }
     } on FirebaseAuthException catch (e) {
       String errorMessage = e.toString();
-      print("Exception in registration: " + errorMessage);
+      print("Firbase Auth Exception in registration: " + errorMessage);
       print(e.code);
 
       if (e.code == "invalid-email") {
@@ -51,6 +53,10 @@ class _BodyState extends State<Body> {
           content: Text("You have already registered with this email"),
         ));
       }
+    } on PlatformException catch (e) {
+      String fullErrorMessage = "Platform Exception in registration: ${e.code} | $e";
+      print(fullErrorMessage);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(fullErrorMessage)));
     }
   }
 

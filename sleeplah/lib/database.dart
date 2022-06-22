@@ -9,8 +9,8 @@ import 'package:sleeplah/Login/log_in.dart';
 import 'package:sleeplah/models/app_user.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/rewards/check.dart';
-//hellos
-class DatabaseService {
+
+class DB {
   late CollectionReference userCollection;
   late DocumentReference userDoc;
   late CollectionReference bedTimeCollection;
@@ -19,7 +19,7 @@ class DatabaseService {
   late CollectionReference daysCollection;
   late CollectionReference coinCollection;
 
-  DatabaseService({FirebaseFirestore? instanceInjection}) {
+  DB({FirebaseFirestore? instanceInjection}) {
     FirebaseFirestore instance;
     String uid;
 
@@ -33,31 +33,77 @@ class DatabaseService {
 
     userCollection = instance.collection('users');
     userDoc = instance.collection('users').doc(uid);
-    bedTimeCollection =
-        instance.collection('users').doc(uid).collection('bedTimeCollection');
   }
 
-  //flower
-  Future<void> setFlower(String uid) async {
+  Future<void> addUser(AppUser user, String uid) async {
+    await userCollection.doc(uid).set({
+      'uid': uid,
+      'email': user.email,
+      'nickname': user.nickName,
+    });
+
+    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
+    await bedTimeCollection
+        .doc(today)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
+    });
+
     flowerCollection = userCollection.doc(uid).collection('flowerCollection');
-    //String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
     await flowerCollection
         .doc(uid)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
-      if (!documentSnapshot.exists) {
-        flowerCollection
-            .doc(uid)
-            .set({"sunflower": 1, "rose": 0, "daisy": 0, "lilac": 0});
-      }
+      flowerCollection
+          .doc(uid)
+          .set({"sunflower": 1, "rose": 0, "daisy": 0, "lilac": 0});
     });
-    flowerCollection.doc(uid).update({
-      "sunflower": getFlowerNum("sunflower", uid),
-      "rose": getFlowerNum("rose", uid),
-      "daisy": getFlowerNum("daisy", uid),
-      "lilac": getFlowerNum("lilac", uid)
+
+    coinCollection = userCollection.doc(uid).collection('coinCollection');
+    await coinCollection
+        .doc(uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      coinCollection.doc(uid).set({"Number of Coins": 0});
     });
+
+    daysCollection = userCollection.doc(uid).collection('daysCollection');
+    await daysCollection
+        .doc(uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      daysCollection.doc(uid).set({"Days of consecutive sleeping on time": 0});
+    });
+
+    // .then((value) {
+    //   bedTimeCollection =
+    //       userCollection.doc(uid).collection('bedTimeCollection');
+    //   print("User added");
+    // }).catchError((error) => print("Failed to add user: $error"));
   }
+
+  //flower
+  // Future<void> setFlower(String uid) async {
+  //   flowerCollection = userCollection.doc(uid).collection('flowerCollection');
+  //   // await flowerCollection
+  //   //     .doc(uid)
+  //   //     .get()
+  //   //     .then((DocumentSnapshot documentSnapshot) {
+  //   //   if (!documentSnapshot.exists) {
+  //   //     flowerCollection
+  //   //         .doc(uid)
+  //   //         .set({"sunflower": 1, "rose": 0, "daisy": 0, "lilac": 0});
+  //   //   }
+  //   // });
+  //   flowerCollection.doc(uid).update({
+  //     "sunflower": getFlowerNum("sunflower", uid),
+  //     "rose": getFlowerNum("rose", uid),
+  //     "daisy": getFlowerNum("daisy", uid),
+  //     "lilac": getFlowerNum("lilac", uid)
+  //   });
+  // }
 
   Future<int> getFlowerNum(String flowerName, String uid) async {
     flowerCollection = userCollection.doc(uid).collection('flowerCollection');
@@ -90,20 +136,21 @@ class DatabaseService {
   } */
 
   // num of days of consecutive sleeping on time
-  Future<void> setDays(String uid) async {
-    daysCollection = userCollection.doc(uid).collection('daysCollection');
-    await daysCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (!documentSnapshot.exists) {
-        daysCollection
-            .doc(uid)
-            .set({"Days of consecutive sleeping on time": 0});
-      }
-    });
-    daysCollection.doc(uid).update({"Days of consecutive sleeping on time": getNumOfConsecutiveDays(uid)});
-  }
+  // Future<void> setDays(String uid) async {
+  //   daysCollection = userCollection.doc(uid).collection('daysCollection');
+  //   await daysCollection
+  //       .doc(uid)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (!documentSnapshot.exists) {
+  //       daysCollection
+  //           .doc(uid)
+  //           .set({"Days of consecutive sleeping on time": 0});
+  //     }
+  //   }).catchError((e) => ErrorWidget(e));
+  //   daysCollection.doc(uid).update(
+  //       {"Days of consecutive sleeping on time": getNumOfConsecutiveDays(uid)});
+  // }
 
   Future<int> getNumOfConsecutiveDays(String uid) async {
     late int count;
@@ -117,27 +164,26 @@ class DatabaseService {
       if (!increase) {
         count = documentSnapshot.get("Days of consecutive sleeping on time");
       } else {
-        count = documentSnapshot.get("Days of consecutive sleeping on time") + 1;
+        count =
+            documentSnapshot.get("Days of consecutive sleeping on time") + 1;
       }
     });
     return count;
   }
 
-  // coins
-  Future<void> setNumOfCoins(String uid) async {
-    coinCollection = userCollection.doc(uid).collection('coinCollection');
-    await coinCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (!documentSnapshot.exists) {
-        coinCollection
-            .doc(uid)
-            .set({"Number of Coins": 0});
-      }
-    });
-    coinCollection.doc(uid).update({"Number of Coins": getNumOfCoins(uid)});
-  }
+  // // coins
+  // Future<void> setNumOfCoins(String uid) async {
+  //   coinCollection = userCollection.doc(uid).collection('coinCollection');
+  //   await coinCollection
+  //       .doc(uid)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (!documentSnapshot.exists) {
+  //       coinCollection.doc(uid).set({"Number of Coins": 0});
+  //     }
+  //   });
+  //   coinCollection.doc(uid).update({"Number of Coins": getNumOfCoins(uid)});
+  // }
 
   Future<int> getNumOfCoins(String uid) async {
     late int count;
@@ -154,18 +200,6 @@ class DatabaseService {
       }
     });
     return count;
-  }
-
-  Future<void> addUser(AppUser user, String uid) async {
-    await userCollection.doc(uid).set({
-      'uid': uid,
-      'email': user.email,
-      'nickname': user.nickName,
-    }).then((value) {
-      bedTimeCollection =
-          userCollection.doc(uid).collection('bedTimeCollection');
-      print("User added");
-    }).catchError((error) => print("Failed to add user: $error"));
   }
 
   Future<String> getUserName(String userId) async {

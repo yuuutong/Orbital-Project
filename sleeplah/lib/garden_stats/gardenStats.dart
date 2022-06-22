@@ -33,10 +33,10 @@ class _gardenStatsState extends State<gardenStats> {
 
   void getDataFlower() async {
     try {
-      int data1 = await DatabaseService().getFlowerNum("sunflower", FirebaseAuth.instance.currentUser.uid);
-      int data2 = await DatabaseService().getFlowerNum("rose", FirebaseAuth.instance.currentUser.uid);
-      int data3 = await DatabaseService().getFlowerNum("daisy", FirebaseAuth.instance.currentUser.uid);
-      int data4 = await DatabaseService().getFlowerNum("lilac", FirebaseAuth.instance.currentUser.uid);
+      int data1 = await DB().getFlowerNum("sunflower", FirebaseAuth.instance.currentUser.uid);
+      int data2 = await DB().getFlowerNum("rose", FirebaseAuth.instance.currentUser.uid);
+      int data3 = await DB().getFlowerNum("daisy", FirebaseAuth.instance.currentUser.uid);
+      int data4 = await DB().getFlowerNum("lilac", FirebaseAuth.instance.currentUser.uid);
       setState(() {
         numOfSunflower = data1;
         numOfRose = data2;
@@ -50,8 +50,8 @@ class _gardenStatsState extends State<gardenStats> {
   
   @override
   Widget build(BuildContext context) {
-    //getDataFlower();
-    //return new FutureBuilder()
+    getDataFlower();
+    // return FutureBuilder()
     return Scaffold(
       appBar: AppBar(
         title: const Text("Garden Statistics Dashboard"),
@@ -70,9 +70,9 @@ class _gardenStatsState extends State<gardenStats> {
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
             detail("Sunflower", "sunflower.png", numOfSunflower),
-            detail("Rose", "rose.png", numOfRose),
-            detail("Daisy", "daisy.png", numOfDaisy),
-            detail("Lilac", "lilac.png", numOfLilac),
+            detail("Rose", "rose.png", 0),//numOfRose),
+            detail("Daisy", "daisy.png", 0),//numOfDaisy),
+            detail("Lilac", "lilac.png", 0),//numOfLilac),
             detail("Coins", "coin.png", 0),
             detail("Days of Consecutive Sleep", "shanna_asleep.png", 0)
           ],

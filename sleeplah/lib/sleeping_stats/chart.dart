@@ -31,7 +31,7 @@ class BarChartSample1State extends State<BarChartSample1> {
 
   double sleepingHistory = 5;
   BarChartSample1State() {
-    DatabaseService().getSleepDurationOnDate(0).then((value) => setState(() => sleepingHistory = value,));
+    DB().getSleepDurationOnDate(0).then((value) => setState(() => sleepingHistory = value,));
   }
 
   @override
