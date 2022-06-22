@@ -10,6 +10,7 @@ import 'package:sleeplah/sleeping_stats/Statistics.dart';
 import 'package:sleeplah/Component/time_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_stats/gardenStats.dart';
+import "../database.dart";
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -81,13 +82,23 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Flower Collection'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const FlowerCollection()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FlowerCollection()));
               },
             ),
             ListTile(
               title: const Text('Garden Statistics Dashboard'),
               onTap: () {
+                setState(() {
+                  DatabaseService()
+                      .setFlower(FirebaseAuth.instance.currentUser.uid);
+                  DatabaseService()
+                      .setNumOfCoins(FirebaseAuth.instance.currentUser.uid);
+                  DatabaseService()
+                      .setDays(FirebaseAuth.instance.currentUser.uid);
+                });
                 Navigator.push(
                     context,
                     MaterialPageRoute(
