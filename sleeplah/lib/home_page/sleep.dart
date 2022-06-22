@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/configurations/background.dart';
-import '../size_config.dart';
+// import 'package:sleeplah/configurations/background.dart';
+import '../SizeConfig.dart';
 import '../constant.dart';
 //import 'package:sleeplah/Component/startSleepingButton.dart';
 

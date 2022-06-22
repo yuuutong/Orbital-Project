@@ -1,18 +1,18 @@
 import 'package:sleeplah/configurations/background.dart';
-import 'package:sleeplah/Signup/sign_up.dart';
+import 'package:sleeplah/signup_page/SignUpScreen.dart';
 import 'package:sleeplah/configurations/rounded_button.dart';
 import 'package:sleeplah/configurations/rounded_input_field.dart';
 import 'package:sleeplah/configurations/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sleeplah/Screens/Home_Screen.dart';
+import 'package:sleeplah/home_page/HomeScreen.dart';
 
-class Body extends StatefulWidget {
+class LogIn extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _LogInState createState() => _LogInState();
 }
 
-class _BodyState extends State<Body> {
+class _LogInState extends State<LogIn> {
   late String _email, _password;
   final auth = FirebaseAuth.instance;
   bool obscure = true;

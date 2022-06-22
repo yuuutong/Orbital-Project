@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/garden_stats/garden_details.dart';
-import '../database.dart';
+import 'package:sleeplah/garden_page/garden_details.dart';
+import '../Database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class gardenStats extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/database.dart';
+import 'package:sleeplah/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../size_config.dart';
+import '../SizeConfig.dart';
 import '../constant.dart';
-import 'package:sleeplah/Screens/sleep.dart';
+import 'package:sleeplah/home_page/sleep.dart';
 
 class startSleepingButton extends StatefulWidget {
   String _buttonText = "Sleep Now";

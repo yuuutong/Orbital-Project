@@ -6,9 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:sleeplah/Login/log_in.dart';
-import 'package:sleeplah/models/app_user.dart';
+import 'package:sleeplah/models/AppUser.dart';
 import 'package:intl/intl.dart';
-import 'package:sleeplah/rewards/check.dart';
+import 'package:sleeplah/garden_page/check.dart';
 
 class DB {
   late CollectionReference userCollection;

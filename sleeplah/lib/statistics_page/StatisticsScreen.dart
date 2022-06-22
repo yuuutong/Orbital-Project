@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/sleeping_stats/chart.dart';
+import 'package:sleeplah/statistics_page/Chart.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _StatisticsState extends State<Statistics> {
                 image: AssetImage("assets/images/background.png"),
                 fit: BoxFit.cover),
           ),
-          child: BarChartSample1()),
+          child: Chart()),
     );
   }
 }

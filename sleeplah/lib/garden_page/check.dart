@@ -1,11 +1,4 @@
-import 'dart:async';
-import 'dart:collection';
-import 'dart:core';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:sleeplah/Login/log_in.dart';
-import 'package:sleeplah/models/app_user.dart';
-import 'package:sleeplah/database.dart';
+import 'package:sleeplah/Database.dart';
 
 class check {
   //bool ifOnTime = false;

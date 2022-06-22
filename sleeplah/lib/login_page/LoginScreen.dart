@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'body.dart';
+import 'LogIn.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 // late User? user;
@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: LogIn(),
     );
   }
 }

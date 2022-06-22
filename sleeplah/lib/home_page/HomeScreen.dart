@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sleeplah/Component/startSleepingButton.dart';
-import 'package:sleeplah/Component/wakeUpButton.dart';
+import 'package:sleeplah/home_page/startSleepingButton.dart';
+import 'package:sleeplah/home_page/wakeUpButton.dart';
 import 'package:sleeplah/flower_collection/FlowerCollection.dart';
-import 'package:sleeplah/login/log_in.dart';
-import 'package:sleeplah/Screens/Neighbourhood.dart';
-import 'package:sleeplah/Screens/Settings.dart';
-import 'package:sleeplah/sleeping_stats/Statistics.dart';
-import 'package:sleeplah/Component/time_picker.dart';
+import 'package:sleeplah/login_page/LoginScreen.dart';
+import 'package:sleeplah/NeighbourhoodScreen.dart';
+import 'package:sleeplah/SettingsScreen.dart';
+import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
+import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:intl/intl.dart';
-import 'package:sleeplah/garden_stats/gardenStats.dart';
-import "../database.dart";
+import 'package:sleeplah/garden_page/gardenStats.dart';
+import '../Database.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

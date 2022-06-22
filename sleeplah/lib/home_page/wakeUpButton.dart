@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sleeplah/database.dart';
+import 'package:sleeplah/Database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../size_config.dart';
+import '../SizeConfig.dart';
 import '../constant.dart';
-import 'package:sleeplah/Screens/awake.dart';
+import 'package:sleeplah/home_page/awake.dart';
 
 class wakeUpButton extends StatefulWidget {
   String _buttonText = "I'm awake!";

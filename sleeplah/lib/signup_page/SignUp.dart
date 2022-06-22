@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:sleeplah/configurations/rounded_empty_field.dart';
-import 'package:sleeplah/login/log_in.dart';
+import 'package:sleeplah/login_page/LoginScreen.dart';
 import '../constant.dart';
-import '../database.dart';
-import 'package:sleeplah/models/app_user.dart';
+import '../Database.dart';
+import 'package:sleeplah/models/AppUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/configurations/background.dart';
 
-class Body extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _BodyState extends State<Body> {
+class _SignUpState extends State<SignUp> {
   late String _email, _password, _confirmPassword, _userName;
   final auth = FirebaseAuth.instance;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'body.dart';
+import 'SignUp.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
         title: Text("Sign Up", style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: Body(),
+      body: SignUp(),
     );
   }
 }
