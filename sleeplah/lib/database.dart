@@ -272,6 +272,4 @@ class DatabaseService {
     });
     return totalDuration;
   }
-
-  
 }

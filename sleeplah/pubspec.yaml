@@ -45,6 +45,7 @@ dependencies:
   is_lock_screen: ^2.0.0
   flutter_fgbg: ^0.2.0
   screen_state: ^2.0.0
+  flutter_launcher_icons: ^0.9.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/launcher.png"
+  adaptive_icon_background: "assets/images/launcher_background.png"
+  adaptive_icon_foreground: "assets/images/launcher_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

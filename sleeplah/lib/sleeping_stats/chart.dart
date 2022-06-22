@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../configurations/color_extensions.dart';
-// import 'package:example/utils/color_extensions.dart';
+import 'package:sleeplah/database.dart';
 
 class BarChartSample1 extends StatefulWidget {
   final List<Color> availableColors = const [
@@ -28,6 +28,11 @@ class BarChartSample1State extends State<BarChartSample1> {
   int touchedIndex = -1;
 
   bool isPlaying = false;
+
+  double sleepingHistory = 5;
+  BarChartSample1State() {
+    DatabaseService().getSleepDurationOnDate(0).then((value) => setState(() => sleepingHistory = value,));
+  }
 
   @override
   Widget build(BuildContext context) {
