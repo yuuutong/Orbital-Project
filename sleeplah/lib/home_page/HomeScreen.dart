@@ -56,9 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.center,
                 children: const <Widget>[
                   Image(
-                      image: AssetImage("assets/images/field.png"),
+                      image: AssetImage("assets/images/sunflower_field.png"),
                       fit: BoxFit.fitWidth),
-                  Image(image: AssetImage("assets/images/sunflower.png")),
+                  // Image(image: AssetImage("assets/images/sunflower.png")),
                 ],
               ),
             ),
