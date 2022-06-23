@@ -6,6 +6,7 @@ import 'package:sleeplah/configurations/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/home_page/HomeScreen.dart';
+import '../forgotPasswordPage.dart';
 
 class LogIn extends StatefulWidget {
   @override
@@ -25,8 +26,8 @@ class _LogInState extends State<LogIn> {
           .user;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('signed in'),
+        const SnackBar(
+          content: const Text('signed in'),
         ),
       );
 
@@ -83,25 +84,49 @@ class _LogInState extends State<LogIn> {
                 await _logIn();
               }),
           Padding(
-            padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
-            child: Row(
-              children: <Widget>[
-                Text(
+              padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
+              child: Row(children: <Widget>[
+                const Text(
                   "Do not have an account?",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                     style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                         onPrimary: Colors.white // background
                         ),
-                    child: Text('Sign Up'),
+                    child: const Text('Sign Up', style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => SignUpScreen()));
                     }),
+              ])),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
+            child: Row(
+              children: <Widget>[
+                const Text(
+                  "",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                TextButton(
+                  onPressed: () {
+                    /* Navigator.pushNamed(
+                      context,
+                      ForgotPassword.id,
+                    ) */
+                    Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ForgotPassword()));
+                  },
+                  child: const Text(
+                    'Change/Reset Password',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                )
               ],
             ),
           ),
