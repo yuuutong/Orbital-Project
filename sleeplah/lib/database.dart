@@ -119,6 +119,7 @@ class DB {
       } else {
         count = documentSnapshot.get(flowerName) + 1;
       }
+      print(count.toString() + "herherhehr");
     });
     return count;
   }

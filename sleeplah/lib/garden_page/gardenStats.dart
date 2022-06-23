@@ -44,7 +44,7 @@ class _gardenStatsState extends State<gardenStats> {
         numOfLilac = data4;
       });
     } catch (ex) {
-      print("aabcdefg");
+      print(ex);
     }
   }
   
