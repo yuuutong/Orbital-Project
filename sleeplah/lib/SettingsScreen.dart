@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// try merging
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
