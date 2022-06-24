@@ -15,9 +15,6 @@ class DB {
   late DocumentReference userDoc;
   late CollectionReference bedTimeCollection;
   late CollectionReference actualTimeCollection;
-  late CollectionReference flowerCollection;
-  late CollectionReference daysCollection;
-  late CollectionReference coinCollection;
 
   DB({FirebaseFirestore? instanceInjection}) {
     FirebaseFirestore instance;
@@ -50,158 +47,92 @@ class DB {
         .then((DocumentSnapshot documentSnapshot) {
       bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
     });
-
-    flowerCollection = userCollection.doc(uid).collection('flowerCollection');
-    await flowerCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      flowerCollection
-          .doc(uid)
-          .set({"sunflower": 1, "rose": 0, "daisy": 0, "lilac": 0});
-    });
-
-    coinCollection = userCollection.doc(uid).collection('coinCollection');
-    await coinCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      coinCollection.doc(uid).set({"Number of Coins": 0});
-    });
-
-    daysCollection = userCollection.doc(uid).collection('daysCollection');
-    await daysCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      daysCollection.doc(uid).set({"Days of consecutive sleeping on time": 0});
-    });
-
-    // .then((value) {
-    //   bedTimeCollection =
-    //       userCollection.doc(uid).collection('bedTimeCollection');
-    //   print("User added");
-    // }).catchError((error) => print("Failed to add user: $error"));
   }
 
-  //flower
-  // Future<void> setFlower(String uid) async {
-  //   flowerCollection = userCollection.doc(uid).collection('flowerCollection');
-  //   // await flowerCollection
-  //   //     .doc(uid)
-  //   //     .get()
-  //   //     .then((DocumentSnapshot documentSnapshot) {
-  //   //   if (!documentSnapshot.exists) {
-  //   //     flowerCollection
-  //   //         .doc(uid)
-  //   //         .set({"sunflower": 1, "rose": 0, "daisy": 0, "lilac": 0});
-  //   //   }
-  //   // });
-  //   flowerCollection.doc(uid).update({
-  //     "sunflower": getFlowerNum("sunflower", uid),
-  //     "rose": getFlowerNum("rose", uid),
-  //     "daisy": getFlowerNum("daisy", uid),
-  //     "lilac": getFlowerNum("lilac", uid)
-  //   });
-  // }
+  Future<List<String>> getList(String databaseField, String userId) async {
+    //late List<String> requestList;
+    late List<String> requestList = [];
+    DocumentReference docRef = userCollection.doc(userId);
+    await docRef.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        var requestListRaw = [];
+        try {
+          requestListRaw = documentSnapshot.get(databaseField);
+        } catch (StateError) {
+          print("rq list does not exist");
+        }
 
-  Future<int> getFlowerNum(String flowerName, String uid) async {
-    flowerCollection = userCollection.doc(uid).collection('flowerCollection');
-    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    bool increase = await check().compareTime(today);
-    late int count;
-    await flowerCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (!increase) {
-        count = documentSnapshot.get(flowerName) - 1;
-      } else {
-        count = documentSnapshot.get(flowerName) + 1;
+        requestList = List<String>.from(requestListRaw);
       }
-      print(count.toString() + "herherhehr");
     });
+
+    return requestList;
+  }
+
+  // coins
+  Future<int> getCoins() async {
+    int count = 0;
+    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        //var map = documentSnapshot.data();
+        //count = map[FirebaseString.bio]
+        count = documentSnapshot.get("coins");
+      }
+    });
+    
     return count;
   }
 
-  /* Future<void> updateFlower(String flowerName, String uid) async {
-    flowerCollection = userCollection.doc(uid).collection('flowerCollection');
-    int count = await getFlowerNum(flowerName, uid);
-    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    bool increase = await check().compareTime(today);
-    if (increase) {
-      flowerCollection.doc(today).update({flowerName: count + 1});
-    } else {
-      flowerCollection.doc(today).update({flowerName: count - 1});
-    }
+  Future<void> updateCoin(int amt) async {
+    int count = await getCoins();
+    userDoc.update({"coins": count + amt});
+  }
+
+  /* Future<void> claimReward(int index, String date, String userID) async {
+      if (check().compareTime(date)) {
+        await userDoc.update({
+      "flowers": getFlowerList(userID)});
+    });
+      }
+    String curr = '$index-$date';
+    
+    updateCoin(10);
   } */
 
-  // num of days of consecutive sleeping on time
-  // Future<void> setDays(String uid) async {
-  //   daysCollection = userCollection.doc(uid).collection('daysCollection');
-  //   await daysCollection
-  //       .doc(uid)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (!documentSnapshot.exists) {
-  //       daysCollection
-  //           .doc(uid)
-  //           .set({"Days of consecutive sleeping on time": 0});
-  //     }
-  //   }).catchError((e) => ErrorWidget(e));
-  //   daysCollection.doc(uid).update(
-  //       {"Days of consecutive sleeping on time": getNumOfConsecutiveDays(uid)});
-  // }
-
-  Future<int> getNumOfConsecutiveDays(String uid) async {
-    late int count;
-    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    daysCollection = userCollection.doc(uid).collection('daysCollection');
-    bool increase = await check().compareTime(today);
-    await daysCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (!increase) {
-        count = documentSnapshot.get("Days of consecutive sleeping on time");
-      } else {
-        count =
-            documentSnapshot.get("Days of consecutive sleeping on time") + 1;
+  // days
+  Future<int> getDays() async {
+    int count = 0;
+    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        count = documentSnapshot.get("days");
       }
     });
     return count;
   }
 
-  // // coins
-  // Future<void> setNumOfCoins(String uid) async {
-  //   coinCollection = userCollection.doc(uid).collection('coinCollection');
-  //   await coinCollection
-  //       .doc(uid)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (!documentSnapshot.exists) {
-  //       coinCollection.doc(uid).set({"Number of Coins": 0});
-  //     }
-  //   });
-  //   coinCollection.doc(uid).update({"Number of Coins": getNumOfCoins(uid)});
-  // }
-
-  Future<int> getNumOfCoins(String uid) async {
-    late int count;
-    int numOfDays = await getNumOfConsecutiveDays(uid);
-    coinCollection = userCollection.doc(uid).collection('coinCollection');
-    await daysCollection
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (numOfDays > 6) {
-        count = documentSnapshot.get("Number of Coins") + 10;
-      } else {
-        count = documentSnapshot.get("Number of Coins");
-      }
-    });
-    return count;
+  Future<void> updateDays(int amt) async {
+    int count = await getDays();
+    userDoc.update({"days": count + amt});
   }
+
+  // flower
+  Future<List<String>> getFlowerList(String userId) {
+    return getList("flowers", userId);
+  }
+
+  Future<void> addFlower(String userId, String flowerId) async {
+    var flowerList = await getFlowerList(userId);
+    var doc = userCollection.doc(userId);
+    if (!flowerList.contains(flowerId)) flowerList.add(flowerId);
+
+    doc.update({"flowers": flowerList});
+  }
+
+  /* Future<List<String>> updateFlowerNum(String userId, String flowerId) async {
+      List<String> newList = await getFlowerList(userId).removeAt();
+
+      return getList("flowers", userId);
+    } */
 
   Future<String> getUserName(String userId) async {
     late String name;
@@ -271,14 +202,6 @@ class DB {
     }
     return exist;
   }
-
-  // Future<bool> doesDateExist(String date) async {
-  //   bool exists = false;
-  //   await bedTimeCollection.doc(date).get().then(
-  //       (DocumentSnapshot documentSnapshot) =>
-  //           exists = documentSnapshot.exists);
-  //   return exists;
-  // }
 
   Future<String> getSleepTime(String date) async {
     String sleepTime = '';

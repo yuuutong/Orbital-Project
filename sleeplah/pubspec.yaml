@@ -46,6 +46,7 @@ dependencies:
   flutter_fgbg: ^0.2.0
   screen_state: ^2.0.0
   flutter_launcher_icons: ^0.9.3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

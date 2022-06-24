@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/configurations/color_extensions.dart';
-import 'package:sleeplah/Database.dart';
+import 'package:sleeplah/database.dart';
 
 class Chart extends StatefulWidget {
   final List<Color> availableColors = const [

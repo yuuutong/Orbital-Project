@@ -6,11 +6,12 @@ import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
 import 'package:sleeplah/SettingsScreen.dart';
+import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
-import '../Database.dart';
+import '../database.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -86,6 +87,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const FlowerCollection()));
+              },
+            ),
+            ListTile(
+              title: const Text('ShopTrial'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Shop()));
               },
             ),
             ListTile(

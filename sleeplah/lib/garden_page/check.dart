@@ -1,4 +1,4 @@
-import 'package:sleeplah/Database.dart';
+import 'package:sleeplah/database.dart';
 
 class check {
   //bool ifOnTime = false;

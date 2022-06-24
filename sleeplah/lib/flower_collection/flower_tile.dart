@@ -36,7 +36,7 @@ class _FlowerState extends State<Flower> {
         color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(flowerName),
+      child: Text(flowerName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black)),
     );
   }
 }

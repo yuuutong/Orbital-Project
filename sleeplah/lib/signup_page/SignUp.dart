@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sleeplah/configurations/rounded_empty_field.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import '../constant.dart';
-import '../Database.dart';
+import '../database.dart';
 import 'package:sleeplah/models/AppUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

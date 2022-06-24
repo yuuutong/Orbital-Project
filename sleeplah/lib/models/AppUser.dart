@@ -3,8 +3,9 @@ class AppUser {
   String email = '';
   String nickName = '';
   List<String> friends = List.of(Iterable.empty());
-  // List<String> animals = ["0"];
-  // int stars = 0;
+  List<String> flowers = ["0"]; // the user only has sunflower at the start
+  int coins = 0;
+  int numOfDays = 0;
   // List<String> tags = List.of(Iterable.empty());
   // List<String> townAchievements = [];
 
@@ -13,7 +14,7 @@ class AppUser {
     required this.email,
     required this.nickName,
     //required this.friends,
-    //required this.animals });
+    //required this.coins 
   });
 
   void setEmail(String email) {
@@ -23,13 +24,4 @@ class AppUser {
   void setNickName(String nickName) {
     this.nickName = nickName;
   }
-/*
-  void addFriend(String friend) {
-    this.friends.add(friend);
-  }
-  void addAnimal(String animalId) {
-    this.animals.add(animalId);
-  }
-  */
-
 }
