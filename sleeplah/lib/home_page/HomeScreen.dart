@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('SleepLah!'),
             ),
             ListTile(
-              title: const Text('Flower Collection'),
+              title: const Text('Shop'),
               onTap: () {
                 Navigator.push(
                     context,

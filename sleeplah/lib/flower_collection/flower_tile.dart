@@ -29,7 +29,7 @@ class _FlowerState extends State<Flower> {
             image: AssetImage("assets/images/$flowerImage"),
             filterQuality: FilterQuality.none,
           ).image,
-          colorFilter: const ColorFilter.mode(Colors.white70, BlendMode.color),
+          colorFilter: const ColorFilter.mode(Colors.transparent, BlendMode.color),
           fit: BoxFit.fill,
           filterQuality: FilterQuality.none,
         ),
