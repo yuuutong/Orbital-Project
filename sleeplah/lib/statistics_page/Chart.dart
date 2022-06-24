@@ -29,11 +29,6 @@ class ChartState extends State<Chart> {
 
   bool isPlaying = false;
 
-  double sleepingHistory = 5;
-  ChartState() {
-    DB().getSleepDurationOnDate(0).then((value) => setState(() => sleepingHistory = value,));
-  }
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(

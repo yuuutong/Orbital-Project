@@ -6,7 +6,7 @@ import 'package:sleeplah/configurations/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/home_page/HomeScreen.dart';
-import '../forgotPasswordPage.dart';
+import '../forgot_password_page/ForgotPasswordScreen.dart';
 
 class LogIn extends StatefulWidget {
   @override
@@ -85,7 +85,9 @@ class _LogInState extends State<LogIn> {
               }),
           Padding(
               padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
-              child: Row(children: <Widget>[
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
                 const Text(
                   "Do not have an account?",
                   textAlign: TextAlign.center,
@@ -107,6 +109,7 @@ class _LogInState extends State<LogIn> {
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
                   "",
