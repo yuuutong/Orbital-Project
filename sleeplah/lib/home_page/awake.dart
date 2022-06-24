@@ -28,7 +28,7 @@ class _awakeState extends State<awake> {
             children: [
               const Flexible(
                 child: Text(
-                  'Good morning!\n \n Shanna is excited \n to start a new day!',
+                  'Good morning!\nShanna is excited \n to start a new day!',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
