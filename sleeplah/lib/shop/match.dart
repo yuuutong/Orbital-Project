@@ -54,14 +54,14 @@ class _MatchState extends State<Match> {
     bool success = true;
 
     if (!await hasEnoughCoins()) {
-      message = "You don't have enough coins mew ~";
+      message = "You don't have enough coins~";
       success = false;
     }
 
     var selectedFlower = await pickFlower();
 
     if (selectedFlower.id == "0") {
-      message = "Fufu~ seems like you already know everyone";
+      message = "Fufu~ seems like you already unlocked all flowers";
       success = false;
     }
 
