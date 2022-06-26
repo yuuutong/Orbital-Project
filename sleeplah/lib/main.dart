@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: 
-          //LoginScreen(), 
-          HomeScreen(),
+          LoginScreen(), 
+          // HomeScreen(),
         );
   }
 }
