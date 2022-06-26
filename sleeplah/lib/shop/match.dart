@@ -54,7 +54,7 @@ class _MatchState extends State<Match> {
     bool success = true;
 
     if (!await hasEnoughCoins()) {
-      message = "You don't have enough coins mew ~";
+      message = "You don't have enough coins ~";
       success = false;
     }
 

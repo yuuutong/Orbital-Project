@@ -46,7 +46,7 @@ class ChartState extends State<Chart> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   const Text(
-                    'Mingguan',
+                    'Have a peek at',
                     style: TextStyle(
                         color: Color(0xff0f4a3c),
                         fontSize: 24,
@@ -56,7 +56,7 @@ class ChartState extends State<Chart> {
                     height: 4,
                   ),
                   const Text(
-                    'Grafik konsumsi kalori',
+                    'Your weekly sleeping statistics',
                     style: TextStyle(
                         color: Color(0xff379982),
                         fontSize: 18,
