@@ -54,9 +54,11 @@ class _SignUpState extends State<SignUp> {
         ));
       }
     } on PlatformException catch (e) {
-      String fullErrorMessage = "Platform Exception in registration: ${e.code} | $e";
+      String fullErrorMessage =
+          "Platform Exception in registration: ${e.code} | $e";
       print(fullErrorMessage);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(fullErrorMessage)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(fullErrorMessage)));
     }
   }
 
@@ -118,12 +120,18 @@ class _SignUpState extends State<SignUp> {
                     side: BorderSide(color: Colors.white),
                   ),
                   onPressed: () {
-                    if (_password == _confirmPassword) {
-                      _register();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Passwords do not match"),
-                      ));
+                    try {
+                      if (_password == _confirmPassword) {
+                        _register();
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Passwords do not match"),
+                        ));
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text("Fill in all fields")));
                     }
                   },
                   child: Text("Sign Up",
@@ -133,7 +141,8 @@ class _SignUpState extends State<SignUp> {
               Container(
                   width: size.width * 0.4,
                   height: size.height * 0.2,
-                  child: Image.asset('assets/images/shanna-removebg-preview.png')),
+                  child:
+                      Image.asset('assets/images/shanna-removebg-preview.png')),
             ],
           )
         ])));
