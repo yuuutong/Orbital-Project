@@ -15,8 +15,6 @@ import 'package:sleeplah/garden_page/check.dart';
 class DB {
   late CollectionReference userCollection;
   late DocumentReference userDoc;
-  late CollectionReference bedTimeCollection;
-  late CollectionReference actualTimeCollection;
 
   late CollectionReference timeCollection;
 
@@ -41,15 +39,6 @@ class DB {
       'uid': uid,
       'email': user.email,
       'nickname': user.nickName,
-    });
-
-    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
-    await bedTimeCollection
-        .doc(today)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
     });
   }
 
