@@ -48,24 +48,6 @@ class DB {
     }).then((value) {
       print("User added");
     }).catchError((error) => print("Failed to add user: $error"));
-
-    String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
-    await bedTimeCollection
-        .doc(today)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
-    });
-
-    actualTimeCollection =
-        userCollection.doc(uid).collection('actualTimeCollection');
-    await actualTimeCollection
-        .doc(today)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      actualTimeCollection.doc(today).set({"sleep": "", "wake": ""});
-    });
   }
 
   Future<List<String>> getList(String databaseField, String userId) async {
@@ -119,14 +101,16 @@ class DB {
         : unlockedFlowers[_random.nextInt(unlockedFlowers.length)];
   }
 
-  // add 1 to a flower variant that has alr been unlocked, and add 10 coins
+  // add 1 to a flower variant that has alr been unlocked, and add 10 coins, update num of days of sleeping
   Future<void> claimReward(String date, String userID) async {
     if (await check().compareTime(date)) {
-      //var flowerList = await getFlowerList(userID);
       var selectedFlower = await pickExistingFlower();
-      addFlower(user!.uid, selectedFlower.id);
+      addFlower(userID, selectedFlower.id);
       updateCoin(10);
+      updateDays(1, userID);
+      print("reward claimed");
     }
+    print("reward never run");
   }
 
   // days
@@ -144,7 +128,7 @@ class DB {
   Future<void> updateDays(int amt, String userId) async {
     int count = await getDays(userId);
     DocumentReference docRef = userCollection.doc(userId);
-    docRef.update({"days": count + amt});
+    docRef.update({"numOfDays": count + amt});
   }
 
   // flower
@@ -199,6 +183,30 @@ class DB {
       }
     });
     return result;
+  }
+
+  Future<DateTime> getSleepSet(String docDate) async {
+    var map = await getTimeCollectionDoc(docDate);
+    DateTime time = DateTime.parse(map["sleepSet"]);
+    return time;
+  }
+
+  Future<DateTime> getSleepActual(String docDate) async {
+    var map = await getTimeCollectionDoc(docDate);
+    DateTime time = DateTime.parse(map["sleepActual"]);
+    return time;
+  }
+
+  Future<DateTime> getWakeSet(String docDate) async {
+    var map = await getTimeCollectionDoc(docDate);
+    DateTime time = DateTime.parse(map["wakeSet"]);
+    return time;
+  }
+
+  Future<DateTime> getWakeActual(String docDate) async {
+    var map = await getTimeCollectionDoc(docDate);
+    DateTime time = DateTime.parse(map["wakeActual"]);
+    return time;
   }
 
   Future<void> updateTimeCollection(
