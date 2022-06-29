@@ -41,10 +41,11 @@ class wakeUpButtonState extends State<wakeUpButton> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const awake()));
                   setState(() {
-                    DB().recordActualTime(
-                        TimeOfDay.fromDateTime(DateTime.now()),
-                        FirebaseAuth.instance.currentUser.uid,
-                        "wake");
+                    // DB().recordActualTime(
+                    //     TimeOfDay.fromDateTime(DateTime.now()),
+                    //     FirebaseAuth.instance.currentUser.uid,
+                    //     "wake");
+                    DB().setTime(DateTime.now(), "wakeActual");
                   });
                 }
               }),

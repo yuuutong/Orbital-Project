@@ -11,7 +11,7 @@ class TimePicker extends StatefulWidget {
 class TimePickerState extends State<TimePicker> {
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
-
+  //the time picker will not show the previously set time when the user starts up the app again
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,8 +27,9 @@ class TimePickerState extends State<TimePicker> {
             child: FittedBox(
                 child: _buildTimePick("Start", true, startTime, (x) {
               setState(() {
-                DB().setTimer(
-                    x, FirebaseAuth.instance.currentUser.uid, "sleep");
+                DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
+                // DB().setTimer(
+                //     x, FirebaseAuth.instance.currentUser.uid, "sleep");
                 startTime = x;
                 print("The picked time is: $x");
               });
@@ -40,8 +41,9 @@ class TimePickerState extends State<TimePicker> {
             child: FittedBox(
                 child: _buildTimePick("End", true, endTime, (x) {
               setState(() {
-                DB()
-                    .setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
+                DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
+                // DB()
+                //     .setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
                 endTime = x;
                 print("The picked time is: $x");
               });
