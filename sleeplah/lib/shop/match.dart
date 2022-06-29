@@ -44,7 +44,8 @@ class _MatchState extends State<Match> {
             baseColor: Colors.red,
             highlightColor: Colors.yellow,
             enabled: true,
-            child: Text("Purchase", style: TextStyle(fontSize: defaultSize * 3))),
+            child:
+                Text("Purchase", style: TextStyle(fontSize: defaultSize * 3))),
       )
     ]);
   }
@@ -60,6 +61,7 @@ class _MatchState extends State<Match> {
 
     var selectedFlower = await pickFlower();
 
+    // no more locked flowers, thus random number generator return "0"
     if (selectedFlower.id == "0") {
       message = "Fufu~ seems like you already unlocked all flowers";
       success = false;
@@ -78,9 +80,10 @@ class _MatchState extends State<Match> {
                       ? EdgeInsets.all(defaultSize)
                       : EdgeInsets.all(defaultSize * 10),
                   child: Image(
-                    image: AssetImage(
-                        "$flower_profile_path${selectedFlower.id}.png"),
-                  ),
+                      image: AssetImage(
+                          "$flower_profile_path${selectedFlower.id}.png"),
+                      fit: BoxFit.fitWidth,
+                      filterQuality: FilterQuality.none),
                 ),
                 actions: [
                   TextButton(
@@ -108,12 +111,13 @@ class _MatchState extends State<Match> {
     }
   }
 
-  //a func that pick the Flower
+  //a func that pick a random Flower to unlock
   Future<Flower> pickFlower() async {
-    var userFlowers = await DB().getFlowerList(user?.uid ?? "000");
+    var userFlowers = await DB().getFlowerList(user!.uid);
     List<Flower> uncatchFlowers = [];
     for (var Flower in FlowerList) {
-      if (!userFlowers.contains(Flower.id)) uncatchFlowers.add(Flower);
+      if (userFlowers[int.parse(Flower.id)] == "0") uncatchFlowers.add(Flower);
+      // if num = 0 for a particular variant in current list of flower, then it is still locked. add it to locked list
     }
 
     var _random = Random();

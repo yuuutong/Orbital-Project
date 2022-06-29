@@ -34,7 +34,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         }),
       );
     } catch (e) {
-      //print(e);
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Invalid Email Format'),

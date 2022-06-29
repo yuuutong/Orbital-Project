@@ -9,6 +9,8 @@ import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/models/AppUser.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/check.dart';
+import 'package:sleeplah/models/flowers.dart';
+import 'dart:math';
 
 class DB {
   late CollectionReference userCollection;
@@ -37,7 +39,13 @@ class DB {
       'uid': uid,
       'email': user.email,
       'nickname': user.nickName,
-    });
+      'flowers': user.flowers,
+      'coins': user.coins,
+      'friends': user.friends,
+      'numOfDays': user.numOfDays
+    }).then((value) {
+      print("User added");
+    }).catchError((error) => print("Failed to add user: $error"));
 
     String today = DateFormat("yyyy-MM-dd").format(DateTime.now());
     bedTimeCollection = userCollection.doc(uid).collection('bedTimeCollection');
@@ -47,11 +55,19 @@ class DB {
         .then((DocumentSnapshot documentSnapshot) {
       bedTimeCollection.doc(today).set({"sleep": "", "wake": ""});
     });
+
+    actualTimeCollection =
+        userCollection.doc(uid).collection('actualTimeCollection');
+    await actualTimeCollection
+        .doc(today)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      actualTimeCollection.doc(today).set({"sleep": "", "wake": ""});
+    });
   }
 
   Future<List<String>> getList(String databaseField, String userId) async {
-    //late List<String> requestList;
-    late List<String> requestList = [];
+    late List<String> requestList;
     DocumentReference docRef = userCollection.doc(userId);
     await docRef.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
@@ -74,12 +90,9 @@ class DB {
     int count = 0;
     await userDoc.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        //var map = documentSnapshot.data();
-        //count = map[FirebaseString.bio]
         count = documentSnapshot.get("coins");
       }
     });
-    
     return count;
   }
 
@@ -88,31 +101,48 @@ class DB {
     userDoc.update({"coins": count + amt});
   }
 
-  /* Future<void> claimReward(int index, String date, String userID) async {
-      if (check().compareTime(date)) {
-        await userDoc.update({
-      "flowers": getFlowerList(userID)});
-    });
-      }
-    String curr = '$index-$date';
-    
-    updateCoin(10);
-  } */
+  // pick flowers that have already been unlocked
+  Future<Flower> pickExistingFlower() async {
+    var userFlowers = await getFlowerList(user!.uid);
+    List<Flower> unlockedFlowers = [];
+    for (var Flower in FlowerList) {
+      if (userFlowers[int.parse(Flower.id)] != "0") unlockedFlowers.add(Flower);
+      // if num != 0 for a particular variant in current list of flower, then it is unlocked. add it to unlocked list
+    }
+
+    var _random = Random();
+
+    return unlockedFlowers.length == 0
+        ? FlowerList.first
+        : unlockedFlowers[_random.nextInt(unlockedFlowers.length)];
+  }
+
+  // add 1 to a flower variant that has alr been unlocked, and add 10 coins
+  Future<void> claimReward(String date, String userID) async {
+    if (await check().compareTime(date)) {
+      //var flowerList = await getFlowerList(userID);
+      var selectedFlower = await pickExistingFlower();
+      addFlower(user!.uid, selectedFlower.id);
+      updateCoin(10);
+    }
+  }
 
   // days
-  Future<int> getDays() async {
+  Future<int> getDays(String userId) async {
     int count = 0;
-    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+    DocumentReference docRef = userCollection.doc(userId);
+    await docRef.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        count = documentSnapshot.get("days");
+        count = documentSnapshot.get("numOfDays");
       }
     });
     return count;
   }
 
-  Future<void> updateDays(int amt) async {
-    int count = await getDays();
-    userDoc.update({"days": count + amt});
+  Future<void> updateDays(int amt, String userId) async {
+    int count = await getDays(userId);
+    DocumentReference docRef = userCollection.doc(userId);
+    docRef.update({"days": count + amt});
   }
 
   // flower
@@ -121,18 +151,13 @@ class DB {
   }
 
   Future<void> addFlower(String userId, String flowerId) async {
-    var flowerList = await getFlowerList(userId);
+    List<String> flowerList = await getFlowerList(userId);
     var doc = userCollection.doc(userId);
-    if (!flowerList.contains(flowerId)) flowerList.add(flowerId);
-
+    // add 1 more flower to the variant specified by ID
+    flowerList[int.parse(flowerId)] =
+        (int.parse(flowerList[int.parse(flowerId)]) + 1).toString();
     doc.update({"flowers": flowerList});
   }
-
-  /* Future<List<String>> updateFlowerNum(String userId, String flowerId) async {
-      List<String> newList = await getFlowerList(userId).removeAt();
-
-      return getList("flowers", userId);
-    } */
 
   Future<String> getUserName(String userId) async {
     late String name;
