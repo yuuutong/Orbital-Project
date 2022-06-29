@@ -42,10 +42,11 @@ class startSleepingButtonState extends State<startSleepingButton> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const sleep()));
                   setState(() {
-                    DB().recordActualTime(
-                        TimeOfDay.fromDateTime(DateTime.now()),
-                        FirebaseAuth.instance.currentUser.uid,
-                        "sleep");
+                    // DB().recordActualTime(
+                    //     TimeOfDay.fromDateTime(DateTime.now()),
+                    //     FirebaseAuth.instance.currentUser.uid,
+                    //     "sleep");
+                    DB().setTime(DateTime.now(), "sleepActual");
                   });
                 }
               }),

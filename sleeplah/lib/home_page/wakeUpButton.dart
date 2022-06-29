@@ -50,6 +50,11 @@ class wakeUpButtonState extends State<wakeUpButton> {
                     DB().claimReward(
                         DateFormat("yyyy-MM-dd").format(DateTime.now()),
                         FirebaseAuth.instance.currentUser.uid);
+                    // DB().recordActualTime(
+                    //     TimeOfDay.fromDateTime(DateTime.now()),
+                    //     FirebaseAuth.instance.currentUser.uid,
+                    //     "wake");
+                    DB().setTime(DateTime.now(), "wakeActual");
                   });
                 }
               }),

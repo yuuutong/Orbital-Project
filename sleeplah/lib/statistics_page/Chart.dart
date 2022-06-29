@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/configurations/color_extensions.dart';
@@ -15,19 +16,65 @@ class Chart extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const Chart({Key? key}) : super(key: key);
+  final Map chartData;
+
+  Chart(this.chartData, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => ChartState();
+  State<StatefulWidget> createState() => ChartState(chartData);
 }
 
 class ChartState extends State<Chart> {
   final Color barBackgroundColor = const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
+  final Map chartData;
 
   int touchedIndex = -1;
 
   bool isPlaying = false;
+
+  ChartState(this.chartData);
+
+  List getWeekDays() {
+    List result = List.empty(growable: true);
+    for (final item in chartData.entries) {
+      String date = DateFormat("yyyy-MM-dd").format(item.key);
+      String day = '';
+      int dayValue = item.key.weekday;
+      if (dayValue == 1) {
+        day = "Monday";
+      }
+      if (dayValue == 2) {
+        day = "Tuesday";
+      }
+      if (dayValue == 3) {
+        day = "Wednesday";
+      }
+      if (dayValue == 4) {
+        day = "Thursday";
+      }
+      if (dayValue == 5) {
+        day = "Friday";
+      }
+      if (dayValue == 6) {
+        day = "Sat";
+      }
+      if (dayValue == 7) {
+        day = "Sun";
+      }
+      result.add(day + "\n" + date);
+    }
+    return result;
+  }
+
+  List getDurations() {
+    List result = List.empty(growable: true);
+    for (final item in chartData.values) {
+      double dur = item.inMinutes / 60;
+      result.add(double.parse(dur.toStringAsFixed(2)));
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +93,7 @@ class ChartState extends State<Chart> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   const Text(
-                    'Mingguan',
+                    'Have a peek at',
                     style: TextStyle(
                         color: Color(0xff0f4a3c),
                         fontSize: 24,
@@ -56,7 +103,7 @@ class ChartState extends State<Chart> {
                     height: 4,
                   ),
                   const Text(
-                    'Grafik konsumsi kalori',
+                    'Your weekly sleeping statistics',
                     style: TextStyle(
                         color: Color(0xff379982),
                         fontSize: 18,
@@ -138,19 +185,19 @@ class ChartState extends State<Chart> {
   List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+            return makeGroupData(0, getDurations()[6], isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(1, getDurations()[5], isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+            return makeGroupData(2, getDurations()[4], isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+            return makeGroupData(3, getDurations()[3], isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
+            return makeGroupData(4, getDurations()[2], isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
+            return makeGroupData(5, getDurations()[1], isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
+            return makeGroupData(6, getDurations()[0], isTouched: i == touchedIndex);
           default:
             return throw Error();
         }
@@ -165,25 +212,25 @@ class ChartState extends State<Chart> {
               String weekDay;
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = 'Monday';
+                  weekDay = getWeekDays()[6];
                   break;
                 case 1:
-                  weekDay = 'Tuesday';
+                  weekDay = getWeekDays()[5];
                   break;
                 case 2:
-                  weekDay = 'Wednesday';
+                  weekDay = getWeekDays()[4];
                   break;
                 case 3:
-                  weekDay = 'Thursday';
+                  weekDay = getWeekDays()[3];
                   break;
                 case 4:
-                  weekDay = 'Friday';
+                  weekDay = getWeekDays()[2];
                   break;
                 case 5:
-                  weekDay = 'Saturday';
+                  weekDay = getWeekDays()[1];
                   break;
                 case 6:
-                  weekDay = 'Sunday';
+                  weekDay = getWeekDays()[0];
                   break;
                 default:
                   throw Error();
@@ -257,25 +304,25 @@ class ChartState extends State<Chart> {
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('M', style: style);
+        text = Text(getWeekDays()[6].substring(0,3), style: style);
         break;
       case 1:
-        text = const Text('T', style: style);
+        text = Text(getWeekDays()[5].substring(0,3), style: style);
         break;
       case 2:
-        text = const Text('W', style: style);
+        text = Text(getWeekDays()[4].substring(0,3), style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text(getWeekDays()[3].substring(0,3), style: style);
         break;
       case 4:
-        text = const Text('F', style: style);
+        text = Text(getWeekDays()[2].substring(0,3), style: style);
         break;
       case 5:
-        text = const Text('S', style: style);
+        text = Text(getWeekDays()[1].substring(0,3), style: style);
         break;
       case 6:
-        text = const Text('S', style: style);
+        text = Text(getWeekDays()[0].substring(0,3), style: style);
         break;
       default:
         text = const Text('', style: style);

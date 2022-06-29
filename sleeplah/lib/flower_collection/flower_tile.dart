@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class Flower extends StatefulWidget {
   // const Flower({super.key});
 
-  String flowerName;
-  String flowerImage;
+  final String flowerName;
+  final String flowerImage;
 
-  Flower(this.flowerName, this.flowerImage);
+  Flower(this.flowerName, this.flowerImage, {Key? key}) : super(key: key);
 
   @override
   State<Flower> createState() => _FlowerState(flowerName, flowerImage);
 }
 
 class _FlowerState extends State<Flower> {
-  String flowerName;
-  String flowerImage;
+  final String flowerName;
+  final String flowerImage;
 
   _FlowerState(this.flowerName, this.flowerImage);
 
