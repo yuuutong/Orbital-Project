@@ -12,7 +12,7 @@ class Shop extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text("Store"),
+          title: Text("Flower Shop"),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,

@@ -11,33 +11,37 @@ class gardenStats extends StatefulWidget {
 }
 
 class _gardenStatsState extends State<gardenStats> {
-
   late int numOfSunflower = 1;
   late int numOfRose = 0;
   late int numOfDaisy = 0;
   late int numOfLilac = 0;
+  late int numOfDays = 0;
+  late int coins = 0;
+  bool loading = true;
 
-  /* void getDataFlower() async {
-    try {
-      int data1 = await DB().getFlowerList(FirebaseAuth.instance.currentUser.uid).elementAt(0).getNum(); // sunflower is at index 0 in the list, get its num
-      int data2 = await DB().getFlowerList(FirebaseAuth.instance.currentUser.uid).elementAt(1).getNum();
-      int data3 = await DB().getFlowerList(FirebaseAuth.instance.currentUser.uid).elementAt(2).getNum();
-      int data4 = await DB().getFlowerList(FirebaseAuth.instance.currentUser.uid).elementAt(3).getNum();
-      setState(() {
-        numOfSunflower = data1;
-        numOfRose = data2;
-        numOfDaisy = data3;
-        numOfLilac = data4;
-      });
-    } catch (ex) {
-      print(ex);
-    }
-  } */
-  
+  @override
+  void initState() {
+    loading = true;
+    getValue();
+    super.initState();
+  }
+
+  Future<void> getValue() async {
+    List<String> flowerList = await DB().getFlowerList(FirebaseAuth.instance.currentUser.uid);
+    numOfSunflower = int.parse(flowerList[0]);
+    numOfRose = int.parse(flowerList[1]);
+    numOfDaisy = int.parse(flowerList[2]);
+    numOfLilac = int.parse(flowerList[3]);
+    numOfDays = await DB().getDays(FirebaseAuth.instance.currentUser.uid);
+    coins = await DB().getCoins();
+    setState(() {
+      loading = false;
+    });
+    print(loading);
+  }
+
   @override
   Widget build(BuildContext context) {
-    //getDataFlower();
-    // return FutureBuilder()
     return Scaffold(
       appBar: AppBar(
         title: const Text("Garden Statistics Dashboard"),
@@ -51,16 +55,17 @@ class _gardenStatsState extends State<gardenStats> {
             fit: BoxFit.fitHeight,
           ),
         ),
+        loading ? const Text("loading...") : 
         GridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
             detail("Sunflower", "0.png", numOfSunflower),
-            detail("Rose", "1.png", 0),//numOfRose),
-            detail("Daisy", "2.png", 0),//numOfDaisy),
-            detail("Lilac", "3.png", 0),//numOfLilac),
-            detail("Coins", "coin.png", 0),
-            detail("Days of Consecutive Sleep", "shanna_asleep.png", 0)
+            detail("Rose", "1.png", numOfRose),
+            detail("Daisy", "2.png", numOfDaisy),
+            detail("Lilac", "3.png", numOfLilac),
+            detail("Coins", "coin.png", coins),
+            detail("Days of Consecutive Sleep", "shanna_asleep.png", numOfDays)
           ],
         )
       ]),
