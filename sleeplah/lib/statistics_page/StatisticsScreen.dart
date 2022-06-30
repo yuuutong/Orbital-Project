@@ -38,8 +38,6 @@ class _StatisticsState extends State<Statistics> {
         chartData[pastDate] = Duration.zero;
       }
     }
-    // allData = await DB().getTimeCollectionDoc('2022-06-29');
-    // data = await DB().getUserName(FirebaseAuth.instance.currentUser.uid);
     print("chartdata in screen: " + chartData.toString());
     setState(() {
       loading = false;
