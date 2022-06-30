@@ -1,4 +1,4 @@
-package com.example.sleeplah
+package com.orbital.sleeplah
 
 import io.flutter.embedding.android.FlutterActivity
 

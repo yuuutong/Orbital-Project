@@ -156,12 +156,12 @@ class DB {
   Future<Map> getTimeCollectionDoc(String docDate) async {
     Map result = {};
     DocumentReference docRef = userCollection
-        .doc(FirebaseAuth.instance.currentUser.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('timeCollection')
         .doc(docDate);
     await docRef.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        result = documentSnapshot.data();
+        result = documentSnapshot.data() as Map;
       }
     });
     return result;

@@ -68,7 +68,7 @@ class DefaultFirebaseOptions {
     projectId: 'orbital-8ba35',
     storageBucket: 'orbital-8ba35.appspot.com',
     iosClientId: '691967678435-ugeauenc2vu2or6j4c87grj2tr9qroh1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.sleeplah',
+    iosBundleId: 'com.orbital.sleeplah',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,6 +78,6 @@ class DefaultFirebaseOptions {
     projectId: 'orbital-8ba35',
     storageBucket: 'orbital-8ba35.appspot.com',
     iosClientId: '691967678435-ugeauenc2vu2or6j4c87grj2tr9qroh1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.sleeplah',
+    iosBundleId: 'com.orbital.sleeplah',
   );
 }
