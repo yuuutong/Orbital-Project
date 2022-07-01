@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'package:sleeplah/database.dart';
-import 'package:sleeplah/login_page/LoginScreen.dart';
 
 class TimePicker extends StatefulWidget {
   @override
@@ -11,7 +11,36 @@ class TimePicker extends StatefulWidget {
 class TimePickerState extends State<TimePicker> {
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
-  //the time picker will not show the previously set time when the user starts up the app again
+  bool loading = true;
+
+  @override
+  void initState() {
+    loading = true;
+    getValue();
+    super.initState();
+  }
+
+  Future<void> getValue() async {
+    String docDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    Map timeData = await DB().getTimeCollectionDoc(docDate);
+    print(timeData);
+    try {
+      if (timeData["sleepSet"] != null) {
+        startTime =
+            TimeOfDay.fromDateTime(DateTime.parse(timeData["sleepSet"]));
+      }
+      if (timeData["wakeSet"] != null) {
+        endTime = TimeOfDay.fromDateTime(DateTime.parse(timeData["wakeSet"]));
+      }
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      loading = false;
+      print('time picker loading complete!');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,32 +51,28 @@ class TimePickerState extends State<TimePicker> {
       children: [
         const Spacer(flex: 1),
         Flexible(
-            fit: FlexFit.tight,
-            flex: 3,
-            child: FittedBox(
-                child: _buildTimePick("Start", true, startTime, (x) {
-              setState(() {
-                DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
-                // DB().setTimer(
-                //     x, FirebaseAuth.instance.currentUser.uid, "sleep");
-                startTime = x;
-                print("The picked time is: $x");
-              });
-            }))),
+          fit: FlexFit.tight,
+          flex: 3,
+          child: _buildTimePick("Start", true, startTime, (x) {
+            setState(() {
+              DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
+              startTime = x;
+              print("The picked time is: $x");
+            });
+          }),
+        ),
         const Spacer(flex: 1),
         Flexible(
-            fit: FlexFit.tight,
-            flex: 3,
-            child: FittedBox(
-                child: _buildTimePick("End", true, endTime, (x) {
-              setState(() {
-                DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
-                // DB()
-                //     .setTimer(x, FirebaseAuth.instance.currentUser.uid, "wake");
-                endTime = x;
-                print("The picked time is: $x");
-              });
-            }))),
+          fit: FlexFit.tight,
+          flex: 3,
+          child: _buildTimePick("End", true, endTime, (x) {
+            setState(() {
+              DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
+              endTime = x;
+              print("The picked time is: $x");
+            });
+          }),
+        ),
         const Spacer(flex: 1),
       ],
     );
@@ -68,23 +93,39 @@ class TimePickerState extends State<TimePicker> {
       mainAxisAlignment: MainAxisAlignment.center,
       // mainAxisSize: MainAxisSize.min,
       children: [
-        Text(title),
-        Container(
-          padding: const EdgeInsets.all(8.0), //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.lightBlueAccent,
-            border: Border.all(),
-            borderRadius: BorderRadius.circular(20),
-          ),
+        Flexible(
+            fit: FlexFit.tight, flex: 2, child: FittedBox(child: Text(title))),
+        Flexible(
+          fit: FlexFit.tight,
+          flex: 3,
           child: GestureDetector(
-            child: Text(
-              currentTime.format(context),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.lightBlueAccent,
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: loading
+                  ? Center(
+                      child: Image(
+                        image: Image.asset(
+                          circularProgressIndicatorSmall,
+                          filterQuality: FilterQuality.none,
+                        ).image,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : FittedBox(fit: BoxFit.cover,child: Text(currentTime.format(context))),
             ),
             onTap: () {
               selectedTime(context, ifPickedTime, currentTime, onTimePicked);
             },
           ),
-        ),
+        )
       ],
     );
   }

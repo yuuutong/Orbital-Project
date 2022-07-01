@@ -13,7 +13,7 @@ class _FlowerCollectionState extends State<FlowerCollection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shop"),
+        title: const Text("Flower Collection"),
         backgroundColor: Colors.lightBlue,
         centerTitle: true,
       ),

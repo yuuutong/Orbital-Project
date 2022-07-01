@@ -1,12 +1,7 @@
-import 'dart:async';
-import 'dart:collection';
 import 'dart:core';
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
-import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/models/AppUser.dart';
 import 'package:intl/intl.dart';
@@ -87,7 +82,7 @@ class DB {
 
   // pick flowers that have already been unlocked
   Future<Flower> pickExistingFlower() async {
-    var userFlowers = await getFlowerList(user!.uid);
+    var userFlowers = await getFlowerList();
     List<Flower> unlockedFlowers = [];
     for (var Flower in FlowerList) {
       if (userFlowers[int.parse(Flower.id)] != "0") unlockedFlowers.add(Flower);
@@ -132,12 +127,12 @@ class DB {
   }
 
   // flower
-  Future<List<String>> getFlowerList(String userId) {
-    return getList("flowers", userId);
+  Future<List<String>> getFlowerList() {
+    return getList("flowers", FirebaseAuth.instance.currentUser!.uid);
   }
 
   Future<void> addFlower(String userId, String flowerId) async {
-    List<String> flowerList = await getFlowerList(userId);
+    List<String> flowerList = await getFlowerList();
     var doc = userCollection.doc(userId);
     // add 1 more flower to the variant specified by ID
     flowerList[int.parse(flowerId)] =

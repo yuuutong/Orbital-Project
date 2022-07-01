@@ -12,8 +12,6 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
-  // String data = 'test';
-  // Map allData = {"yo" : "keyss"};
   Map chartData = {};
   bool loading = true;
 
@@ -25,7 +23,7 @@ class _StatisticsState extends State<Statistics> {
   }
 
   Future<void> getValue() async {
-    for (int i = 1; i <= 7; i++) {
+    for (int i = 0; i <= 6; i++) {
       DateTime pastDate = DateTime.now().subtract(Duration(days: i));
       String docDate = DateFormat("yyyy-MM-dd").format(pastDate);
       Map allData = await DB().getTimeCollectionDoc(docDate);
