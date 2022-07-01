@@ -12,7 +12,6 @@ class startSleepingButton extends StatefulWidget {
   @override
   State<startSleepingButton> createState() =>
       startSleepingButtonState(_buttonText);
-  //_startSleepingButtonState createState() => _startSleepingButtonState(_buttonText);
 }
 
 class startSleepingButtonState extends State<startSleepingButton> {
@@ -25,7 +24,6 @@ class startSleepingButtonState extends State<startSleepingButton> {
     return Container(
         alignment: Alignment.center,
         child: Container(
-          //color: Colors.blueGrey,
           decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.blueGrey,
@@ -42,10 +40,6 @@ class startSleepingButtonState extends State<startSleepingButton> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const sleep()));
                   setState(() {
-                    // DB().recordActualTime(
-                    //     TimeOfDay.fromDateTime(DateTime.now()),
-                    //     FirebaseAuth.instance.currentUser.uid,
-                    //     "sleep");
                     DB().setTime(DateTime.now(), "sleepActual");
                   });
                 }

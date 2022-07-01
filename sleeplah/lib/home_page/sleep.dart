@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:sleeplah/configurations/background.dart';
+import 'package:sleeplah/database.dart';
 import '../SizeConfig.dart';
 import '../constant.dart';
-//import 'package:sleeplah/Component/startSleepingButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class sleep extends StatefulWidget {
   const sleep({Key? key}) : super(key: key);
@@ -12,6 +12,24 @@ class sleep extends StatefulWidget {
 }
 
 class _sleepState extends State<sleep> {
+  late String username = "";
+  bool loading = true;
+
+  @override
+  void initState() {
+    loading = true;
+    getValue();
+    super.initState();
+  }
+
+  Future<void> getValue() async {
+    username = await DB().getUserName(FirebaseAuth.instance.currentUser!.uid);
+    setState(() {
+      loading = false;
+    });
+    print(loading);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +45,10 @@ class _sleepState extends State<sleep> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Flexible(
+              loading ? const Text("loading...") :
+              Flexible(
                 child: Text(
-                  'Good Night with Shanna!',
+                  '$username, Good Night with Shanna!',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),

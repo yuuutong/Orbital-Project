@@ -11,4 +11,7 @@ List<Flower> FlowerList = [
   Flower("1", "Rose"),
   Flower("2", "Daisy"),
   Flower("3", "Lilac"),
+  Flower("4", "Lotus"),
+  Flower("5", "Lily"),
+  Flower("6", "Tulip")
 ];

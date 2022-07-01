@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:sleeplah/configurations/background.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../SizeConfig.dart';
 import '../constant.dart';
+import 'package:sleeplah/models/AppUser.dart';
+import 'package:sleeplah/database.dart';
 
 class awake extends StatefulWidget {
   const awake({Key? key}) : super(key: key);
@@ -11,6 +13,24 @@ class awake extends StatefulWidget {
 }
 
 class _awakeState extends State<awake> {
+  late String username = "";
+  bool loading = true;
+
+  @override
+  void initState() {
+    loading = true;
+    getValue();
+    super.initState();
+  }
+
+  Future<void> getValue() async {
+    username = await DB().getUserName(FirebaseAuth.instance.currentUser!.uid);
+    setState(() {
+      loading = false;
+    });
+    print(loading);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +46,13 @@ class _awakeState extends State<awake> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Flexible(
+              loading ? const Text("loading...") :
+              Flexible(
                 child: Text(
-                  'Good morning!\nShanna is excited \n to start a new day!',
+                  'Good morning, $username!\nShanna is excited \n to start a new day!',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
               Flexible(

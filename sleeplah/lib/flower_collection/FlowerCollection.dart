@@ -32,6 +32,9 @@ class _FlowerCollectionState extends State<FlowerCollection> {
             Flower("Rose", "1.png"),
             Flower("Daisy", "2.png"),
             Flower("Lilac", "3.png"),
+            Flower("Lotus", "4.png"),
+            Flower("Lily", "5.png"),
+            Flower("Tulip", "6.png"),
           ],
         )
       ]),

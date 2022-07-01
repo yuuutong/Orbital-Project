@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sleeplah/friend_system/friendboard_page.dart';
 import 'package:sleeplah/home_page/startSleepingButton.dart';
 import 'package:sleeplah/home_page/wakeUpButton.dart';
 import 'package:sleeplah/flower_collection/FlowerCollection.dart';
@@ -114,6 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const Statistics()));
+              },
+            ),
+            ListTile(
+              title: const Text('Leaderboard'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Friendboard()));
               },
             ),
             ListTile(

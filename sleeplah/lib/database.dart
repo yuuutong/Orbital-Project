@@ -108,9 +108,9 @@ class DB {
       addFlower(userID, selectedFlower.id);
       updateCoin(10);
       updateDays(1, userID);
-      print("reward claimed");
+      //print("reward claimed");
     }
-    print("reward never run");
+    //print("reward never run");
   }
 
   // days
@@ -145,6 +145,7 @@ class DB {
     doc.update({"flowers": flowerList});
   }
 
+  // user name related
   Future<String> getUserName(String userId) async {
     late String name;
     DocumentReference docRef = userCollection.doc(userId);
@@ -171,6 +172,7 @@ class DB {
     return exist;
   }
 
+  // time related
   Future<Map> getTimeCollectionDoc(String docDate) async {
     Map result = {};
     DocumentReference docRef = userCollection
@@ -236,5 +238,73 @@ class DB {
   Future<void> setTime(DateTime dateTime, String fieldName) async {
     String docDate = DateFormat("yyyy-MM-dd").format(dateTime);
     updateTimeCollection(docDate, fieldName, dateTime);
+  }
+
+  //friend system
+  Future<List<String>> getFriendList(String userId) {
+    return getList("friends", userId);
+  }
+
+  Future<bool> sendFriendRequest(String senderId, String receiverName) async {
+    bool succ = false;
+
+    //check whether user search himself
+    if (await getUserName(senderId) == receiverName) return false;
+
+    await userCollection
+        .where("nickname", isEqualTo: receiverName)
+        .get()
+        .then((QuerySnapshot querySnapshot) async {
+      if (querySnapshot.size == 0) return false;
+
+      DocumentReference requestDoc = querySnapshot.docs.first.reference;
+
+      //check whether this is a existed friend
+      if (await isFriend(senderId, requestDoc.id)) return false;
+      //check whether there is alr an exist request
+      if (await isReqeustExist(requestDoc.id, senderId)) return false;
+
+      requestDoc.update({
+        "friendRequest": FieldValue.arrayUnion([senderId])
+      });
+
+      succ = true;
+    });
+    return succ;
+  }
+
+  Future<void> receiveFriendRequest(String id1, String id2) async {
+    if (await isFriend(id1, id2)) return;
+
+    //add 1 to 2
+    DocumentReference docRef1 = userCollection.doc(id1);
+    var friends1 = await getFriendList(id1);
+    friends1.add(id2);
+    await docRef1.update({"friends": friends1});
+
+    //add 2 to 1
+    DocumentReference docRef2 = userCollection.doc(id2);
+    var friends2 = await getFriendList(id2);
+    friends2.add(id1);
+    await docRef2.update({"friends": friends2});
+
+    //delete 2 from 1 request list
+    var reqList = await getList("friendRequest", id1);
+    reqList.remove(id2);
+    await docRef1.update({"friendRequest": reqList});
+  }
+
+  Future<bool> isFriend(String uid, String targetId) async {
+    var friendlist = await getFriendList(uid);
+    return friendlist.contains(targetId);
+  }
+
+  Future<bool> isReqeustExist(String uid, String targetId) async {
+    var targetRequestList = await getFriendRequestList(targetId);
+    return targetRequestList.contains(uid);
+  }
+
+  Future<List<String>> getFriendRequestList(String userId) {
+    return getList("friendRequest", userId);
   }
 }
