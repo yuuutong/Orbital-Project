@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/configurations/loading.dart';
 import '../constant.dart';
@@ -89,11 +88,10 @@ class _BodyState extends State<Body> {
                 width: defaultSize * 0.8, //8
               ),
               color: Colors.white,
-              /* image: DecorationImage(
+              image: DecorationImage(
                 fit: BoxFit.contain,
-                image: AssetImage(
-                    "assets/image/animal_floating/$userProfileAnimal.png"),
-              ), */
+                image: AssetImage("assets/images/0.png"),
+              ),
             )),
         Container(
           width: defaultWidth * 0.5,
