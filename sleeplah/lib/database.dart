@@ -307,4 +307,31 @@ class DB {
   Future<List<String>> getFriendRequestList(String userId) {
     return getList("friendRequest", userId);
   }
+
+  //user_profile_pic
+  Future<String> getProfileFlower(String uid) async {
+    String id = "0";
+    DocumentReference currUserDoc = userCollection.doc(uid);
+
+    await currUserDoc.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        id = documentSnapshot.get("uid");
+      }
+    });
+    return id == "" ? "0" : id;
+  }
+
+  Future<String> getUserProfileFlower(String uid) async {
+    String id = "0";
+    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        id = documentSnapshot.get("uid");
+      }
+    });
+    return id == "" ? "0" : id;
+  }
+
+  Future<void> updateProfileFlower(String id) async {
+    userDoc.update({"uid": id});
+  }
 }
