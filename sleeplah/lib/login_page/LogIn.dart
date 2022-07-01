@@ -24,15 +24,14 @@ class _LogInState extends State<LogIn> {
       final user = (await auth.signInWithEmailAndPassword(
               email: _email, password: _password))
           .user;
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: const Text('signed in'),
+          content: const Text('Signed in'),
         ),
       );
-
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     } catch (e) {
       print("error");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,7 +45,6 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Background(
         child: SingleChildScrollView(
             child: Column(
@@ -54,9 +52,10 @@ class _LogInState extends State<LogIn> {
                 children: <Widget>[
           SizedBox(height: size.height * 0.1),
           Container(
-              width: size.width * 0.5,
-              height: size.height * 0.25,
-              child: Image.asset('assets/images/shanna-removebg-preview.png')),
+            width: size.width * 0.5,
+            height: size.height * 0.25,
+            child: Image.asset('assets/images/shanna-removebg-preview.png'),
+          ),
           SizedBox(
             width: size.width * 0.5,
             height: size.height * 0.05,
@@ -86,26 +85,30 @@ class _LogInState extends State<LogIn> {
           Padding(
               padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                const Text(
-                  "Do not have an account?",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                        onPrimary: Colors.white // background
-                        ),
-                    child: const Text('Sign Up', style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18)),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => SignUpScreen()));
-                    }),
-              ])),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Do not have an account?",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                            onPrimary: Colors.white // background
+                            ),
+                        child: const Text('Sign Up',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18)),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SignUpScreen()));
+                        }),
+                  ])),
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
             child: Row(
@@ -123,11 +126,14 @@ class _LogInState extends State<LogIn> {
                       ForgotPassword.id,
                     ) */
                     Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ForgotPassword()));
+                        MaterialPageRoute(builder: (_) => ForgotPassword()));
                   },
                   child: const Text(
                     'Change/Reset Password',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 )
               ],

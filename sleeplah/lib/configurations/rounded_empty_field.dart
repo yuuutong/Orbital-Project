@@ -32,6 +32,7 @@ class RoundedEmptyField extends StatelessWidget {
           RoundedPasswordField(text: hintText, onChanged: onChanged)
           : TextFieldContainer(
             child: TextField(
+              keyboardType: TextInputType.emailAddress,
               onChanged: onChanged,
               cursorColor: themePrimaryColor,
               decoration: InputDecoration(

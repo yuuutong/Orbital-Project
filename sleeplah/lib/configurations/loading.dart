@@ -1,18 +1,21 @@
-import '../constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: themePrimaryColor,
+      color: Colors.transparent,
       child: Center(
-        child: SpinKitThreeBounce(
-          color: themeSecondaryColor,
-          size: 50.0,
-        ),
-      ),
+          child: FadeInImage.assetNetwork(
+              placeholder: placeholderEmpty,
+              image: cupertinoActivityIndicatorSmall)
+          // child: SpinKitThreeBounce(
+          //   // color: themeSecondaryColor,
+          //   color: Colors.white,
+          //   // size: 50.0,
+          // ),
+          ),
     );
   }
 }

@@ -23,32 +23,45 @@ class wakeUpButtonState extends State<wakeUpButton> {
   Widget build(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize ?? 1;
     return Container(
-        alignment: Alignment.center,
-        child: Container(
-          //color: Colors.blueGrey,
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.blueGrey,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20))),
-          child: TextButton(
-              child: Text(_buttonText,
-                  style: TextStyle(
-                      fontSize: defaultSize * 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
-              onPressed: () {
-                {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const awake()));
-                  setState(() {
-                    DB().setTime(DateTime.now(), "wakeActual");
-                    DB().claimReward(
-                        DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                        FirebaseAuth.instance.currentUser!.uid);                  
-                  });
-                }
-              }),
-        ));
+      alignment: Alignment.center,
+      child: Container(
+        //color: Colors.blueGrey,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.blueGrey,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: TextButton(
+          child: Text(
+            _buttonText,
+            style: TextStyle(
+                fontSize: defaultSize * 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
+          onPressed: () {
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const awake(),
+                ),
+              );
+              setState(
+                () {
+                  DB().setTime(DateTime.now(), "wakeActual");
+                  DB().claimReward(
+                      DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                      FirebaseAuth.instance.currentUser!.uid);
+                },
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 }

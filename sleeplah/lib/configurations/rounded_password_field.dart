@@ -33,6 +33,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
 
     return TextFieldContainer(
       child: TextField(
+        keyboardType: TextInputType.emailAddress,
         obscureText: obscure,
         onChanged: onChanged,
         cursorColor: themePrimaryColor,

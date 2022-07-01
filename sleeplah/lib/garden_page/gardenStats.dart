@@ -27,7 +27,7 @@ class _gardenStatsState extends State<gardenStats> {
   }
 
   Future<void> getValue() async {
-    List<String> flowerList = await DB().getFlowerList(FirebaseAuth.instance.currentUser!.uid);
+    List<String> flowerList = await DB().getFlowerList();
     numOfSunflower = int.parse(flowerList[0]);
     numOfRose = int.parse(flowerList[1]);
     numOfDaisy = int.parse(flowerList[2]);

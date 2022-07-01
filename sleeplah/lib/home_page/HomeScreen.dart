@@ -11,7 +11,6 @@ import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
-import '../database.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -57,8 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.center,
                 children: const <Widget>[
                   Image(
-                      image: AssetImage("assets/images/sunflower_field.png"),
-                      fit: BoxFit.fitWidth),
+                    image: AssetImage("assets/images/sunflower_field.png"),
+                    fit: BoxFit.fitWidth,
+                  ),
                   // Image(image: AssetImage("assets/images/sunflower.png")),
                 ],
               ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('SleepLah!'),
             ),
             ListTile(
-              title: const Text('Shop'),
+              title: const Text('Flower Collection'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -92,10 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('ShopTrial'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Shop()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Shop()));
               },
             ),
             ListTile(

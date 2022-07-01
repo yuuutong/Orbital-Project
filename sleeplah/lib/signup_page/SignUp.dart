@@ -65,86 +65,85 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Background(
         child: SingleChildScrollView(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-          SizedBox(
-            width: size.width * 0.8,
-            height: size.width * 0.1,
-          ),
-          RoundedEmptyField(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(
+          width: size.width * 0.8,
+          height: size.width * 0.1,
+        ),
+        RoundedEmptyField(
+          isPassword: false,
+          title: "Email",
+          hintText: "must be correct format",
+          onChanged: (value) {
+            _email = value;
+          },
+        ),
+        RoundedEmptyField(
             isPassword: false,
-            title: "Email",
-            hintText: "must be correct format",
+            title: "Nickname",
+            hintText: "type your nickname",
             onChanged: (value) {
-              _email = value;
+              setState(() {
+                _userName = value;
+              });
+            }),
+        RoundedEmptyField(
+            hintText: "At least 6 characters",
+            onChanged: (value) {
+              _password = value;
             },
-          ),
-          RoundedEmptyField(
-              isPassword: false,
-              title: "Nickname",
-              hintText: "type your nickname",
-              onChanged: (value) {
-                setState(() {
-                  _userName = value;
-                });
-              }),
-          RoundedEmptyField(
-              hintText: "At least 6 characters",
-              onChanged: (value) {
-                _password = value;
-              },
-              title: "Password",
-              isPassword: true),
-          RoundedEmptyField(
-              hintText: "Enter your password again",
-              onChanged: (value) {
-                _confirmPassword = value;
-              },
-              title: "Confirm Password",
-              isPassword: true),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 150,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: distinctPurple, // background
-                    onPrimary: Colors.white,
-                    side: BorderSide(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    try {
-                      if (_password == _confirmPassword) {
-                        _register();
-                      } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("Passwords do not match"),
-                        ));
-                      }
-                    } catch (e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("Fill in all fields")));
-                    }
-                  },
-                  child: Text("Sign Up",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+            title: "Password",
+            isPassword: true),
+        RoundedEmptyField(
+            hintText: "Enter your password again",
+            onChanged: (value) {
+              _confirmPassword = value;
+            },
+            title: "Confirm Password",
+            isPassword: true),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 150,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: distinctPurple, // background
+                  onPrimary: Colors.white,
+                  side: BorderSide(color: Colors.white),
                 ),
+                onPressed: () {
+                  try {
+                    if (_password == _confirmPassword) {
+                      _register();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Passwords do not match"),
+                      ));
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Fill in all fields")));
+                  }
+                },
+                child: Text("Sign Up",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              Container(
-                  width: size.width * 0.4,
-                  height: size.height * 0.2,
-                  child:
-                      Image.asset('assets/images/shanna-removebg-preview.png')),
-            ],
-          )
-        ])));
+            ),
+            Container(
+                width: size.width * 0.4,
+                height: size.height * 0.2,
+                child:
+                    Image.asset('assets/images/shanna-removebg-preview.png')),
+          ],
+        )
+      ],
+    )));
   }
 }

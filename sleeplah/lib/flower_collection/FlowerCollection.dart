@@ -13,7 +13,7 @@ class _FlowerCollectionState extends State<FlowerCollection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shop"),
+        title: const Text("Flower Collection"),
         backgroundColor: Colors.lightBlue,
         centerTitle: true,
       ),
@@ -28,10 +28,10 @@ class _FlowerCollectionState extends State<FlowerCollection> {
           crossAxisCount: 2,
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
-            Flower("Shanna swimming in the air", "shanna_stand.gif"),
-            Flower("Rose", "1.png"),
-            Flower("Daisy", "2.png"),
-            Flower("Lilac", "3.png"),
+            Flower("Sunflower", "0"),
+            Flower("Rose", "1"),
+            Flower("Daisy", "2"),
+            Flower("Lilac", "3"),
           ],
         )
       ]),
