@@ -4,6 +4,7 @@ import '../database.dart';
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import '../SizeConfig.dart';
+import 'package:sleeplah/configurations/loading.dart';
 
 class Selection extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class Selection extends StatefulWidget {
 }
 
 class _SelectionState extends State<Selection> {
+  bool loading = true;
   List<String> userFlowers = [];
   double defaultSize = SizeConfig.defaultSize!;
   double screenHeight = SizeConfig.screenHeight!;
@@ -29,9 +31,12 @@ class _SelectionState extends State<Selection> {
       return Container(child: flowerInfo());
     }
 
-    return Container(
-        margin: EdgeInsets.fromLTRB(defaultSize * 6, defaultSize * 11,
-            defaultSize * 6, defaultSize * 13),
+    //print(FlowerList.length);
+    return loading
+        ? Loading()
+        : Container(
+        margin: EdgeInsets.fromLTRB(defaultSize * 6, defaultSize * 1,
+            defaultSize * 6, defaultSize * 8),
         child: ListView.builder(
             itemCount: FlowerList.length,
             itemBuilder: (context, index) {
@@ -41,7 +46,14 @@ class _SelectionState extends State<Selection> {
 
   ListTile _buildTile(int index) {
     String flowerID = FlowerList[index].id;
-    if (userFlowers.contains(flowerID)) {
+    List<String> unlockedFlowersID = [];
+    for (var Flower in FlowerList) {
+      if (userFlowers[int.parse(Flower.id)] != "0")
+        unlockedFlowersID.add(Flower.id);
+      // if num != 0 for a particular variant in current list of flower, then it is unlocked. add it to unlocked list
+    }
+    // if the user already unlocked the flower
+    if (unlockedFlowersID.contains(flowerID)) {
       return ListTile(
         onTap: () {
           setState(() {
@@ -56,6 +68,7 @@ class _SelectionState extends State<Selection> {
       );
     }
 
+    // if the user has not unlocked the flower
     return ListTile(
         onTap: () {
           showDialog<void>(
@@ -66,15 +79,14 @@ class _SelectionState extends State<Selection> {
                     content: SingleChildScrollView(
                       child: ListBody(
                         children: const <Widget>[
-                          Text(
-                              'Go to flower shop to purchase new flowers...'),
+                          Text('Go to flower shop to purchase new flowers...'),
                         ],
                       ),
                     ));
               });
         },
-        title: Text("mysterious flower locked"),
-        leading: Icon(Icons.lock));
+        title: const Text("mysterious flower locked"),
+        leading: const Icon(Icons.lock));
   }
 
   Widget flowerInfo() {
@@ -90,12 +102,13 @@ class _SelectionState extends State<Selection> {
                 border:
                     Border.all(color: Colors.grey, width: defaultSize * 0.2)),
             child: Image(
-                image: AssetImage('$flower_profile_path$selectedID.png'))),
+                image: AssetImage('$flower_profile_path$selectedID.png'), fit: BoxFit.fitHeight)),
         Container(
             height: screenHeight * 0.35,
             padding: EdgeInsets.all(defaultSize * 1.25),
             child: Image(
-              image: AssetImage('$flower_profile_path$selectedID.png'),
+              image: AssetImage('$flower_profile_path${selectedID}_des.png'),
+              width: 300, height: 300,
             )),
         Row(
           children: [
@@ -107,7 +120,8 @@ class _SelectionState extends State<Selection> {
                     top: defaultSize * -2.5,
                     right: defaultSize * -1.2,
                     child: Image(
-                      image: AssetImage('assets/images/background.png'),
+                      image: AssetImage('assets/images/paw.png'),
+                      fit: BoxFit.fitWidth
                     )),
                 IconButton(
                     onPressed: () {
@@ -127,6 +141,8 @@ class _SelectionState extends State<Selection> {
 
   void getData() async {
     userFlowers = await DB().getFlowerList(user!.uid);
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
   }
 }

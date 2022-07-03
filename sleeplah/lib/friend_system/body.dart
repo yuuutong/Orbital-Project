@@ -23,7 +23,7 @@ class _BodyState extends State<Body> {
   double screenHeight = SizeConfig.screenHeight!;
   double screenWidth = SizeConfig.screenWidth!;
   String _category;
-  //String userProfileAnimal = "0";
+  String userProfileFlower = "0";
 
   _BodyState(this._category);
 
@@ -73,71 +73,76 @@ class _BodyState extends State<Body> {
       criteria = user.coins.toString();
     }
 
-    return Row(
-      children: <Widget>[
-        Container(
-          width: defaultWidth * 0.5,
-        ),
-        Container(
-            //mimic display pic
-            width: defaultWidth * 2.5,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: defaultSize * 0.8, //8
+    return loading
+        ? Loading()
+        : Row(
+            children: <Widget>[
+              Container(
+                width: defaultWidth * 0.5,
               ),
-              color: Colors.white,
-              image: DecorationImage(
-                fit: BoxFit.contain,
-                image: AssetImage("assets/images/0.png"),
+              Container(
+                  //mimic display pic
+                  width: defaultWidth * 2.5,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: defaultSize * 0.8, //8
+                    ),
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: //AssetImage("assets/images/$userProfileFlower.png"),
+                      AssetImage("assets/images/0.png")
+                    ),
+                  )),
+              Container(
+                width: defaultWidth * 0.5,
               ),
-            )),
-        Container(
-          width: defaultWidth * 0.5,
-        ),
-        Container(
-            width: defaultWidth * 4.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: defaultHeight * 1.8,
-                ),
-                Text(user.name,
-                    style: TextStyle(
-                        color: primaryColor, fontSize: defaultWidth * 0.8)),
-                Container(
-                  height: defaultHeight * 0.5,
-                ),
-                Text(criteria, style: TextStyle(fontSize: defaultWidth * 0.45))
-              ],
-            )),
-        IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => FriendRequest()));
-            },
-            icon:
-                Icon(Icons.person_add_alt_1_rounded, size: defaultWidth * 0.8))
-      ],
-    );
+              Container(
+                  width: defaultWidth * 4.8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: defaultHeight * 1.8,
+                      ),
+                      Text(user.name,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: defaultWidth * 0.8)),
+                      Container(
+                        height: defaultHeight * 0.5,
+                      ),
+                      Text(criteria,
+                          style: TextStyle(fontSize: defaultWidth * 0.45))
+                    ],
+                  )),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => FriendRequest()));
+                  },
+                  icon: Icon(Icons.person_add_alt_1_rounded,
+                      size: defaultWidth * 0.8))
+            ],
+          );
   }
 
   Future<void> getData() async {
     String currUserId = user!.uid;
-    //userProfileAnimal = await DB().getProfileAnimal(currUserId);
+    userProfileFlower = await DB().getProfileFlower(currUserId);
     List<String> friendIdList = await DB().getFriendList(currUserId);
     String name = await DB().getUserName(currUserId);
     num days = await DB().getDays(currUserId);
     num coins = await DB().getCoins();
 
-    currUser = UserModel(name, "", days, coins);
+    currUser = UserModel(name, "", userProfileFlower, days, coins);
 
     for (var id in friendIdList) {
       num days = await DB().getDays(currUserId);
-
-      friendList.add(UserModel(name, id, days, coins));
+      String userProfileFlower = await DB().getProfileFlower(currUserId);
+      friendList.add(UserModel(name, id, userProfileFlower, days, coins));
     }
 
     setState(() {
