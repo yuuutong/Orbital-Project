@@ -20,7 +20,7 @@ class _BodyState extends State<Body> {
             child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/0.png"),
+                    image: AssetImage("assets/images/collection_book.png"),
                     fit: BoxFit.fill,
                   ),
                 ),
