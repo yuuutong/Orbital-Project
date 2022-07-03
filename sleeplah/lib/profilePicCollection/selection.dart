@@ -126,7 +126,7 @@ class _SelectionState extends State<Selection> {
   }
 
   void getData() async {
-    userFlowers = await DB().getFlowerList();
+    userFlowers = await DB().getFlowerList(user!.uid);
     setState(() {});
   }
 }
