@@ -105,7 +105,7 @@ class TimePickerState extends State<TimePicker> {
               padding: const EdgeInsets.all(8.0),
               //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
+                color: Colors.blueAccent,
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -116,10 +116,10 @@ class TimePickerState extends State<TimePicker> {
                           circularProgressIndicatorSmall,
                           filterQuality: FilterQuality.none,
                         ).image,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
                     )
-                  : FittedBox(fit: BoxFit.cover,child: Text(currentTime.format(context))),
+                  : FittedBox(fit: BoxFit.contain,child: Text(currentTime.format(context))),
             ),
             onTap: () {
               selectedTime(context, ifPickedTime, currentTime, onTimePicked);

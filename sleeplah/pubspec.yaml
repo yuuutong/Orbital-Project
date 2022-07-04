@@ -42,6 +42,8 @@ dependencies:
   shimmer: ^2.0.0
   flutter_launcher_icons: "^0.9.2"
   loading_gifs: ^0.3.0
+  time_chart: ^0.3.4
+  flutter_settings_screens: ^0.2.2+1
 
 dev_dependencies:
   flutter_test:

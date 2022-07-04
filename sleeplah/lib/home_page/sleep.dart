@@ -61,7 +61,7 @@ class _sleepState extends State<sleep> {
                   padding: const EdgeInsets.all(8.0),
                   child: const Image(
                     image:
-                        AssetImage("assets/images/shanna-removebg-preview.png"),
+                        AssetImage("assets/images/shanna.png"),
                   ),
                 ),
               ),

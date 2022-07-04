@@ -7,15 +7,19 @@ class Loading extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       child: Center(
-          child: FadeInImage.assetNetwork(
-              placeholder: placeholderEmpty,
-              image: cupertinoActivityIndicatorSmall)
-          // child: SpinKitThreeBounce(
-          //   // color: themeSecondaryColor,
-          //   color: Colors.white,
-          //   // size: 50.0,
-          // ),
-          ),
+        child: Image(
+          image: Image.asset(
+            circularProgressIndicatorSmall,
+            filterQuality: FilterQuality.none,
+          ).image,
+          fit: BoxFit.cover,
+        ),
+        // child: SpinKitThreeBounce(
+        //   // color: themeSecondaryColor,
+        //   color: Colors.white,
+        //   // size: 50.0,
+        // ),
+      ),
     );
   }
 }

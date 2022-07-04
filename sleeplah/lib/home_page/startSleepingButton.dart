@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sleeplah/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../SizeConfig.dart';
-import '../constant.dart';
 import 'package:sleeplah/home_page/sleep.dart';
 
 class startSleepingButton extends StatefulWidget {
@@ -20,42 +18,39 @@ class startSleepingButtonState extends State<startSleepingButton> {
 
   @override
   Widget build(BuildContext context) {
-    double defaultSize = SizeConfig.defaultSize ?? 1;
-    return Container(
-      alignment: Alignment.center,
+    return FittedBox(
+      fit: BoxFit.contain,
       child: Container(
-        //color: Colors.blueGrey,
-        decoration: BoxDecoration(
-          border: Border.all(
+        alignment: Alignment.center,
+        child: Container(
+          decoration: BoxDecoration(
             color: Colors.blueGrey,
+            border: Border.all(),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+          child: TextButton(
+            child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  _buttonText,
+                  style: TextStyle(color: Colors.black),
+                )),
+            onPressed: () {
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const sleep(),
+                  ),
+                );
+                setState(
+                  () {
+                    DB().setTime(DateTime.now(), "sleepActual");
+                  },
+                );
+              }
+            },
           ),
-        ),
-        child: TextButton(
-          child: Text(
-            _buttonText,
-            style: TextStyle(
-                fontSize: defaultSize * 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
-          ),
-          onPressed: () {
-            {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const sleep(),
-                ),
-              );
-              setState(
-                () {
-                  DB().setTime(DateTime.now(), "sleepActual");
-                },
-              );
-            }
-          },
         ),
       ),
     );

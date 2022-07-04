@@ -28,7 +28,7 @@ class _FlowerCollectionState extends State<FlowerCollection> {
           crossAxisCount: 2,
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
-            Flower("Shanna swimming in the air", "shanna_stand.gif"),
+            Flower("Sunflower", "0.png"),
             Flower("Rose", "1.png"),
             Flower("Daisy", "2.png"),
             Flower("Lilac", "3.png"),

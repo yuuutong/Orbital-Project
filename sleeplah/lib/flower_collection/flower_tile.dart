@@ -31,7 +31,8 @@ class _FlowerState extends State<Flower> {
 
   Future<void> accessDB() async {
     List<String> flowersList = await DB().getFlowerList();
-    int index = int.parse(flowerImage);
+    String strIndex = flowerImage.replaceAll(RegExp(r'[^0-9]'),'');
+    int index = int.parse(strIndex);
     try {
       if (flowersList[index] != "0") {
         print(flowerName + " is an unlocked item!");
@@ -59,7 +60,7 @@ class _FlowerState extends State<Flower> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: Image(
-                  image: AssetImage("assets/images/$flowerImage.png"),
+                  image: AssetImage("assets/images/$flowerImage"),
                   filterQuality: FilterQuality.none,
                 ).image,
                 colorFilter:

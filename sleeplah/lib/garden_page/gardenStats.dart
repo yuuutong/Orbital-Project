@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleeplah/configurations/loading.dart';
 import 'package:sleeplah/garden_page/garden_details.dart';
 import '../database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,11 +62,13 @@ class _gardenStatsState extends State<gardenStats> {
             fit: BoxFit.fitHeight,
           ),
         ),
-        loading ? const Text("loading...") : 
+        loading ? Loading() : 
         GridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(8.0),
           children: <Widget>[
+            detail("Coins", "coin.png", coins),
+            detail("Days of Consecutive Sleep", "shanna_asleep.png", numOfDays),
             detail("Sunflower", "0.png", numOfSunflower),
             detail("Rose", "1.png", numOfRose),
             detail("Daisy", "2.png", numOfDaisy),
@@ -73,8 +76,6 @@ class _gardenStatsState extends State<gardenStats> {
             detail("Lotus", "4.png", numOfLotus),
             detail("Lily", "5.png", numOfLily),
             detail("Tulip", "6.png", numOfTulip),
-            detail("Coins", "coin.png", coins),
-            detail("Days of Consecutive Sleep", "shanna_asleep.png", numOfDays)
           ],
         )
       ]),
