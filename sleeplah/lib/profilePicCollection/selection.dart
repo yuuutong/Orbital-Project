@@ -31,7 +31,6 @@ class _SelectionState extends State<Selection> {
       return Container(child: flowerInfo());
     }
 
-    //print(FlowerList.length);
     return loading
         ? Loading()
         : Container(
@@ -120,7 +119,7 @@ class _SelectionState extends State<Selection> {
                     top: defaultSize * -2.5,
                     right: defaultSize * -1.2,
                     child: Image(
-                      image: AssetImage('assets/images/shanna.png'),
+                      image: AssetImage('assets/images/paw.png'),
                       fit: BoxFit.fitWidth
                     )),
                 IconButton(

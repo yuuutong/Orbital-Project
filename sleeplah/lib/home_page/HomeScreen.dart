@@ -14,6 +14,7 @@ import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
 import 'package:sleeplah/statistics_page/test_time_chart.dart';
+import 'package:sleeplah/SizeConfig.dart';
 
 import 'sleepWakeButtons.dart';
 
@@ -31,11 +32,14 @@ _signOut() async {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Homepage"),
-        backgroundColor: Colors.lightBlue,
         centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
       ),
       body: Stack(children: [
         const Positioned.fill(
@@ -45,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Column(children: [
+          Spacer(flex: 2),
           Flexible(fit: FlexFit.tight, flex: 3, child: TimePicker()),
           Spacer(flex: 1),
           Flexible(fit: FlexFit.tight, flex: 2, child: sleepWakeButtons()),
@@ -90,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   },
             // ),
             ListTile(
-              title: const Text('ShopTrial'),
+              title: const Text('Flower Shop'),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Shop()));
@@ -106,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              title: const Text('Statistics'),
+              title: const Text('Sleeping Statistics'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -131,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              title: const Text('Pick Your Profile'),
+              title: const Text('Flower Collection Handbook'),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Collection()));

@@ -12,7 +12,7 @@ class Collection extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text("Collection"),
+          title: const Text("Flower Collection Handbook"),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,

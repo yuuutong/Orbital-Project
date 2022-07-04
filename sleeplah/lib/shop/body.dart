@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
       children: <Widget>[
         Container(height: defaultSize * 10),
         Text(
-          "~ Unlock your favourite flowers in the store ~",
+          "~ Unlock your favourite flowers in the shop ~",
           style: TextStyle(color: Colors.white, fontSize: defaultSize * 2),
         ),
         Text(

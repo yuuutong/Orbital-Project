@@ -105,7 +105,7 @@ class TimePickerState extends State<TimePicker> {
               padding: const EdgeInsets.all(8.0),
               //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                color: Color.fromARGB(255, 147, 184, 248),
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(20),
               ),
