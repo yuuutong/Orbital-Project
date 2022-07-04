@@ -120,7 +120,7 @@ class _SelectionState extends State<Selection> {
                     top: defaultSize * -2.5,
                     right: defaultSize * -1.2,
                     child: Image(
-                      image: AssetImage('assets/images/paw.png'),
+                      image: AssetImage('assets/images/shanna.png'),
                       fit: BoxFit.fitWidth
                     )),
                 IconButton(
@@ -140,7 +140,7 @@ class _SelectionState extends State<Selection> {
   }
 
   void getData() async {
-    userFlowers = await DB().getFlowerList(user!.uid);
+    userFlowers = await DB().getFlowerList();
     setState(() {
       loading = false;
     });

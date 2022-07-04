@@ -114,7 +114,7 @@ class _SignUpState extends State<SignUp> {
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: distinctPurple, // background
+                  primary: primaryColor, // background
                   onPrimary: Colors.white,
                   side: BorderSide(color: Colors.white),
                 ),
@@ -140,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                 width: size.width * 0.4,
                 height: size.height * 0.2,
                 child:
-                    Image.asset('assets/images/shanna-removebg-preview.png')),
+                    Image.asset('assets/images/shanna.png')),
           ],
         )
       ],

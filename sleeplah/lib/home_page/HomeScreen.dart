@@ -6,13 +6,16 @@ import 'package:sleeplah/home_page/wakeUpButton.dart';
 import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
-import 'package:sleeplah/SettingsScreen.dart';
+import 'package:sleeplah/settings_page/SettingsScreen.dart';
 import 'package:sleeplah/profilePicCollection/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
+import 'package:sleeplah/statistics_page/test_time_chart.dart';
+
+import 'sleepWakeButtons.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -38,20 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
         const Positioned.fill(
           child: Image(
             image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.cover,
           ),
         ),
         Column(children: [
-          Flexible(fit: FlexFit.tight, flex: 1, child: TimePicker()),
-          Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
-              child: startSleepingButton("Sleep Now")),
-          Flexible(
-              fit: FlexFit.tight, flex: 1, child: wakeUpButton("I'm awake!")),
+          Flexible(fit: FlexFit.tight, flex: 3, child: TimePicker()),
+          Spacer(flex: 1),
+          Flexible(fit: FlexFit.tight, flex: 2, child: sleepWakeButtons()),
           Flexible(
             fit: FlexFit.tight,
-            flex: 3,
+            flex: 9,
             child: Container(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
@@ -61,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     image: AssetImage("assets/images/sunflower_field.png"),
                     fit: BoxFit.fitWidth,
                   ),
-                  // Image(image: AssetImage("assets/images/sunflower.png")),
                 ],
               ),
             ),
@@ -82,15 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Text('SleepLah!'),
             ),
-            ListTile(
-              title: const Text('Flower Collection'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FlowerCollection()));
-              },
-            ),
+            // ListTile(
+            //   title: const Text('Flower Collection'),
+            //   onTap: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => const FlowerCollection()));
+            //   },
+            // ),
             ListTile(
               title: const Text('ShopTrial'),
               onTap: () {
@@ -119,10 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Leaderboard'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Friendboard()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Friendboard()));
               },
             ),
             ListTile(
@@ -137,10 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Pick Your Profile'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Collection()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Collection()));
               },
             ),
             ListTile(
@@ -162,6 +156,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }
+              },
+            ),
+            ListTile(
+              title: const Text('test time chart'),
+              onTap: () async {
+                // Update the state of the app
+                await _signOut();
+                if (_firebaseAuth.currentUser == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => timeChart()),
                   );
                 }
               },

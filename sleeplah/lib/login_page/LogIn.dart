@@ -54,7 +54,7 @@ class _LogInState extends State<LogIn> {
           Container(
             width: size.width * 0.5,
             height: size.height * 0.25,
-            child: Image.asset('assets/images/shanna-removebg-preview.png'),
+            child: Image.asset('assets/images/shanna.png'),
           ),
           SizedBox(
             width: size.width * 0.5,
