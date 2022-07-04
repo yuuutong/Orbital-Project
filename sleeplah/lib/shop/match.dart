@@ -96,7 +96,7 @@ class _MatchState extends State<Match> {
               ));
       _bigger = true;
       //minus coins
-      DB().updateCoin(-50);
+      DB().updateCoin(-50, user!.uid);
       //add Flowers
       DB().addFlower(user!.uid, selectedFlower.id);
     } else {
@@ -129,6 +129,6 @@ class _MatchState extends State<Match> {
 
   //a func that determine whether the user has enough stars
   Future<bool> hasEnoughCoins() async {
-    return await DB().getCoins() >= 50;
+    return await DB().getCoins(user!.uid) >= 50;
   }
 }

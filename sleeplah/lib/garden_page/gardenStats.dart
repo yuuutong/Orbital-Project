@@ -39,7 +39,7 @@ class _gardenStatsState extends State<gardenStats> {
     numOfLily = int.parse(flowerList[5]);
     numOfTulip = int.parse(flowerList[6]);
     numOfDays = await DB().getDays(FirebaseAuth.instance.currentUser!.uid);
-    coins = await DB().getCoins();
+    coins = await DB().getCoins(FirebaseAuth.instance.currentUser!.uid);
     setState(() {
       loading = false;
     });
