@@ -135,14 +135,16 @@ class _BodyState extends State<Body> {
     List<String> friendIdList = await DB().getFriendList(currUserId);
     String name = await DB().getUserName(currUserId);
     num days = await DB().getDays(currUserId);
-    num coins = await DB().getCoins();
+    num coins = await DB().getCoins(currUserId);
 
     currUser = UserModel(name, "", userProfileFlower, days, coins);
 
     for (var id in friendIdList) {
-      num days = await DB().getDays(currUserId);
-      String userProfileFlower = await DB().getProfileFlower(currUserId);
-      friendList.add(UserModel(name, id, userProfileFlower, days, coins));
+      String friendName = await DB().getUserName(id);
+      num friendDays = await DB().getDays(id);
+      String friendProfileFlower = await DB().getProfileFlower(id);
+      num friendCoins = await DB().getCoins(id);
+      friendList.add(UserModel(friendName, id, friendProfileFlower, friendDays, friendCoins));
     }
 
     setState(() {

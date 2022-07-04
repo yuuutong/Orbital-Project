@@ -65,19 +65,26 @@ class DB {
   }
 
   // coins
-  Future<int> getCoins() async {
+  Future<int> getCoins(String userId) async {
     int count = 0;
-    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+    DocumentReference docRef = userCollection.doc(userId);
+    await docRef.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         count = documentSnapshot.get("coins");
       }
     });
+    /* await userDoc.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        count = documentSnapshot.get("coins");
+      }
+    }); */
     return count;
   }
 
-  Future<void> updateCoin(int amt) async {
-    int count = await getCoins();
-    userDoc.update({"coins": count + amt});
+  Future<void> updateCoin(int amt, String uid) async {
+    int count = await getCoins(uid);
+    DocumentReference docRef = userCollection.doc(uid);
+    docRef.update({"coins": count + amt});
   }
 
   // pick flowers that have already been unlocked
@@ -101,7 +108,7 @@ class DB {
     if (await check().compareTime(date)) {
       var selectedFlower = await pickExistingFlower();
       addFlower(userID, selectedFlower.id);
-      updateCoin(10);
+      updateCoin(10, userID);
       updateDays(1, userID);
       //print("reward claimed");
     }

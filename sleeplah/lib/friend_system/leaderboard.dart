@@ -1,10 +1,11 @@
 import 'package:sleeplah/friend_system/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/SizeConfig.dart';
-import 'package:sleeplah/database.dart';
+/* import 'package:sleeplah/database.dart';
 import 'package:sleeplah/configurations/loading.dart';
 import 'package:sleeplah/friend_system/user_model.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
+import 'package:sleeplah/friend_system/body.dart'; */
 
 class LeaderBoard extends StatefulWidget {
   List<UserModel> friendList;
@@ -37,23 +38,14 @@ class _LeaderBoardState extends State<LeaderBoard> {
   double screenWidth = SizeConfig.screenWidth!;
   bool loading = true;
   String category;
-  String userProfileFlower = "0";
 
   _LeaderBoardState(this.rankList, this.category);
-
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     double defaultWidth = screenWidth * 0.1;
 
-    return loading
-        ? Loading()
-        : Container(
+    return Container(
             height: screenHeight * 7 / 11,
             child: ListView.builder(
                 itemCount: rankList.length,
@@ -74,9 +66,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       criteria = user.coins.toString();
     }
 
-    return /* loading
-        ? ListTile()
-        :  */ListTile(
+    return ListTile(
             leading: Container(
                 height: 60,
                 width: 60,
@@ -93,15 +83,8 @@ class _LeaderBoardState extends State<LeaderBoard> {
             subtitle: Text(criteria),
             trailing: Text(
               (index + 1).toString(),
-              style: TextStyle(fontSize: 25),
+              style: const TextStyle(fontSize: 25),
             ),
           );
-  }
-
-  Future<void> getData() async {
-    userProfileFlower = await DB().getProfileFlower(user!.uid);
-    setState(() {
-      loading = false;
-    });
   }
 }
