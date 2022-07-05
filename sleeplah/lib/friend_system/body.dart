@@ -92,8 +92,8 @@ class _BodyState extends State<Body> {
                     color: Colors.white,
                     image: DecorationImage(
                       fit: BoxFit.contain,
-                      image: //AssetImage("assets/images/$userProfileFlower.png"),
-                      AssetImage("assets/images/0.png")
+                      image: AssetImage("assets/images/$userProfileFlower.png"),
+                      //AssetImage("assets/images/0.png")
                     ),
                   )),
               Container(

@@ -39,7 +39,8 @@ class DB {
       'flowers': user.flowers,
       'coins': user.coins,
       'friends': user.friends,
-      'numOfDays': user.numOfDays
+      'numOfDays': user.numOfDays,
+      'profileFlowerID': user.profileFlowerID
     }).then((value) {
       print("User added");
     }).catchError((error) => print("Failed to add user: $error"));
@@ -312,28 +313,19 @@ class DB {
 
   //user_profile_pic
   Future<String> getProfileFlower(String uid) async {
-    String id = "0";
+    String profileFlowerID = "0";
     DocumentReference currUserDoc = userCollection.doc(uid);
 
     await currUserDoc.get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        id = documentSnapshot.get("uid");
+        profileFlowerID = documentSnapshot.get("profileFlowerID");
       }
     });
-    return id == "" ? "0" : id;
+    return profileFlowerID == "" ? "0" : profileFlowerID;
   }
 
-  Future<String> getUserProfileFlower(String uid) async {
-    String id = "0";
-    await userDoc.get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        id = documentSnapshot.get("uid");
-      }
-    });
-    return id == "" ? "0" : id;
-  }
-
-  Future<void> updateProfileFlower(String id) async {
-    userDoc.update({"uid": id});
+  Future<void> updateProfileFlower(String uid, String flowerId) async {
+    DocumentReference docRef = userCollection.doc(uid);
+    docRef.update({"profileFlowerID": flowerId});
   }
 }

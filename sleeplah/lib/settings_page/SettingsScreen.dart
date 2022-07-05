@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
-
-import '../profilePicCollection/collection.dart';
+//import 'package:sleeplah/flowerCollectionHandbook/body.dart';
+import 'package:sleeplah/profile_picking/body.dart';
+import 'package:sleeplah/profile_picking/info.dart';
+import 'package:sleeplah/profile_picking/pick_profile_screen.dart';
+//import '../flowerCollectionHandbook/collection.dart';
 
 // try merging
 class Settings extends StatefulWidget {
@@ -27,7 +32,7 @@ class _SettingsState extends State<Settings> {
                 // value: Text('English'),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Collection()));
+                    MaterialPageRoute(builder: (context) => profilePage()));
                 },
               ),
               // SettingsTile.switchTile(

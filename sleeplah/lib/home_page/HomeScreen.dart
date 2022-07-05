@@ -7,7 +7,7 @@ import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
 import 'package:sleeplah/settings_page/SettingsScreen.dart';
-import 'package:sleeplah/profilePicCollection/collection.dart';
+import 'package:sleeplah/flowerCollectionHandbook/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';

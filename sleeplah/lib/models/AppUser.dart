@@ -7,6 +7,7 @@ class AppUser {
   List<String> flowers = ['1', '0', '0', '0', '0', '0', '0']; // the user only has 1 sunflower at the start
   int coins = 200;
   int numOfDays = 2;
+  String profileFlowerID = '0';
   // List<String> tags = List.of(Iterable.empty());
   // List<String> townAchievements = [];
 

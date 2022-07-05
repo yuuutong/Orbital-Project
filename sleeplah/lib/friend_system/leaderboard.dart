@@ -1,11 +1,11 @@
 import 'package:sleeplah/friend_system/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/SizeConfig.dart';
-/* import 'package:sleeplah/database.dart';
+import 'package:sleeplah/database.dart';
 import 'package:sleeplah/configurations/loading.dart';
 import 'package:sleeplah/friend_system/user_model.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
-import 'package:sleeplah/friend_system/body.dart'; */
+import 'package:sleeplah/friend_system/body.dart';
 
 class LeaderBoard extends StatefulWidget {
   List<UserModel> friendList;
@@ -66,7 +66,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
       criteria = user.coins.toString();
     }
 
-    return ListTile(
+    return 
+    loading?
+    ListTile():
+    ListTile(
             leading: Container(
                 height: 60,
                 width: 60,
@@ -74,8 +77,8 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: //AssetImage("assets/images/$userProfileFlower.png"),
-                    AssetImage("assets/images/0.png")
+                    image: AssetImage("assets/images/$user.profileId.png"),
+                    //AssetImage("assets/images/0.png")
                   ),
                 )),
             tileColor: Colors.transparent,
