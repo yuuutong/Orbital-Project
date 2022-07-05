@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sleeplah/home_page/sleep.dart';
@@ -24,7 +25,7 @@ class startSleepingButtonState extends State<startSleepingButton> {
         alignment: Alignment.center,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.blueGrey,
+            color: themePrimaryColor,
             border: Border.all(),
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),

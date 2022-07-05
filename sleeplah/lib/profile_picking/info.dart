@@ -147,7 +147,7 @@ class _InfoState extends State<Info> {
   Widget _buildGridTile(String id) {
     String path = "assets/images/$id.png";
     return SimpleDialogOption(
-      child: Container(padding: EdgeInsets.zero, child: Image.asset(path)),
+      child: Container(padding: EdgeInsets.zero, child: Image.asset(path, fit: BoxFit.contain, filterQuality: FilterQuality.none,)),
       onPressed: () {
         setState(() {
           userFlower = id;

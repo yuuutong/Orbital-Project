@@ -28,7 +28,7 @@ class wakeUpButtonState extends State<wakeUpButton> {
         child: Container(
           //color: Colors.blueGrey,
           decoration: BoxDecoration(
-            color: Colors.blueGrey,
+            color: themePrimaryColor,
             border: Border.all(),
             borderRadius: const BorderRadius.all(
               Radius.circular(20),
