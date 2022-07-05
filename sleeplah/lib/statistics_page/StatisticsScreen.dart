@@ -30,16 +30,19 @@ class _StatisticsState extends State<Statistics> {
       DateTime pastDate = DateTime.now().subtract(Duration(days: i));
       String docDate = DateFormat("yyyy-MM-dd").format(pastDate);
       Map allData = await DB().getTimeCollectionDoc(docDate);
+      Duration asleep = Duration.zero;
       if (allData.isNotEmpty) {
         DateTime sleepActual = DateTime.parse(allData["sleepActual"]);
         DateTime wakeActual = DateTime.parse(allData["wakeActual"]);
-        Duration asleep =
-            const Duration(days: 1) - sleepActual.difference(wakeActual);
-        chartData[pastDate] = asleep;
-      } else {
-        chartData[pastDate] = Duration.zero;
+        if (sleepActual.isBefore(wakeActual)) {
+          asleep = wakeActual.difference(sleepActual);
+        } else {
+          asleep = const Duration(days: 1) - sleepActual.difference(wakeActual);
+        }
       }
+      chartData[pastDate] = asleep;
     }
+    print(chartData);
     setState(() {
       loading = false;
     });
