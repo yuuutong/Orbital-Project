@@ -6,6 +6,7 @@ import 'package:sleeplah/database.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/configurations/background.dart';
+import '../configurations/loading.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -51,20 +52,23 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          title: const Text("Statistics"),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-        ),
-        body: Background(
-            child: Padding(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text("Statistics"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: Background(
+        child: Padding(
           padding: EdgeInsets.only(top: 2),
           child: Container(
-              child: loading
-                  ? const Center(child: Text("loading..."))
-                  : Chart(chartData)),
-        )));
+            child: loading
+                ? Loading() //const Center(child: Text("loading..."))
+                : Chart(chartData),
+          ),
+        ),
+      ),
+    );
   }
 }

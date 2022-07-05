@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:sleeplah/friend_system/friendboard_page.dart';
-import 'package:sleeplah/home_page/startSleepingButton.dart';
-import 'package:sleeplah/home_page/wakeUpButton.dart';
-import 'package:sleeplah/flower_collection/FlowerCollection.dart';
+// import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
 import 'package:sleeplah/settings_page/SettingsScreen.dart';
@@ -11,11 +10,9 @@ import 'package:sleeplah/profilePicCollection/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
-import 'package:intl/intl.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
 import 'package:sleeplah/statistics_page/test_time_chart.dart';
 import 'package:sleeplah/SizeConfig.dart';
-
 import 'sleepWakeButtons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("Homepage"),
         centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Stack(children: [
         const Positioned.fill(
@@ -50,9 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Column(children: [
           Spacer(flex: 2),
-          Flexible(fit: FlexFit.tight, flex: 3, child: TimePicker()),
+          Flexible(fit: FlexFit.tight, flex: 4, child: TimePicker()),
           Spacer(flex: 1),
           Flexible(fit: FlexFit.tight, flex: 2, child: sleepWakeButtons()),
+          Spacer(flex: 1),
           Flexible(
             fit: FlexFit.tight,
             flex: 9,
@@ -167,15 +165,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               title: const Text('test time chart'),
-              onTap: () async {
-                // Update the state of the app
-                await _signOut();
-                if (_firebaseAuth.currentUser == null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => timeChart()),
-                  );
-                }
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => timeChart()),
+                );
               },
             ),
           ],
