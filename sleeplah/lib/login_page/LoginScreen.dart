@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'LogIn.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
-// late User? user;
 User? user;
 
 class LoginScreen extends StatefulWidget {

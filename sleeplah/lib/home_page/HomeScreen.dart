@@ -6,7 +6,7 @@ import 'package:sleeplah/home_page/wakeUpButton.dart';
 import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
-import 'package:sleeplah/settings_page/SettingsScreen.dart';
+import 'package:sleeplah/settings/settings.dart';
 import 'package:sleeplah/flowerCollectionHandbook/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 // Update the state of the app
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Settings()));
+                    MaterialPageRoute(builder: (context) => Settings()));
                 // Then close the drawer
                 //Navigator.pop(context);
               },
