@@ -65,6 +65,7 @@ class _InfoState extends State<Info> {
                         image: DecorationImage(
                           fit: BoxFit.contain,
                           image: AssetImage("assets/images/$userFlower.png"),
+                          filterQuality: FilterQuality.none,
                         ),
                       ),
                     ),

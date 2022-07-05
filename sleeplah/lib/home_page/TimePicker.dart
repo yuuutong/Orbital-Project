@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import 'package:sleeplah/database.dart';
 
 import '../configurations/loading.dart';

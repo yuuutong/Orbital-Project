@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Body extends StatelessWidget {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  
+
   _signOut() async {
     await _firebaseAuth.signOut();
   }
@@ -24,21 +24,13 @@ class Body extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: RoundedButton(
-            press: () {
-              auth.signOut();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-                /* () async {
-              // Update the state of the app
+            press: () async {
               await _signOut();
-              if (_firebaseAuth.currentUser == null) {
-                Navigator.push(
+              Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }
-            }, */
+                  (Route<dynamic> route) => false);
+            },
             text: 'Log Out',
           ),
         ),

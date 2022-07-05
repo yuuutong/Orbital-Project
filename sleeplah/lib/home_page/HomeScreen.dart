@@ -5,6 +5,7 @@ import 'package:sleeplah/friend_system/friendboard_page.dart';
 // import 'package:sleeplah/flower_collection/FlowerCollection.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/NeighbourhoodScreen.dart';
+import 'package:sleeplah/main.dart';
 import 'package:sleeplah/settings/settings.dart';
 import 'package:sleeplah/flowerCollectionHandbook/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
@@ -148,19 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(builder: (context) => Settings()));
                 // Then close the drawer
                 //Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Logout'),
-              onTap: () async {
-                // Update the state of the app
-                await _signOut();
-                if (_firebaseAuth.currentUser == null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                }
               },
             ),
             ListTile(
