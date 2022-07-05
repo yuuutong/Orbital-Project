@@ -45,7 +45,7 @@ class _BodyState extends State<Body> {
         ? Loading()
         : Background(
             child: Padding(
-                padding: EdgeInsets.only(top: defaultSize * 5),
+                padding: EdgeInsets.only(top: defaultSize * 10),
                 child: Stack(children: [
                   Column(
                     children: <Widget>[

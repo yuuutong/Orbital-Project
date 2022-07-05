@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import '../../database.dart';
 import 'package:flutter/material.dart';
 import '../../SizeConfig.dart';
 import 'package:sleeplah/models/flowers.dart';
 import 'package:sleeplah/configurations/loading.dart';
+
+import '../constant.dart';
 
 class Info extends StatefulWidget {
   const Info({
@@ -39,48 +42,76 @@ class _InfoState extends State<Info> {
     return loading
         ? Loading()
         : SizedBox(
-        height: defualtHeight * 3, // 240
-        child: Stack(children: <Widget>[
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  child: InkWell(
-                    onTap: () => _selectFlowerDialog(),
-                  ),
-                  margin: EdgeInsets.only(bottom: defaultSize), //10
-                  height: defaultSize * 14, //140
-                  width: defaultSize * 14,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: defaultSize * 0.8, //8
+            height: defualtHeight * 8, // 240
+            child: Stack(children: <Widget>[
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      child: InkWell(
+                        onTap: () => _selectFlowerDialog(),
+                      ),
+                      margin: EdgeInsets.only(bottom: defaultSize), //10
+                      height: defaultSize * 15, //140
+                      width: defaultSize * 15,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: defaultSize * 0.6, //8
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage("assets/images/$userFlower.png"),
+                        ),
+                      ),
                     ),
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                          "assets/images/$userFlower.png"),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: defaultSize * 2.5, // 22
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    SizedBox(height: defaultSize / 2),
+                    TextButton(
+                      onPressed: () => _selectFlowerDialog(),
+                      style: TextButton.styleFrom(
+                          primary: primaryColor,
+                          backgroundColor: primaryColor,
+                          shadowColor: Colors.yellow,
+                          elevation: 10,
+                          padding: EdgeInsets.fromLTRB(
+                              defaultSize * 5,
+                              defaultSize * 1.2,
+                              defaultSize * 5,
+                              defaultSize * 1.2),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(defaultSize * 3.6), //36
+                              side: const BorderSide(color: Colors.white))),
+                      child: Shimmer.fromColors(
+                          baseColor: Colors.red,
+                          highlightColor: Colors.yellow,
+                          enabled: true,
+                          child: Text("Change Profile Photo",
+                              style: TextStyle(fontSize: defaultSize * 3))),
+                    ),
+                    SizedBox(height: defualtHeight * 0.1),
+                    Container(
+                      width: 270,
+                      height: 270,
+                      child: Image.asset('assets/images/shanna.png'),
+                    ) //5
+                  ],
                 ),
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: defaultSize * 2.2, // 22
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: defaultSize / 2), //5
-              ],
-            ),
-          )
-        ]));
+              )
+            ]));
   }
 
-  Future<void> getFlowerIDList() async {  
+  Future<void> getFlowerIDList() async {
     List<String> flowerNumList = await DB().getFlowerList();
     for (var Flower in FlowerList) {
       if (flowerNumList[int.parse(Flower.id)] != "0") {
