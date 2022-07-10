@@ -1,11 +1,6 @@
 import 'package:sleeplah/friend_system/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/SizeConfig.dart';
-import 'package:sleeplah/database.dart';
-import 'package:sleeplah/configurations/loading.dart';
-import 'package:sleeplah/friend_system/user_model.dart';
-import 'package:sleeplah/login_page/LoginScreen.dart';
-import 'package:sleeplah/friend_system/body.dart';
 
 class LeaderBoard extends StatefulWidget {
   List<UserModel> friendList;
@@ -46,16 +41,16 @@ class _LeaderBoardState extends State<LeaderBoard> {
     double defaultWidth = screenWidth * 0.1;
 
     return Container(
-            height: screenHeight * 7 / 11,
-            child: ListView.builder(
-                itemCount: rankList.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                      margin: EdgeInsets.only(top: defaultWidth * 0.5),
-                      color: Colors.white.withOpacity(0.6),
-                      child: rankTile(index, rankList[index]));
-                }),
-          );
+      height: screenHeight * 7 / 11,
+      child: ListView.builder(
+          itemCount: rankList.length,
+          itemBuilder: (context, index) {
+            return Card(
+                margin: EdgeInsets.only(top: defaultWidth * 0.5),
+                color: Colors.white.withOpacity(0.6),
+                child: rankTile(index, rankList[index]));
+          }),
+    );
   }
 
   Widget rankTile(int index, UserModel user) {
@@ -66,28 +61,24 @@ class _LeaderBoardState extends State<LeaderBoard> {
       criteria = user.coins.toString();
     }
 
-    return 
-    loading?
-    ListTile():
-    ListTile(
-            leading: Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.contain,
-                    image: AssetImage("assets/images/$user.profileId.png"),
-                    //AssetImage("assets/images/0.png")
-                  ),
-                )),
-            tileColor: Colors.transparent,
-            title: Text(user.name),
-            subtitle: Text(criteria),
-            trailing: Text(
-              (index + 1).toString(),
-              style: const TextStyle(fontSize: 25),
+    return ListTile(
+      leading: Container(
+          height: 60,
+          width: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.contain,
+              image: AssetImage("assets/images/${user.profileId}.png"),
             ),
-          );
+          )),
+      tileColor: Colors.transparent,
+      title: Text(user.name),
+      subtitle: Text(criteria),
+      trailing: Text(
+        (index + 1).toString(),
+        style: const TextStyle(fontSize: 25),
+      ),
+    );
   }
 }
