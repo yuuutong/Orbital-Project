@@ -46,6 +46,7 @@ dependencies:
   flutter_settings_screens: ^0.2.2+1
   settings_ui: ^2.0.2
   flutter_alarm_clock: ^0.0.2
+  fake_cloud_firestore: ^1.2.4
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  test: ^1.21.1
 
 flutter_icons:
   android: true
