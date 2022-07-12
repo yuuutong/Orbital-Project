@@ -33,12 +33,15 @@ class _StatisticsState extends State<Statistics> {
       Map allData = await DB().getTimeCollectionDoc(docDate);
       Duration asleep = Duration.zero;
       if (allData.isNotEmpty) {
-        DateTime sleepActual = DateTime.parse(allData["sleepActual"]);
-        DateTime wakeActual = DateTime.parse(allData["wakeActual"]);
-        if (sleepActual.isBefore(wakeActual)) {
-          asleep = wakeActual.difference(sleepActual);
-        } else {
-          asleep = const Duration(days: 1) - sleepActual.difference(wakeActual);
+        if (!allData.values.contains("")) {
+          DateTime sleepActual = DateTime.parse(allData["sleepActual"]);
+          DateTime wakeActual = DateTime.parse(allData["wakeActual"]);
+          if (sleepActual.isBefore(wakeActual)) {
+            asleep = wakeActual.difference(sleepActual);
+          } else {
+            asleep =
+                const Duration(days: 1) - sleepActual.difference(wakeActual);
+          }
         }
       }
       chartData[pastDate] = asleep;

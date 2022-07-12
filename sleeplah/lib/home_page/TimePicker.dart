@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:intl/intl.dart';
@@ -23,20 +24,36 @@ class TimePickerState extends State<TimePicker> {
   }
 
   Future<void> getValue() async {
-    String docDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    Map timeData = await DB().getTimeCollectionDoc(docDate);
-    print(timeData);
+    // String docDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    // Map timeData = await DB().getTimeCollectionDoc(docDate);
+    // print(timeData);
+    // try {
+    //   if (timeData["sleepSet"] != null) {
+    //     startTime =
+    //         TimeOfDay.fromDateTime(DateTime.parse(timeData["sleepSet"]));
+    //   }
+    //   if (timeData["wakeSet"] != null) {
+    //     endTime = TimeOfDay.fromDateTime(DateTime.parse(timeData["wakeSet"]));
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
+    String sleepTimeSet = await DB()
+        .getUserValue(FirebaseAuth.instance.currentUser!.uid, "sleepTimeSet");
+    String wakeTimeSet = await DB()
+        .getUserValue(FirebaseAuth.instance.currentUser!.uid, "wakeTimeSet");
     try {
-      if (timeData["sleepSet"] != null) {
-        startTime =
-            TimeOfDay.fromDateTime(DateTime.parse(timeData["sleepSet"]));
+      if (sleepTimeSet != "") {
+        startTime = TimeOfDay.fromDateTime(DateTime.parse(sleepTimeSet));
       }
-      if (timeData["wakeSet"] != null) {
-        endTime = TimeOfDay.fromDateTime(DateTime.parse(timeData["wakeSet"]));
+      if (wakeTimeSet != "") {
+        endTime = TimeOfDay.fromDateTime(DateTime.parse(wakeTimeSet));
       }
+      print('used new fx');
     } catch (e) {
       print(e);
     }
+
     setState(() {
       loading = false;
       print('time picker loading complete!');
@@ -57,6 +74,8 @@ class TimePickerState extends State<TimePicker> {
           flex: 3,
           child: _buildTimePick("Start", true, startTime, (x) {
             setState(() {
+              DB().updateTimeSet(
+                  DB.convertTimeOfDayToDateTime(x), "sleepTimeSet");
               DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
               startTime = x;
               print("The picked time is: $x");
@@ -69,6 +88,8 @@ class TimePickerState extends State<TimePicker> {
           flex: 3,
           child: _buildTimePick("End", true, endTime, (x) {
             setState(() {
+              DB().updateTimeSet(
+                  DB.convertTimeOfDayToDateTime(x), "wakeTimeSet");
               DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
               endTime = x;
               print("The picked time is: $x");
