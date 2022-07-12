@@ -10,6 +10,8 @@ class ForgotPassword extends StatefulWidget {
   final String message =
       "An email has just been sent to you\n \nClick the link in email\nto complete password reset";
 
+  const ForgotPassword({Key? key}) : super(key: key);
+
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
@@ -23,7 +25,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Future<void> _passwordReset() async {
     try {
       _formKey.currentState!.save();
-      final user = await _auth.sendPasswordResetEmail(email: _email);
+      //final user = await _auth.sendPasswordResetEmail(email: _email);
+      try {
+        await _auth.sendPasswordResetEmail(email: _email);
+      } on FirebaseAuthException catch (e) {
+      }
 
       Navigator.push(
         context,
@@ -34,13 +40,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         }),
       );
     } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid Email Format'),
-        ));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Invalid Email Format'),
+      ));
     }
-  } 
+  }
 
   /* Future<void> resetPassword() async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
@@ -49,7 +53,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //backgroundColor: Colors.lightBlueAccent,
         body: Stack(children: [
       const Positioned.fill(
         child: Image(
@@ -98,8 +101,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 child: const Text('Send Email'),
                 onPressed: () {
                   _passwordReset();
-                  //resetPassword();
-                  print(_email);
                 },
               ),
               TextButton(

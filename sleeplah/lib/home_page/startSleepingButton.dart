@@ -18,6 +18,7 @@ class startSleepingButton extends StatefulWidget {
 class startSleepingButtonState extends State<startSleepingButton> {
   String _buttonText;
   startSleepingButtonState(this._buttonText);
+  bool _firstPress = true;
 
   @override
   Widget build(BuildContext context) {
