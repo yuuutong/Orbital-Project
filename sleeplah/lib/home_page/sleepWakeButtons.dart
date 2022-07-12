@@ -12,30 +12,9 @@ class sleepWakeButtons extends StatefulWidget {
 }
 
 class _sleepWakeButtonsState extends State<sleepWakeButtons> {
-  // bool isAsleep = false;
-  // bool loading = true;
-
-  // @override
-  // void initState() {
-  //   getValue();
-  //   loading = true;
-  //   super.initState();
-  // }
-
-  // Future<void> getValue() async {
-  //   isAsleep = await DB().isAsleep();
-  //   setState(() {
-  //     loading = false;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // return loading
-    //     ? Loading()
-    //     : isAsleep
-    //         ? wakeUpButton("I'm awake!")
-    //         : startSleepingButton("Sleep now");
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
