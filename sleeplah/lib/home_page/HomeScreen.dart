@@ -15,7 +15,8 @@ import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
 import 'package:sleeplah/statistics_page/test_time_chart.dart';
 import 'package:sleeplah/SizeConfig.dart';
-import 'sleepWakeButtons.dart';
+//import 'sleepWakeButtons.dart';
+import 'package:sleeplah/home_page/actualSleepWake.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Spacer(flex: 2),
           Flexible(fit: FlexFit.tight, flex: 4, child: TimePicker()),
           Spacer(flex: 1),
-          Flexible(fit: FlexFit.tight, flex: 2, child: sleepWakeButtons()),
+          Flexible(fit: FlexFit.tight, flex: 2, child: Actual()),
           Spacer(flex: 1),
           Flexible(
             fit: FlexFit.tight,
