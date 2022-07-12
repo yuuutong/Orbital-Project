@@ -23,7 +23,13 @@ class _SignUpState extends State<SignUp> {
     try {
       final newUser = await auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
-      AppUser appUser = new AppUser(email: _email, nickName: _userName);
+      /* try {
+        await newUser.user!.sendEmailVerification();
+      } catch (e) {
+        print("An error occured while trying to send email verification");
+        //print(e.message);
+      } */
+      AppUser appUser = AppUser(email: _email, nickName: _userName);
       final bool exist = await DB().isUserNameExist(_userName);
 
       if (!exist) {
@@ -139,8 +145,7 @@ class _SignUpState extends State<SignUp> {
             Container(
                 width: size.width * 0.4,
                 height: size.height * 0.2,
-                child:
-                    Image.asset('assets/images/shanna.png')),
+                child: Image.asset('assets/images/shanna.png')),
           ],
         )
       ],

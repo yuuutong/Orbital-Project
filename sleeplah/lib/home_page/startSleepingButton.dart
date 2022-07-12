@@ -16,6 +16,7 @@ class startSleepingButton extends StatefulWidget {
 class startSleepingButtonState extends State<startSleepingButton> {
   String _buttonText;
   startSleepingButtonState(this._buttonText);
+  bool _firstPress = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +31,33 @@ class startSleepingButtonState extends State<startSleepingButton> {
             borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: TextButton(
-            child: FittedBox(
-                fit: BoxFit.contain,
-                child: Text(
-                  _buttonText,
-                  style: TextStyle(color: Colors.black),
-                )),
-            onPressed: () {
+              child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(
+                    _buttonText,
+                    style: TextStyle(color: Colors.black),
+                  )),
+              onPressed: () async {
+                if (_firstPress) {
+                  _firstPress = false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const sleep(),
+                    ),
+                  );
+                  setState(
+                    () {
+                      DB().setTime(DateTime.now(), "sleepActual");
+                    },
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text('You have already started sleeping'),
+                  ));
+                }
+              }
+              /* onPressed: () {
               {
                 Navigator.push(
                   context,
@@ -50,8 +71,8 @@ class startSleepingButtonState extends State<startSleepingButton> {
                   },
                 );
               }
-            },
-          ),
+            }, */
+              ),
         ),
       ),
     );
