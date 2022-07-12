@@ -6,6 +6,7 @@ import 'package:sleeplah/database.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/configurations/background.dart';
+import 'package:sleeplah/statistics_page/test_time_chart.dart';
 import '../configurations/loading.dart';
 
 class Statistics extends StatefulWidget {
@@ -17,6 +18,7 @@ class Statistics extends StatefulWidget {
 
 class _StatisticsState extends State<Statistics> {
   Map chartData = {};
+  List<DateTimeRange> dataList = [];
   bool loading = true;
 
   @override
@@ -47,6 +49,19 @@ class _StatisticsState extends State<Statistics> {
       chartData[pastDate] = asleep;
     }
     print(chartData);
+
+    Map DTRDoc = await DB().getDTRdoc();
+    for (Map sleepWakeMap in DTRDoc.values) {
+      for (MapEntry sleepWakePair in sleepWakeMap.entries) {
+        if (sleepWakePair.value != "") {
+          dataList.add(DateTimeRange(
+              start: DateTime.parse(sleepWakePair.key),
+              end: DateTime.parse(sleepWakePair.value)));
+        }
+      }
+    }
+    dataList.sort((a, b) => b.start.compareTo(a.start));
+
     setState(() {
       loading = false;
     });
@@ -55,20 +70,23 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: themeSecondaryColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Statistics"),
+        foregroundColor: Colors.black,
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
-      body: Background(
+      body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 2),
           child: Container(
             child: loading
                 ? Loading() //const Center(child: Text("loading..."))
-                : Chart(chartData),
+                : timeChart(dataList),
+                // : Chart(chartData),
           ),
         ),
       ),
