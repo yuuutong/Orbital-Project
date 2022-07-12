@@ -5,6 +5,9 @@ import '../SizeConfig.dart';
 import '../constant.dart';
 import 'package:sleeplah/home_page/awake.dart';
 import 'package:intl/intl.dart';
+import 'HomeScreen.dart';
+
+import 'sleepWakeButtons.dart';
 
 class wakeUpButton extends StatefulWidget {
   String _buttonText = "I'm awake!";
@@ -42,22 +45,21 @@ class wakeUpButtonState extends State<wakeUpButton> {
                   style: TextStyle(color: Colors.black),
                 )),
             onPressed: () {
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const awake(),
-                  ),
-                );
-                setState(
-                  () {
-                    DB().setTime(DateTime.now(), "wakeActual");
-                    DB().claimReward(
-                        DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                        FirebaseAuth.instance.currentUser!.uid);
-                  },
-                );
-              }
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const awake(),
+                ),
+              );
+              setState(
+                () {
+                  DB().addWakeActual(DateTime.now());
+                  DB().setTime(DateTime.now(), "wakeActual");
+                  DB().eligibleForReward(
+                      DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                      FirebaseAuth.instance.currentUser!.uid);
+                },
+              );
             },
           ),
         ),

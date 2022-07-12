@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sleeplah/home_page/HomeScreen.dart';
 import 'package:sleeplah/home_page/sleep.dart';
+import 'package:sleeplah/home_page/sleepWakeButtons.dart';
 
 class startSleepingButton extends StatefulWidget {
   String _buttonText = "Sleep Now";
@@ -36,20 +38,19 @@ class startSleepingButtonState extends State<startSleepingButton> {
                   _buttonText,
                   style: TextStyle(color: Colors.black),
                 )),
-            onPressed: () {
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const sleep(),
-                  ),
-                );
-                setState(
-                  () {
-                    DB().setTime(DateTime.now(), "sleepActual");
-                  },
-                );
-              }
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const sleep(),
+                ),
+              );
+              setState(
+                () {
+                  DB().addSleepActual(DateTime.now());
+                  DB().setTime(DateTime.now(), "sleepActual");
+                },
+              );
             },
           ),
         ),

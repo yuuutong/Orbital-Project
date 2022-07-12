@@ -8,6 +8,9 @@ class AppUser {
   int coins = 200;
   int numOfDays = 2;
   String profileFlowerID = '0';
+  String sleepTimeSet = '';
+  String wakeTimeSet = '';
+
   // List<String> tags = List.of(Iterable.empty());
   // List<String> townAchievements = [];
 
