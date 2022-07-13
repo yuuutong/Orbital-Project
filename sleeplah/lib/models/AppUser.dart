@@ -10,6 +10,7 @@ class AppUser {
   String profileFlowerID = '0';
   String sleepTimeSet = '';
   String wakeTimeSet = '';
+  bool sleeping = false;
 
   // List<String> tags = List.of(Iterable.empty());
   // List<String> townAchievements = [];

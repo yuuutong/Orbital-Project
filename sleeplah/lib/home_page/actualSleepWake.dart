@@ -14,14 +14,13 @@ class Actual extends StatefulWidget {
   const Actual({Key? key}) : super(key: key);
 
   @override
-  State<Actual> createState() => _ActualState(/* _buttonText */);
+  State<Actual> createState() => _ActualState();
 }
 
 class _ActualState extends State<Actual> {
-  bool _startAlready = false;
+  //bool _startAlready = false;
   bool loading = true;
-  late String sleepTimeSet;
-  late String wakeTimeSet;
+  bool sleeping = false;
 
   @override
   void initState() {
@@ -30,8 +29,7 @@ class _ActualState extends State<Actual> {
   }
 
   Future<void> getData() async {
-    sleepTimeSet = await DB().getUserValue(user!.uid, "sleepTimeSet");
-    wakeTimeSet = await DB().getUserValue(user!.uid, "wakeTimeSet");
+    sleeping = await DB().isSleeping(FirebaseAuth.instance.currentUser!.uid);
     setState(() {
       loading = false;
     });
@@ -43,113 +41,78 @@ class _ActualState extends State<Actual> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _startAlready
+          //_startAlready
+          sleeping
               ? ElevatedButton(
-                  child: Text("I'm awake",
+                  child: const Text("I'm awake",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                       )),
-                  onPressed: () {
-                    (sleepTimeSet != "" && wakeTimeSet != "")
+                  onPressed: () async {
+                    await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
                         ? setState(() {
                             DB().addWakeActual(DateTime.now());
                             DB().setTime(DateTime.now(), "wakeActual");
                             DB().eligibleForReward(
                                 DateFormat("yyyy-MM-dd").format(DateTime.now()),
                                 FirebaseAuth.instance.currentUser!.uid);
-                            _startAlready = false;
+                            //_startAlready = false;
+                            sleeping = false;
+                            DB().toggleSleeping(
+                                FirebaseAuth.instance.currentUser!.uid);
+                            showDialog(
+                                context: context,
+                                builder: (_) => _wakeDialog());
                             print("set state liao");
                           })
                         : ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text(
+                            const SnackBar(
+                              content: Text(
                                   'You need to set the time to sleep and wake up before sleeping!'),
                             ),
                           );
-                    print("user never set time");
                   })
               : ElevatedButton(
-                  child: Text("Sleep Now",
+                  child: const Text("Sleep Now",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
                       )),
-                  onPressed: () {
-                    (sleepTimeSet != "" && wakeTimeSet != "")
+                  onPressed: () async {
+                    await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
                         ? setState(() {
                             DB().addSleepActual(DateTime.now());
                             DB().setTime(DateTime.now(), "sleepActual");
-                            _startAlready = true;
+                            //_startAlready = true;
+                            sleeping = true;
+                            DB().toggleSleeping(
+                                FirebaseAuth.instance.currentUser!.uid);
+                            showDialog(
+                                context: context,
+                                builder: (_) => _sleepDialog());
                             print("set state liao");
                           })
-                        : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text(
+                        : ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                            content: Text(
                                 'You need to set the time to sleep and wake up before sleeping!'),
                           ));
-                    print("user never set time");
                   }),
-          /* ActualButtons(
-            text: 'Stop',
-            press: () {
-              _timer.cancel();
-              _stars = helper.countStars(_actual);
-              showDialog(context: context, builder: (_) => _confirmationDialog());
-            },
-          ) */
         ]);
   }
 
-  /* Widget _confirmationDialog() {
-    return AlertDialog(
-        title: const Text("Quit?"),
-        content: Text("Are you sure?"),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _startTimer();
-                    _startAlready = false;
-                  });
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context, builder: (_) => _taskCompletedDialog());
-                },
-                child: Text("Yes"),
-              ),
-            ],
-          )
-        ]);
-  } */
-
-  /* Widget _taskCompletedDialog() {
-    return AlertDialog(
-      title: const Text("YAY!"),
-      content: Container(
-        child: Text('You have helped Coma get $_stars stars!'),
-      ),
-      actions: [
-        ElevatedButton(
-          onPressed: () {
-            DB().saveFocusTime(_tag!, _actual, date);
-            print(date);
-            DB().updateStars(_stars);
-            Navigator.pop(context);
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomePage()));
-          },
-          child: Text("Return to Home"),
-        ),
-      ],
+  Widget _sleepDialog() {
+    return const AlertDialog(
+      title: Text("Good Night!"),
     );
-  } */
+  }
+
+  Widget _wakeDialog() {
+    return const AlertDialog(
+      title: Text("Morning!"),
+      content:
+          Text('Shanna is excited to start a new day!'),
+    );
+  }
 }

@@ -43,6 +43,7 @@ class DB {
       'profileFlowerID': user.profileFlowerID,
       'sleepTimeSet': user.sleepTimeSet,
       'wakeTimeSet': user.wakeTimeSet,
+      'sleeping': user.sleeping,
     }).then((value) {
       print("User added");
     }).catchError((error) => print("Failed to add user: $error"));
@@ -201,7 +202,8 @@ class DB {
       if (documentSnapshot.exists) {
         value = documentSnapshot.get(fieldName);
       } else {
-        value = "null";
+        //value = "null";
+        value = ""; 
       }
     });
     return value;
@@ -340,13 +342,6 @@ class DB {
     return DateTimeRange(start: start, end: end);
   }
 
-  Future<bool> isAsleep() async {
-    // Map latestDTRField = await getLatestDTRField();
-    Map DTRDoc = await getDTRdoc();
-    Map latestDTRField = DTRDoc.values.last;
-    return latestDTRField.values.contains("");
-  }
-
   static DateTime convertTimeOfDayToDateTime(TimeOfDay t) {
     DateTime now = DateTime.now();
     return DateTime(now.year, now.month, now.day, t.hour, t.minute);
@@ -355,6 +350,28 @@ class DB {
   Future<void> setTime(DateTime dateTime, String fieldName) async {
     String docDate = DateFormat("yyyy-MM-dd").format(dateTime);
     updateTimeCollection(docDate, fieldName, dateTime);
+  }
+
+  Future<bool> hasAGoal(String uid) async {
+    return (await getUserValue(uid, "sleepTimeSet") != "") &&
+        (await getUserValue(uid, "wakeTimeSet") != "");
+  }
+
+  Future<bool> isSleeping(String uid) async {
+    bool flag = false;
+    DocumentReference docRef = userCollection.doc(uid);
+    await docRef.get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        flag = documentSnapshot.get("sleeping");
+      }
+    });
+    return flag;
+  }
+
+  Future<void> toggleSleeping(String uid) async {
+    bool flag = await isSleeping(uid);
+    DocumentReference docRef = userCollection.doc(uid);
+    docRef.update({"sleeping": !flag});
   }
 
   //friend system
