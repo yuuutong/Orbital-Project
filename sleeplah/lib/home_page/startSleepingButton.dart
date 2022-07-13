@@ -49,7 +49,7 @@ class startSleepingButtonState extends State<startSleepingButton> {
               setState(
                 () {
                   DB().addSleepActual(DateTime.now());
-                  DB().setTime(DateTime.now(), "sleepActual");
+                  // DB().setTime(DateTime.now(), "sleepActual");
                 },
               );
             },

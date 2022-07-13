@@ -76,7 +76,7 @@ class TimePickerState extends State<TimePicker> {
             setState(() {
               DB().updateTimeSet(
                   DB.convertTimeOfDayToDateTime(x), "sleepTimeSet");
-              DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
+              // DB().setTime(DB.convertTimeOfDayToDateTime(x), "sleepSet");
               startTime = x;
               print("The picked time is: $x");
             });
@@ -90,7 +90,7 @@ class TimePickerState extends State<TimePicker> {
             setState(() {
               DB().updateTimeSet(
                   DB.convertTimeOfDayToDateTime(x), "wakeTimeSet");
-              DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
+              // DB().setTime(DB.convertTimeOfDayToDateTime(x), "wakeSet");
               endTime = x;
               print("The picked time is: $x");
             });

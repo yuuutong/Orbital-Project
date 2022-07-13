@@ -54,10 +54,10 @@ class _ActualState extends State<Actual> {
                     (sleepTimeSet != "" && wakeTimeSet != "")
                         ? setState(() {
                             DB().addWakeActual(DateTime.now());
-                            DB().setTime(DateTime.now(), "wakeActual");
-                            DB().eligibleForReward(
-                                DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                                FirebaseAuth.instance.currentUser!.uid);
+                            // DB().setTime(DateTime.now(), "wakeActual");
+                            // DB().eligibleForReward(
+                            //     DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                            //     FirebaseAuth.instance.currentUser!.uid);
                             _startAlready = false;
                             print("set state liao");
                           })
@@ -79,7 +79,7 @@ class _ActualState extends State<Actual> {
                     (sleepTimeSet != "" && wakeTimeSet != "")
                         ? setState(() {
                             DB().addSleepActual(DateTime.now());
-                            DB().setTime(DateTime.now(), "sleepActual");
+                            // DB().setTime(DateTime.now(), "sleepActual");
                             _startAlready = true;
                             print("set state liao");
                           })

@@ -17,7 +17,7 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
-  Map chartData = {};
+  // Map chartData = {};
   List<DateTimeRange> dataList = [];
   bool loading = true;
 
@@ -29,26 +29,26 @@ class _StatisticsState extends State<Statistics> {
   }
 
   Future<void> getValue() async {
-    for (int i = 0; i <= 6; i++) {
-      DateTime pastDate = DateTime.now().subtract(Duration(days: i));
-      String docDate = DateFormat("yyyy-MM-dd").format(pastDate);
-      Map allData = await DB().getTimeCollectionDoc(docDate);
-      Duration asleep = Duration.zero;
-      if (allData.isNotEmpty) {
-        if (!allData.values.contains("")) {
-          DateTime sleepActual = DateTime.parse(allData["sleepActual"]);
-          DateTime wakeActual = DateTime.parse(allData["wakeActual"]);
-          if (sleepActual.isBefore(wakeActual)) {
-            asleep = wakeActual.difference(sleepActual);
-          } else {
-            asleep =
-                const Duration(days: 1) - sleepActual.difference(wakeActual);
-          }
-        }
-      }
-      chartData[pastDate] = asleep;
-    }
-    print(chartData);
+    // for (int i = 0; i <= 6; i++) {
+    //   DateTime pastDate = DateTime.now().subtract(Duration(days: i));
+    //   String docDate = DateFormat("yyyy-MM-dd").format(pastDate);
+    //   Map allData = await DB().getTimeCollectionDoc(docDate);
+    //   Duration asleep = Duration.zero;
+    //   if (allData.isNotEmpty) {
+    //     if (!allData.values.contains("")) {
+    //       DateTime sleepActual = DateTime.parse(allData["sleepActual"]);
+    //       DateTime wakeActual = DateTime.parse(allData["wakeActual"]);
+    //       if (sleepActual.isBefore(wakeActual)) {
+    //         asleep = wakeActual.difference(sleepActual);
+    //       } else {
+    //         asleep =
+    //             const Duration(days: 1) - sleepActual.difference(wakeActual);
+    //       }
+    //     }
+    //   }
+    //   chartData[pastDate] = asleep;
+    // }
+    // print(chartData);
 
     Map DTRDoc = await DB().getDTRdoc();
     for (Map sleepWakeMap in DTRDoc.values) {
@@ -61,6 +61,7 @@ class _StatisticsState extends State<Statistics> {
       }
     }
     dataList.sort((a, b) => b.start.compareTo(a.start));
+    print("datalist: \n" + dataList.toString());
 
     setState(() {
       loading = false;

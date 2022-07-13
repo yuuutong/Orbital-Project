@@ -12,7 +12,7 @@ class DB {
   late CollectionReference userCollection;
   late DocumentReference userDoc;
 
-  late CollectionReference timeCollection;
+  // late CollectionReference timeCollection;
   late CollectionReference DTRCollection;
 
   DB({FirebaseFirestore? instanceInjection}) {
@@ -125,28 +125,28 @@ class DB {
     //print("reward never run");
   }
 
-  Future<void> eligibleForReward(String date, String userID) async {
-    Map timeDoc = await DB().getTimeCollectionDoc(date);
-    print(timeDoc.values.toString() + " values are listed in the map");
-    if (timeDoc["sleepSet"] == "" ||
-        timeDoc["wakeSet"] == "" ||
-        timeDoc["sleepActual"] == "" ||
-        timeDoc["wakeActual"] == "") {
-      print(
-          "Missing start/end times: please set your goal timing for sleeping and waking up!");
-    } else {
-      DateTime sleepSet = DateTime.parse(timeDoc["sleepSet"]);
-      DateTime wakeSet = DateTime.parse(timeDoc["wakeSet"]);
-      DateTime sleepActual = DateTime.parse(timeDoc["sleepActual"]);
-      DateTime wakeActual = DateTime.parse(timeDoc["wakeActual"]);
-      if (sleepSet.isAfter(sleepActual) && wakeSet.isAfter(wakeActual)) {
-        await DB().claimReward(userID);
-        print("Congratulations! You've kept to your set sleep goal!");
-      } else {
-        print("Good job! Though next time, try to keep to the time you set!");
-      }
-    }
-  }
+  // Future<void> eligibleForReward(String date, String userID) async {
+  //   Map timeDoc = await DB().getTimeCollectionDoc(date);
+  //   print(timeDoc.values.toString() + " values are listed in the map");
+  //   if (timeDoc["sleepSet"] == "" ||
+  //       timeDoc["wakeSet"] == "" ||
+  //       timeDoc["sleepActual"] == "" ||
+  //       timeDoc["wakeActual"] == "") {
+  //     print(
+  //         "Missing start/end times: please set your goal timing for sleeping and waking up!");
+  //   } else {
+  //     DateTime sleepSet = DateTime.parse(timeDoc["sleepSet"]);
+  //     DateTime wakeSet = DateTime.parse(timeDoc["wakeSet"]);
+  //     DateTime sleepActual = DateTime.parse(timeDoc["sleepActual"]);
+  //     DateTime wakeActual = DateTime.parse(timeDoc["wakeActual"]);
+  //     if (sleepSet.isAfter(sleepActual) && wakeSet.isAfter(wakeActual)) {
+  //       await DB().claimReward(userID);
+  //       print("Congratulations! You've kept to your set sleep goal!");
+  //     } else {
+  //       print("Good job! Though next time, try to keep to the time you set!");
+  //     }
+  //   }
+  // }
 
   // days
   Future<int> getDays(String userId) async {
@@ -221,19 +221,19 @@ class DB {
   }
 
   // time related
-  Future<Map> getTimeCollectionDoc(String docDate) async {
-    Map result = {};
-    DocumentReference docRef = userCollection
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('timeCollection')
-        .doc(docDate);
-    await docRef.get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        result = documentSnapshot.data() as Map;
-      }
-    });
-    return result;
-  }
+  // // Future<Map> getTimeCollectionDoc(String docDate) async {
+  // //   Map result = {};
+  // //   DocumentReference docRef = userCollection
+  // //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  // //       .collection('timeCollection')
+  // //       .doc(docDate);
+  // //   await docRef.get().then((DocumentSnapshot documentSnapshot) {
+  // //     if (documentSnapshot.exists) {
+  // //       result = documentSnapshot.data() as Map;
+  // //     }
+  // //   });
+  // //   return result;
+  // }
 
   Future<Map> getDTRdoc() async {
     Map result = {};
@@ -255,28 +255,31 @@ class DB {
   //   return DTRDoc.values.last as Map;
   // }
 
-  Future<void> updateTimeCollection(
-      String docDate, String fieldName, DateTime updatedValue) async {
-    timeCollection = userDoc.collection('timeCollection');
-    await timeCollection
-        .doc(docDate)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (!documentSnapshot.exists) {
-        timeCollection.doc(docDate).set({
-          "sleepSet": "",
-          "wakeSet": "",
-          "sleepActual": "",
-          "wakeActual": ""
-        });
-      }
-    });
-    timeCollection.doc(docDate).update({fieldName: updatedValue.toString()});
-  }
+  // Future<void> updateTimeCollection(
+  //     String docDate, String fieldName, DateTime updatedValue) async {
+  //   timeCollection = userDoc.collection('timeCollection');
+  //   await timeCollection
+  //       .doc(docDate)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (!documentSnapshot.exists) {
+  //       timeCollection.doc(docDate).set({
+  //         "sleepSet": "",
+  //         "wakeSet": "",
+  //         "sleepActual": "",
+  //         "wakeActual": ""
+  //       });
+  //     }
+  //   });
+  //   timeCollection.doc(docDate).update({fieldName: updatedValue.toString()});
+  // }
 
   Future<void> updateDTRCollection(
       String fieldNameInDTR, Map<String, Map> updatedDTRDoc) async {
     DTRCollection = userDoc.collection('DTRCollection');
+    print("in updateDTRCollection function...");
+    print(DTRCollection);
+    print(updatedDTRDoc);
     await DTRCollection.doc('DTR')
         .get()
         .then((DocumentSnapshot documentSnapshot) {
@@ -307,16 +310,42 @@ class DB {
   Future<void> addWakeActual(DateTime dateTime) async {
     Map<String, Map> DTRdoc = Map.from(await getDTRdoc());
     print("DTRdoc: " + DTRdoc.toString());
-    String latestDTRField = DTRdoc.keys.last;
+    String latestDTRField = sortedDTRdocFields(DTRdoc).first.key.toString();
     print("latestDTRField: " + latestDTRField);
-    MapEntry correctSleepActual = DTRdoc.values.last.entries
+    MapEntry correctSleepActual = sortedDTRdocFields(DTRdoc).first.value.entries
         .firstWhere(((element) => element.value == ""));
     // String latestSleepActual = DTRdoc.values.last.keys.last;
     String latestSleepActual = correctSleepActual.key;
+    await rewardCheck(DateTime.parse(latestSleepActual), dateTime);
     print("latestSleepActual: " + latestSleepActual);
     DTRdoc[latestDTRField]![latestSleepActual] = dateTime.toString();
     print("DTRdoc: " + DTRdoc.toString());
     await updateDTRCollection(latestDTRField, DTRdoc);
+  }
+
+  Future<void> rewardCheck(DateTime start, DateTime end) async {
+    DateTime sleepTimeSet = DateTime.parse(await DB().getUserValue(user!.uid, "sleepTimeSet"));
+    DateTime wakeTimeSet = DateTime.parse(await DB().getUserValue(user!.uid, "wakeTimeSet"));
+    Duration sleepDurationSet = sleepTimeSet.difference(wakeTimeSet);
+  }
+
+  static DateTimeRange stringToDateTimeRange(String DTRstring) {
+    List<String> DTRsplit = DTRstring.split(" - ");
+    DateTime start = DateTime.parse(DTRsplit.first);
+    DateTime end = DateTime.parse(DTRsplit.last);
+    return DateTimeRange(start: start, end: end);
+  }
+
+  static List<MapEntry<DateTimeRange, Map>> sortedDTRdocFields(Map DTRdoc) {
+    List<MapEntry<DateTimeRange, Map>> sortedDTRdoc = [];
+    Map<DateTimeRange, Map> mappedDTRDoc = DTRdoc.map((key, value) => MapEntry(stringToDateTimeRange(key), value));
+    sortedDTRdoc = mappedDTRDoc.entries.toList();
+    sortedDTRdoc.sort(((a, b) {
+      DateTime aStart = a.key.start;
+      DateTime bStart = b.key.start;
+      return bStart.compareTo(aStart);
+    }));
+    return sortedDTRdoc;
   }
 
   Future<void> updateTimeSet(DateTime newDateTime, String timeField) async {
@@ -352,10 +381,10 @@ class DB {
     return DateTime(now.year, now.month, now.day, t.hour, t.minute);
   }
 
-  Future<void> setTime(DateTime dateTime, String fieldName) async {
-    String docDate = DateFormat("yyyy-MM-dd").format(dateTime);
-    updateTimeCollection(docDate, fieldName, dateTime);
-  }
+  // Future<void> setTime(DateTime dateTime, String fieldName) async {
+  //   String docDate = DateFormat("yyyy-MM-dd").format(dateTime);
+  //   updateTimeCollection(docDate, fieldName, dateTime);
+  // }
 
   //friend system
   Future<List<String>> getFriendList(String userId) {
