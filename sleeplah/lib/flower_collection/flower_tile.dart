@@ -78,7 +78,7 @@ class _FlowerState extends State<Flower> {
           flex: 1,
           child: FittedBox(
             fit: BoxFit.cover,
-            child: Text(flowerName, textAlign: TextAlign.center),
+            child: Text(flowerName + " 1", textAlign: TextAlign.center),
           ),
         )
       ],

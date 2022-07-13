@@ -6,7 +6,6 @@ import '../constant.dart';
 import '../SizeConfig.dart';
 import 'package:sleeplah/configurations/loading.dart';
 import 'package:sleeplah/garden_page/garden_details.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 class data extends StatefulWidget {
@@ -15,6 +14,7 @@ class data extends StatefulWidget {
 }
 
 class _dataState extends State<data> {
+  List<String> flowerList = [];
   bool loading = true;
   double defaultSize = SizeConfig.defaultSize!;
   double screenHeight = SizeConfig.screenHeight!;
@@ -31,13 +31,12 @@ class _dataState extends State<data> {
 
   @override
   void initState() {
-    loading = true;
     getValue();
     super.initState();
   }
 
   Future<void> getValue() async {
-    List<String> flowerList = await DB().getFlowerList();
+    flowerList = await DB().getFlowerList();
     numOfSunflower = int.parse(flowerList[0]);
     numOfRose = int.parse(flowerList[1]);
     numOfDaisy = int.parse(flowerList[2]);
@@ -47,6 +46,9 @@ class _dataState extends State<data> {
     numOfTulip = int.parse(flowerList[6]);
     numOfDays = await DB().getDays(FirebaseAuth.instance.currentUser!.uid);
     coins = await DB().getCoins(FirebaseAuth.instance.currentUser!.uid);
+
+    // make changes here
+
     setState(() {
       loading = false;
     });
@@ -64,7 +66,7 @@ class _dataState extends State<data> {
               children: <Widget>[
                 detail("Coins", "coin.png", coins),
                 detail(
-                    "Days of Consecutive Sleep", "shanna_asleep.png", numOfDays),
+                    "Days", "shanna_asleep.png", numOfDays),
                 detail("Sunflower", "0.png", numOfSunflower),
                 detail("Rose", "1.png", numOfRose),
                 detail("Daisy", "2.png", numOfDaisy),

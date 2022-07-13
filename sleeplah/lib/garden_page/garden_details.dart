@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class detail extends StatefulWidget {
-
   String flowerName;
   String flowerImage;
   int number;
@@ -21,25 +20,37 @@ class _detailState extends State<detail> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //foregroundDecoration: BoxDecoration(Text(flowerName)),
-      margin: const EdgeInsets.all(8.0),
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Image(
-            image: AssetImage("assets/images/$flowerImage"),
-            filterQuality: FilterQuality.none,
-            fit: BoxFit.fill,
-          ).image,
-          colorFilter: const ColorFilter.mode(Colors.white70, BlendMode.color),
-          fit: BoxFit.fill,
-          filterQuality: FilterQuality.none,
+    return Column(children: [
+      Flexible(
+          fit: FlexFit.tight,
+          flex: 4,
+          child: Container(
+            margin: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: Image(
+                  image: AssetImage("assets/images/$flowerImage"),
+                  filterQuality: FilterQuality.none,
+                  fit: BoxFit.fill,
+                ).image,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white70, BlendMode.color),
+                fit: BoxFit.fill,
+                filterQuality: FilterQuality.none,
+              ),
+              color: Colors.blueGrey,
+              borderRadius: BorderRadius.circular(20),
+            ),
+          )),
+      Flexible(
+        fit: FlexFit.tight,
+        flex: 1,
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: Text('$flowerName $number', textAlign: TextAlign.center),
         ),
-        color: Colors.blueGrey,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text('$flowerName $number', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Color.fromARGB(95, 167, 6, 30))),
-    );
+      )
+    ]);
   }
 }
