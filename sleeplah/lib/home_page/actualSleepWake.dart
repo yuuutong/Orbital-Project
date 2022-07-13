@@ -53,10 +53,10 @@ class _ActualState extends State<Actual> {
                     await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
                         ? setState(() {
                             DB().addWakeActual(DateTime.now());
-                            DB().setTime(DateTime.now(), "wakeActual");
-                            DB().eligibleForReward(
-                                DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                                FirebaseAuth.instance.currentUser!.uid);
+                            // DB().setTime(DateTime.now(), "wakeActual");
+                            // DB().eligibleForReward(
+                            //     DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                            //     FirebaseAuth.instance.currentUser!.uid);
                             //_startAlready = false;
                             sleeping = false;
                             DB().toggleSleeping(
@@ -83,7 +83,7 @@ class _ActualState extends State<Actual> {
                     await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
                         ? setState(() {
                             DB().addSleepActual(DateTime.now());
-                            DB().setTime(DateTime.now(), "sleepActual");
+                            // DB().setTime(DateTime.now(), "sleepActual");
                             //_startAlready = true;
                             sleeping = true;
                             DB().toggleSleeping(
