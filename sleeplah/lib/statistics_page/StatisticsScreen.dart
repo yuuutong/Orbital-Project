@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sleeplah/statistics_page/Chart.dart';
 import 'package:sleeplah/database.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/SizeConfig.dart';

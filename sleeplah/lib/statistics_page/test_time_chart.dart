@@ -18,7 +18,13 @@ class timeChart extends StatelessWidget {
           data: ThemeData.dark(),
           child: Column(
             children: [
-              const Text('Weekly time chart'),
+              const Text(
+                'Sleeping Distribution By Week',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 84, 52, 165)),
+              ),
               TimeChart(
                 data: dataList,
                 viewMode: ViewMode.weekly,
@@ -26,7 +32,13 @@ class timeChart extends StatelessWidget {
                 tooltipBackgroundColor: primaryColor,
               ),
               sizedBox,
-              const Text('Weekly amount chart'),
+              const Text(
+                'Sleep Duration By Week',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 84, 52, 165)),
+              ),
               TimeChart(
                 data: dataList,
                 chartType: ChartType.amount,
@@ -35,7 +47,13 @@ class timeChart extends StatelessWidget {
                 tooltipBackgroundColor: primaryColor,
               ),
               sizedBox,
-              const Text('Monthly time chart'),
+              const Text(
+                'Sleeping Distribution By Month',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 84, 52, 165)),
+              ),
               TimeChart(
                 data: dataList,
                 viewMode: ViewMode.monthly,
@@ -43,7 +61,13 @@ class timeChart extends StatelessWidget {
                 tooltipBackgroundColor: primaryColor,
               ),
               sizedBox,
-              const Text('Monthly amount chart'),
+              const Text(
+                'Sleep Duration By Month',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 84, 52, 165)),
+              ),
               TimeChart(
                 data: dataList,
                 chartType: ChartType.amount,

@@ -72,7 +72,7 @@ class TimePickerState extends State<TimePicker> {
         Flexible(
           fit: FlexFit.tight,
           flex: 3,
-          child: _buildTimePick("Start", true, startTime, (x) {
+          child: _buildTimePick("Sleeping Goal", true, startTime, (x) {
             setState(() {
               DB().updateTimeSet(
                   DB.convertTimeOfDayToDateTime(x), "sleepTimeSet");
@@ -86,7 +86,7 @@ class TimePickerState extends State<TimePicker> {
         Flexible(
           fit: FlexFit.tight,
           flex: 3,
-          child: _buildTimePick("End", true, endTime, (x) {
+          child: _buildTimePick("Wakeup Goal", true, endTime, (x) {
             setState(() {
               DB().updateTimeSet(
                   DB.convertTimeOfDayToDateTime(x), "wakeTimeSet");
@@ -150,7 +150,7 @@ class TimePickerState extends State<TimePicker> {
             onTap: () {
               FlutterAlarmClock.createAlarm(
                   currentTime.hour, currentTime.minute,
-                  title: "SleepLah! Alarm: $title Sleeping!");
+                  title: "SleepLah! Alarm: $title time reached!");
             },
             child: Container(
               width: double.infinity,

@@ -21,6 +21,7 @@ class _ActualState extends State<Actual> {
   //bool _startAlready = false;
   bool loading = true;
   bool sleeping = false;
+  String username = "";
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _ActualState extends State<Actual> {
 
   Future<void> getData() async {
     sleeping = await DB().isSleeping(FirebaseAuth.instance.currentUser!.uid);
+    username = await DB().getUserName(FirebaseAuth.instance.currentUser!.uid);
     setState(() {
       loading = false;
     });
@@ -103,16 +105,16 @@ class _ActualState extends State<Actual> {
   }
 
   Widget _sleepDialog() {
-    return const AlertDialog(
-      title: Text("Good Night!"),
+    return AlertDialog(
+      title: Text("Good Night, $username!"),
     );
   }
 
   Widget _wakeDialog() {
-    return const AlertDialog(
-      title: Text("Morning!"),
+    return AlertDialog(
+      title: Text("Morning, $username!"),
       content:
-          Text('Shanna is excited to start a new day!'),
+          const Text('Shanna is excited to start a new day!'),
     );
   }
 }
