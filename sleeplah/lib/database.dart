@@ -203,7 +203,7 @@ class DB {
         value = documentSnapshot.get(fieldName);
       } else {
         //value = "null";
-        value = ""; 
+        value = "";
       }
     });
     return value;
@@ -289,18 +289,19 @@ class DB {
     });
   }
 
+  Future<void> checkPreviousConsecutive() async {
+    //check via string if ystd date exists in a field name, then see if have an entry inside that says Claimed Reward
+  }
+
   Future<void> addSleepActual(DateTime dateTime) async {
     Map<String, Map> DTRdoc = Map.from(await getDTRdoc());
     DateTimeRange fieldNameInDTR = await DB().getCurrentDTR();
     if (DTRdoc.containsKey(fieldNameInDTR.toString())) {
       Map sleepWakeEntries = DTRdoc[fieldNameInDTR.toString()] as Map;
-      // Map updatedMap = {};
-      // updatedMap.addAll(sleepWakeEntries);
-      // updatedMap.addAll({dateTime.toString(): ""});
-      // DTRdoc[fieldNameInDTR.toString()] = updatedMap;
       sleepWakeEntries[dateTime.toString()] = "";
       DTRdoc[fieldNameInDTR.toString()] = sleepWakeEntries;
     } else {
+      await checkPreviousConsecutive();
       DTRdoc.addAll({
         fieldNameInDTR.toString(): {dateTime.toString(): ""}
       });
@@ -311,24 +312,38 @@ class DB {
 
   Future<void> addWakeActual(DateTime dateTime) async {
     Map<String, Map> DTRdoc = Map.from(await getDTRdoc());
-    print("DTRdoc: " + DTRdoc.toString());
-    String latestDTRField = sortedDTRdocFields(DTRdoc).first.key.toString();
-    print("latestDTRField: " + latestDTRField);
-    MapEntry correctSleepActual = sortedDTRdocFields(DTRdoc).first.value.entries
-        .firstWhere(((element) => element.value == ""));
-    // String latestSleepActual = DTRdoc.values.last.keys.last;
-    String latestSleepActual = correctSleepActual.key;
-    await rewardCheck(DateTime.parse(latestSleepActual), dateTime);
-    print("latestSleepActual: " + latestSleepActual);
-    DTRdoc[latestDTRField]![latestSleepActual] = dateTime.toString();
-    print("DTRdoc: " + DTRdoc.toString());
-    await updateDTRCollection(latestDTRField, DTRdoc);
+    List<MapEntry<DateTimeRange, Map>> sortedListDTR = sortedDTRdocFields(DTRdoc);
+    for (MapEntry<DateTimeRange, Map> DTRfield in sortedListDTR) {
+      Map sleepWakeTimings = DTRfield.value;
+      if (sleepWakeTimings.containsValue("")) {
+        String correctDTRField = DTRfield.key.toString();
+        for (MapEntry sleepWakeEntry in sleepWakeTimings.entries) {
+          if (sleepWakeEntry.value == "") {
+            String latestSleepActual = sleepWakeEntry.key;
+            await rewardCheck(DateTime.parse(latestSleepActual), dateTime);
+            DTRdoc[correctDTRField]![latestSleepActual] = dateTime.toString();
+            await updateDTRCollection(correctDTRField, DTRdoc);
+            break;
+          }
+        }
+      }
+    }
   }
 
   Future<void> rewardCheck(DateTime start, DateTime end) async {
-    DateTime sleepTimeSet = DateTime.parse(await DB().getUserValue(user!.uid, "sleepTimeSet"));
-    DateTime wakeTimeSet = DateTime.parse(await DB().getUserValue(user!.uid, "wakeTimeSet"));
-    Duration sleepDurationSet = sleepTimeSet.difference(wakeTimeSet);
+    DateTime sleepTimeSet =
+        DateTime.parse(await DB().getUserValue(user!.uid, "sleepTimeSet"));
+    DateTime wakeTimeSet =
+        DateTime.parse(await DB().getUserValue(user!.uid, "wakeTimeSet"));
+    Duration sleepDurationSet = sleepTimeSet.difference(wakeTimeSet).abs();
+    Duration sleepDurationActual = start.difference(end).abs();
+    Duration marginSleep = start.difference(sleepTimeSet).abs();
+    Duration marginWake = end.difference(wakeTimeSet).abs();
+    if (marginWake <= Duration(minutes: 10) && marginSleep <= Duration(minutes: 10)) {
+      await DB().claimReward(user!.uid);
+    } if ((sleepDurationSet - sleepDurationActual).abs() <= Duration(minutes: 10)) {
+      await DB().claimReward(user!.uid);
+    }
   }
 
   static DateTimeRange stringToDateTimeRange(String DTRstring) {
@@ -340,13 +355,15 @@ class DB {
 
   static List<MapEntry<DateTimeRange, Map>> sortedDTRdocFields(Map DTRdoc) {
     List<MapEntry<DateTimeRange, Map>> sortedDTRdoc = [];
-    Map<DateTimeRange, Map> mappedDTRDoc = DTRdoc.map((key, value) => MapEntry(stringToDateTimeRange(key), value));
+    Map<DateTimeRange, Map> mappedDTRDoc =
+        DTRdoc.map((key, value) => MapEntry(stringToDateTimeRange(key), value));
     sortedDTRdoc = mappedDTRDoc.entries.toList();
     sortedDTRdoc.sort(((a, b) {
       DateTime aStart = a.key.start;
       DateTime bStart = b.key.start;
       return bStart.compareTo(aStart);
     }));
+    print(sortedDTRdoc);
     return sortedDTRdoc;
   }
 
