@@ -121,13 +121,12 @@ class DB {
     addFlower(userID, selectedFlower.id);
     int days = await getDays(user!.uid);
     if (days % 7 == 0 && days != 0) {
-    updateCoin(30, userID);
-    // }
+      updateCoin(30, userID);
+    }
     updateDays(1, userID);
     print("reward claimed");
-    }
-    //print("reward never run");
   }
+  //print("reward never run");
 
   // days
   Future<int> getDays(String userId) async {
