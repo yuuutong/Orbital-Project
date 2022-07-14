@@ -98,7 +98,9 @@ class TimePickerState extends State<TimePicker> {
 
   Widget _buildTimePick(String title, bool ifPickedTime, TimeOfDay currentTime,
       Function(TimeOfDay) onTimePicked) {
-    TimeOfDay alarmTime = TimeOfDay.fromDateTime(DB.convertTimeOfDayToDateTime(currentTime).subtract(Duration(minutes: 5)));
+    TimeOfDay alarmTime = TimeOfDay.fromDateTime(DB
+        .convertTimeOfDayToDateTime(currentTime)
+        .subtract(const Duration(minutes: 5)));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       // mainAxisSize: MainAxisSize.min,
@@ -115,7 +117,7 @@ class TimePickerState extends State<TimePicker> {
               padding: const EdgeInsets.all(8.0),
               //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 147, 184, 248),
+                color: const Color.fromARGB(255, 147, 184, 248),
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -135,8 +137,8 @@ class TimePickerState extends State<TimePicker> {
           flex: 2,
           child: GestureDetector(
             onTap: () {
-              FlutterAlarmClock.createAlarm(
-                  alarmTime.hour, alarmTime.minute,
+              showDialog(context: context, builder: (_) => _alarm1Dialog());
+              FlutterAlarmClock.createAlarm(alarmTime.hour, alarmTime.minute,
                   title: "SleepLah! Alarm: $title time reached!");
             },
             child: Container(
@@ -145,7 +147,7 @@ class TimePickerState extends State<TimePicker> {
               padding: const EdgeInsets.all(8.0),
               //EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 192, 213, 249),
+                color: const Color.fromARGB(255, 192, 213, 249),
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -163,6 +165,12 @@ class TimePickerState extends State<TimePicker> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _alarm1Dialog() {
+    return const AlertDialog(
+      title: Text("Alarm is set at 5 minutes before your scheduled time!"),
     );
   }
 }
