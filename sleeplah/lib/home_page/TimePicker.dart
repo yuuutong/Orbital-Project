@@ -24,20 +24,6 @@ class TimePickerState extends State<TimePicker> {
   }
 
   Future<void> getValue() async {
-    // String docDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    // Map timeData = await DB().getTimeCollectionDoc(docDate);
-    // print(timeData);
-    // try {
-    //   if (timeData["sleepSet"] != null) {
-    //     startTime =
-    //         TimeOfDay.fromDateTime(DateTime.parse(timeData["sleepSet"]));
-    //   }
-    //   if (timeData["wakeSet"] != null) {
-    //     endTime = TimeOfDay.fromDateTime(DateTime.parse(timeData["wakeSet"]));
-    //   }
-    // } catch (e) {
-    //   print(e);
-    // }
     String sleepTimeSet = await DB()
         .getUserValue(FirebaseAuth.instance.currentUser!.uid, "sleepTimeSet");
     String wakeTimeSet = await DB()
