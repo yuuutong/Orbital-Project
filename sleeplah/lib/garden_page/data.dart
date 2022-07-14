@@ -20,12 +20,6 @@ class _dataState extends State<data> {
   double screenHeight = SizeConfig.screenHeight!;
   double screenWidth = SizeConfig.screenWidth!;
   late int numOfSunflower = 1;
-  late int numOfRose = 0;
-  late int numOfDaisy = 0;
-  late int numOfLilac = 0;
-  late int numOfLotus = 0;
-  late int numOfLily = 0;
-  late int numOfTulip = 0;
   late int numOfDays = 0;
   late int coins = 0;
 
@@ -38,17 +32,8 @@ class _dataState extends State<data> {
   Future<void> getValue() async {
     flowerList = await DB().getFlowerList();
     numOfSunflower = int.parse(flowerList[0]);
-    numOfRose = int.parse(flowerList[1]);
-    numOfDaisy = int.parse(flowerList[2]);
-    numOfLilac = int.parse(flowerList[3]);
-    numOfLotus = int.parse(flowerList[4]);
-    numOfLily = int.parse(flowerList[5]);
-    numOfTulip = int.parse(flowerList[6]);
     numOfDays = await DB().getDays(FirebaseAuth.instance.currentUser!.uid);
     coins = await DB().getCoins(FirebaseAuth.instance.currentUser!.uid);
-
-    // make changes here
-
     setState(() {
       loading = false;
     });
@@ -58,24 +43,28 @@ class _dataState extends State<data> {
   Widget build(BuildContext context) {
     return loading
         ? Loading()
-        : Container(margin: EdgeInsets.fromLTRB(0, defaultSize * 6,
-            0, 0),
-          child: GridView.count(
+        : Container(
+            margin: EdgeInsets.fromLTRB(0, defaultSize * 6, 0, 0),
+            child: GridView.count(
               crossAxisCount: 2,
               padding: const EdgeInsets.all(8.0),
-              children: <Widget>[
-                detail("Coins", "coin.png", coins),
-                detail(
-                    "Days", "shanna_asleep.png", numOfDays),
-                detail("Sunflower", "0.png", numOfSunflower),
-                detail("Rose", "1.png", numOfRose),
-                detail("Daisy", "2.png", numOfDaisy),
-                detail("Lilac", "3.png", numOfLilac),
-                detail("Lotus", "4.png", numOfLotus),
-                detail("Lily", "5.png", numOfLily),
-                detail("Tulip", "6.png", numOfTulip),
-              ],
+              children: tiles(),
             ),
-        );
+          );
+  }
+
+  List<Widget> tiles() {
+    List<Flower> unlockedFlower = [];
+    List<Widget> result = [];
+    result.add(detail("Coins", "coin.png", coins));
+    result.add(detail("Days", "shanna_asleep.png", numOfDays));
+    for (Flower f in FlowerList) {
+      if (flowerList[int.parse(f.id)] != "0") unlockedFlower.add(f);
+    }
+    for (Flower f in unlockedFlower) {
+      result.add(detail(
+          f.name, '${f.id}.png', int.parse(flowerList[int.parse(f.id)])));
+    }
+    return result;
   }
 }

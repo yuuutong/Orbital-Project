@@ -15,8 +15,6 @@ import 'package:sleeplah/statistics_page/test_time_chart.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/home_page/actualSleepWake.dart';
 
-import '../flower_collection/FlowerCollection.dart';
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -84,15 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: primaryColor,
               ),
               child: Text('SleepLah!'),
-            ),
-            ListTile(
-              title: const Text('Flower Collection'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FlowerCollection()));
-              },
             ),
             ListTile(
               title: const Text('Flower Shop'),
