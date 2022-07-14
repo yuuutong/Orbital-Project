@@ -53,7 +53,9 @@ class _ActualState extends State<Actual> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
-                          )), style:ElevatedButton.styleFrom(primary: themePrimaryColor),
+                          )),
+                      style:
+                          ElevatedButton.styleFrom(primary: themePrimaryColor),
                       onPressed: () async {
                         await DB().hasAGoal(
                                 FirebaseAuth.instance.currentUser!.uid)
@@ -88,7 +90,9 @@ class _ActualState extends State<Actual> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
-                          )), style:ElevatedButton.styleFrom(primary: themePrimaryColor),
+                          )),
+                      style:
+                          ElevatedButton.styleFrom(primary: themePrimaryColor),
                       onPressed: () async {
                         await DB().hasAGoal(
                                 FirebaseAuth.instance.currentUser!.uid)
