@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Spacer(flex: 1),
           Flexible(
             fit: FlexFit.tight,
-            flex: 9,
+            flex: 8,
             child: Container(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
