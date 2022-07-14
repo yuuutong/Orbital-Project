@@ -45,62 +45,72 @@ class _ActualState extends State<Actual> {
         children: [
           //_startAlready
           sleeping
-              ? ElevatedButton(
-                  child: const Text("I'm awake",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                  onPressed: () async {
-                    await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
-                        ? setState(() {
-                            DB().addWakeActual(DateTime.now());
-                            // DB().setTime(DateTime.now(), "wakeActual");
-                            // DB().eligibleForReward(
-                            //     DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                            //     FirebaseAuth.instance.currentUser!.uid);
-                            //_startAlready = false;
-                            sleeping = false;
-                            DB().toggleSleeping(
-                                FirebaseAuth.instance.currentUser!.uid);
-                            showDialog(
-                                context: context,
-                                builder: (_) => _wakeDialog());
-                            print("set state liao");
-                          })
-                        : ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'You need to set the time to sleep and wake up before sleeping!'),
-                            ),
-                          );
-                  })
-              : ElevatedButton(
-                  child: const Text("Sleep Now",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                      )),
-                  onPressed: () async {
-                    await DB().hasAGoal(FirebaseAuth.instance.currentUser!.uid)
-                        ? setState(() {
-                            DB().addSleepActual(DateTime.now());
-                            // DB().setTime(DateTime.now(), "sleepActual");
-                            //_startAlready = true;
-                            sleeping = true;
-                            DB().toggleSleeping(
-                                FirebaseAuth.instance.currentUser!.uid);
-                            showDialog(
-                                context: context,
-                                builder: (_) => _sleepDialog());
-                            print("set state liao");
-                          })
-                        : ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                            content: Text(
-                                'You need to set the time to sleep and wake up before sleeping!'),
-                          ));
-                  }),
+              ? SizedBox(
+                  width: 150,
+                  height: 50,
+                  child: ElevatedButton(
+                      child: const Text("I'm awake",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                          )), style:ElevatedButton.styleFrom(primary: themePrimaryColor),
+                      onPressed: () async {
+                        await DB().hasAGoal(
+                                FirebaseAuth.instance.currentUser!.uid)
+                            ? setState(() {
+                                DB().addWakeActual(DateTime.now());
+                                // DB().setTime(DateTime.now(), "wakeActual");
+                                // DB().eligibleForReward(
+                                //     DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                                //     FirebaseAuth.instance.currentUser!.uid);
+                                //_startAlready = false;
+                                sleeping = false;
+                                DB().toggleSleeping(
+                                    FirebaseAuth.instance.currentUser!.uid);
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => _wakeDialog());
+                                print("set state liao");
+                              })
+                            : ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'You need to set the time to sleep and wake up before sleeping!'),
+                                ),
+                              );
+                      }),
+                )
+              : SizedBox(
+                  width: 150,
+                  height: 50,
+                  child: ElevatedButton(
+                      child: const Text("Sleep Now",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                          )), style:ElevatedButton.styleFrom(primary: themePrimaryColor),
+                      onPressed: () async {
+                        await DB().hasAGoal(
+                                FirebaseAuth.instance.currentUser!.uid)
+                            ? setState(() {
+                                DB().addSleepActual(DateTime.now());
+                                // DB().setTime(DateTime.now(), "sleepActual");
+                                //_startAlready = true;
+                                sleeping = true;
+                                DB().toggleSleeping(
+                                    FirebaseAuth.instance.currentUser!.uid);
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => _sleepDialog());
+                                print("set state liao");
+                              })
+                            : ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content: Text(
+                                    'You need to set the time to sleep and wake up before sleeping!'),
+                              ));
+                      }),
+                ),
         ]);
   }
 
@@ -113,8 +123,7 @@ class _ActualState extends State<Actual> {
   Widget _wakeDialog() {
     return AlertDialog(
       title: Text("Morning, $username!"),
-      content:
-          const Text('Shanna is excited to start a new day!'),
+      content: const Text('Shanna is excited to start a new day!'),
     );
   }
 }
