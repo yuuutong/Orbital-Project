@@ -119,7 +119,10 @@ class DB {
     // if (await check().compareTime(date)) {
     var selectedFlower = await pickExistingFlower();
     addFlower(userID, selectedFlower.id);
-    updateCoin(10, userID);
+    int days= await getDays(user!.uid);
+    // if (days % 7 == 0 && days != 0) {
+      updateCoin(30, userID);
+    // }
     updateDays(1, userID);
     print("reward claimed");
     // }
