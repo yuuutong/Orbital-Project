@@ -46,11 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Column(children: [
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
           Flexible(fit: FlexFit.tight, flex: 4, child: TimePicker()),
-          Spacer(flex: 1),
-          Flexible(fit: FlexFit.tight, flex: 2, child: Actual()),
-          Spacer(flex: 1),
+          const Spacer(flex: 1),
+          const Flexible(fit: FlexFit.tight, flex: 2, child: Actual()),
+          const Spacer(flex: 1),
           Flexible(
             fit: FlexFit.tight,
             flex: 9,
@@ -58,11 +58,24 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Stack(
                 alignment: Alignment.center,
-                children: const <Widget>[
-                  Image(
-                    image: AssetImage("assets/images/sunflower_field.png"),
-                    fit: BoxFit.fitWidth,
-                  ),
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 10,
+                            color: Color.fromARGB(255, 48, 146, 226),
+                            spreadRadius: 5)
+                      ],
+                    ),
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage("assets/images/hp4.gif"),
+                      radius: 200,
+                    ),
+                  )
                 ],
               ),
             ),

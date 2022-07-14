@@ -5,8 +5,8 @@ class AppUser {
   List<String> friends = List.of(Iterable.empty());
   // index is the flower code, elem at that index is the num of that particular flower
   List<String> flowers = ['1', '0', '0', '0', '0', '0', '0']; // the user only has 1 sunflower at the start
-  int coins = 200;
-  int numOfDays = 2;
+  int coins = 0;
+  int numOfDays = 0;
   String profileFlowerID = '0';
   String sleepTimeSet = '';
   String wakeTimeSet = '';
