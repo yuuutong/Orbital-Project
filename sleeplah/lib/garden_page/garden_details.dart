@@ -32,11 +32,11 @@ class _detailState extends State<detail> {
                 image: Image(
                   image: AssetImage("assets/images/$flowerImage"),
                   filterQuality: FilterQuality.none,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ).image,
                 colorFilter:
-                    const ColorFilter.mode(Colors.white70, BlendMode.color),
-                fit: BoxFit.fill,
+                    const ColorFilter.mode(Colors.transparent, BlendMode.color),
+                fit: BoxFit.contain,
                 filterQuality: FilterQuality.none,
               ),
               color: Colors.blueGrey,

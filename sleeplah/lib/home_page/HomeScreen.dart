@@ -79,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-          )
+          ),
+          const Spacer(flex: 1),
         ])
       ]),
       drawer: Drawer(
