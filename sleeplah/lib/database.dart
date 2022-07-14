@@ -310,7 +310,7 @@ class DB {
     if (!hasPastConsecutive) {
       int count = await getDays(user!.uid);
       DocumentReference docRef = userCollection.doc(user!.uid);
-      docRef.update({"numOfDays": 1});
+      docRef.update({"numOfDays": 0});
     }
   }
 
@@ -336,6 +336,8 @@ class DB {
         sortedDTRdocFields(DTRdoc);
     for (MapEntry<DateTimeRange, Map> DTRfield in sortedListDTR) {
       Map sleepWakeTimings = DTRfield.value;
+      print("looping through mapentry of DTRfields in addWakeActual");
+      print(sleepWakeTimings);
       if (sleepWakeTimings.containsValue("")) {
         String correctDTRField = DTRfield.key.toString();
         for (MapEntry sleepWakeEntry in sleepWakeTimings.entries) {

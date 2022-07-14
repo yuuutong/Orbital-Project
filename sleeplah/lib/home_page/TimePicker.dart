@@ -112,6 +112,7 @@ class TimePickerState extends State<TimePicker> {
 
   Widget _buildTimePick(String title, bool ifPickedTime, TimeOfDay currentTime,
       Function(TimeOfDay) onTimePicked) {
+    TimeOfDay alarmTime = TimeOfDay.fromDateTime(DB.convertTimeOfDayToDateTime(currentTime).subtract(Duration(minutes: 5)));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       // mainAxisSize: MainAxisSize.min,
@@ -149,7 +150,7 @@ class TimePickerState extends State<TimePicker> {
           child: GestureDetector(
             onTap: () {
               FlutterAlarmClock.createAlarm(
-                  currentTime.hour, currentTime.minute,
+                  alarmTime.hour, alarmTime.minute,
                   title: "SleepLah! Alarm: $title time reached!");
             },
             child: Container(

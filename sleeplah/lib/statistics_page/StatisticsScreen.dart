@@ -52,7 +52,7 @@ class _StatisticsState extends State<Statistics> {
     Map DTRDoc = await DB().getDTRdoc();
     for (Map sleepWakeMap in DTRDoc.values) {
       for (MapEntry sleepWakePair in sleepWakeMap.entries) {
-        if (sleepWakePair.value != "") {
+        if (sleepWakePair.value != "" && sleepWakePair.value != true) {
           dataList.add(DateTimeRange(
               start: DateTime.parse(sleepWakePair.key),
               end: DateTime.parse(sleepWakePair.value)));
