@@ -280,7 +280,6 @@ class DB {
       String fieldNameInDTR, Map<String, Map> updatedDTRDoc) async {
     DTRCollection = userDoc.collection('DTRCollection');
     print("in updateDTRCollection function...");
-    print(DTRCollection);
     print(updatedDTRDoc);
     await DTRCollection.doc('DTR')
         .get()
@@ -289,8 +288,27 @@ class DB {
     });
   }
 
-  Future<void> checkPreviousConsecutive() async {
-    //check via string if ystd date exists in a field name, then see if have an entry inside that says Claimed Reward
+  Future<void> checkPreviousConsecutive(Map<String, Map> DTRdoc) async {
+    //check via string if ystd date exists in a field name, then see if have an entry inside that says Claimed, true
+    List<MapEntry<String, Map>> DTRDocList = DTRdoc.entries.toList();
+    DateTime previousDay = DateTime.now().subtract(Duration(days: 1));
+    String previousDayDate = previousDay.toString().substring(0, 9);
+    List<MapEntry<String, Map>> previousDayOnly = DTRDocList.where((element) {
+      String DTRfield = element.key;
+      return DTRfield.contains(previousDayDate);
+    }).toList();
+    bool hasPastConsecutive = false;
+    for (MapEntry<String, Map> previousDTR in previousDayOnly) {
+      Map sleepWakeTimes = previousDTR.value;
+      if (sleepWakeTimes.containsValue(true)) {
+        hasPastConsecutive = true;
+      }
+    }
+    if (!hasPastConsecutive) {
+      int count = await getDays(user!.uid);
+      DocumentReference docRef = userCollection.doc(user!.uid);
+      docRef.update({"numOfDays": 1});
+    }
   }
 
   Future<void> addSleepActual(DateTime dateTime) async {
@@ -301,18 +319,18 @@ class DB {
       sleepWakeEntries[dateTime.toString()] = "";
       DTRdoc[fieldNameInDTR.toString()] = sleepWakeEntries;
     } else {
-      await checkPreviousConsecutive();
+      await checkPreviousConsecutive(DTRdoc);
       DTRdoc.addAll({
         fieldNameInDTR.toString(): {dateTime.toString(): ""}
       });
     }
-    print("current order of DTR: " + DTRdoc.toString());
     await updateDTRCollection(fieldNameInDTR.toString(), DTRdoc);
   }
 
   Future<void> addWakeActual(DateTime dateTime) async {
     Map<String, Map> DTRdoc = Map.from(await getDTRdoc());
-    List<MapEntry<DateTimeRange, Map>> sortedListDTR = sortedDTRdocFields(DTRdoc);
+    List<MapEntry<DateTimeRange, Map>> sortedListDTR =
+        sortedDTRdocFields(DTRdoc);
     for (MapEntry<DateTimeRange, Map> DTRfield in sortedListDTR) {
       Map sleepWakeTimings = DTRfield.value;
       if (sleepWakeTimings.containsValue("")) {
@@ -320,9 +338,10 @@ class DB {
         for (MapEntry sleepWakeEntry in sleepWakeTimings.entries) {
           if (sleepWakeEntry.value == "") {
             String latestSleepActual = sleepWakeEntry.key;
-            await rewardCheck(DateTime.parse(latestSleepActual), dateTime);
             DTRdoc[correctDTRField]![latestSleepActual] = dateTime.toString();
             await updateDTRCollection(correctDTRField, DTRdoc);
+            await rewardCheck(
+                DateTime.parse(latestSleepActual), dateTime, correctDTRField);
             break;
           }
         }
@@ -330,7 +349,8 @@ class DB {
     }
   }
 
-  Future<void> rewardCheck(DateTime start, DateTime end) async {
+  Future<void> rewardCheck(
+      DateTime start, DateTime end, String correctDTRField) async {
     DateTime sleepTimeSet =
         DateTime.parse(await DB().getUserValue(user!.uid, "sleepTimeSet"));
     DateTime wakeTimeSet =
@@ -339,11 +359,28 @@ class DB {
     Duration sleepDurationActual = start.difference(end).abs();
     Duration marginSleep = start.difference(sleepTimeSet).abs();
     Duration marginWake = end.difference(wakeTimeSet).abs();
-    if (marginWake <= Duration(minutes: 10) && marginSleep <= Duration(minutes: 10)) {
-      await DB().claimReward(user!.uid);
-    } if ((sleepDurationSet - sleepDurationActual).abs() <= Duration(minutes: 10)) {
-      await DB().claimReward(user!.uid);
+    bool durationCriteria =
+        (sleepDurationSet - sleepDurationActual).abs() <= Duration(minutes: 10);
+    bool keepToScheduleCriteria = marginWake <= Duration(minutes: 15) &&
+        marginSleep <= Duration(minutes: 15);
+    if (durationCriteria || keepToScheduleCriteria) {
+      if (await DB().rewardStatusUpdate(correctDTRField)) {
+        await DB().claimReward(user!.uid);
+      }
     }
+  }
+
+  Future<bool> rewardStatusUpdate(String correctDTRField) async {
+    bool canClaim = false;
+    Map<String, Map> DTRdoc = Map.from(await getDTRdoc());
+    Map sleepWakeTimes = DTRdoc[correctDTRField] as Map;
+    if (!sleepWakeTimes.containsValue(true)) {
+      canClaim = true;
+      sleepWakeTimes["claimed"] = true;
+      DTRdoc[correctDTRField] = sleepWakeTimes;
+      await DB().updateDTRCollection(correctDTRField, DTRdoc);
+    }
+    return canClaim;
   }
 
   static DateTimeRange stringToDateTimeRange(String DTRstring) {
@@ -363,7 +400,6 @@ class DB {
       DateTime bStart = b.key.start;
       return bStart.compareTo(aStart);
     }));
-    print(sortedDTRdoc);
     return sortedDTRdoc;
   }
 
@@ -373,7 +409,6 @@ class DB {
 
   Future<DateTimeRange> getCurrentDTR() async {
     DateTime today = DateTime.now();
-    print("today is: " + today.toString());
     DateTime sleepTimeSet = DateTime.parse(await DB()
         .getUserValue(FirebaseAuth.instance.currentUser!.uid, "sleepTimeSet"));
     DateTime start = DateTime(today.year, today.month, today.day,
