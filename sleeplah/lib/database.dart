@@ -1,6 +1,5 @@
 import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/login_page/LoginScreen.dart';
 import 'package:sleeplah/models/AppUser.dart';
@@ -148,7 +147,7 @@ class DB {
 
   // flower
   Future<List<String>> getFlowerList() {
-    return getList("flowers", FirebaseAuth.instance.currentUser!.uid);
+    return getList("flowers", user!.uid);
   }
 
   Future<void> addFlower(String userId, String flowerId) async {
@@ -205,7 +204,7 @@ class DB {
   Future<Map> getDTRdoc() async {
     Map result = {};
     DocumentReference docRef = userCollection
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(user!.uid)
         .collection('DTRCollection')
         .doc('DTR');
     await docRef.get().then(
@@ -353,11 +352,11 @@ class DB {
   Future<DateTimeRange> getCurrentDTR() async {
     DateTime today = DateTime.now();
     DateTime sleepTimeSet = DateTime.parse(await DB()
-        .getUserValue(FirebaseAuth.instance.currentUser!.uid, "sleepTimeSet"));
+        .getUserValue(user!.uid, "sleepTimeSet"));
     DateTime start = DateTime(today.year, today.month, today.day,
         sleepTimeSet.hour, sleepTimeSet.minute);
     DateTime wakeTimeSet = DateTime.parse(await DB()
-        .getUserValue(FirebaseAuth.instance.currentUser!.uid, "wakeTimeSet"));
+        .getUserValue(user!.uid, "wakeTimeSet"));
     DateTime end = DateTime(today.year, today.month, today.day,
         wakeTimeSet.hour, wakeTimeSet.minute);
     if (start.isAfter(end)) {

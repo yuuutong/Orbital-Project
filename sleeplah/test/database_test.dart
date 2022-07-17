@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sleeplah/database.dart';
 import 'package:test/test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+// import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 void main() {
   group("coin system test", () {
