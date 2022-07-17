@@ -170,7 +170,7 @@ class TimePickerState extends State<TimePicker> {
 
   Widget _alarm1Dialog() {
     return const AlertDialog(
-      title: Text("Alarm is set at 5 minutes before your scheduled time!"),
+      title: Text("Alarm is set at 5 minutes before your scheduled time!\nCheck your default alarm for more info"),
     );
   }
 }
