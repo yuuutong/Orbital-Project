@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sleeplah/database.dart';
 import 'package:test/test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 void main() {
   group("coin system test", () {
@@ -10,7 +9,7 @@ void main() {
     DB ds = DB(instanceInjection: firestore);
     test("[get coin] value should return 0", () async {
       await ds.userDoc.set({"coins": 0});
-      var result = await ds.getCoins(/* FirebaseAuth.instance.currentUser!.uid */"0");
+      var result = await ds.getCoins("0");
       expect(result, 0);
     });
   });
@@ -96,19 +95,6 @@ void main() {
       var rqlist = await ds.getFriendRequestList("4");
 
       expect(rqlist.length == 0, true);
-    });
-  });
-
-  group("Flower system test", () {
-    var firestore = FakeFirebaseFirestore();
-    DB ds = DB(instanceInjection: firestore);
-
-    test("[get FlowerList] value should return ['0', '0', '0', '0', '0', '0', '0']", () async {
-      await ds.userDoc.set({
-        'flowers': ["1", "0", "0", "0", "0", "0", "0"]
-      });
-      var result = await ds.getFlowerList();
-      expect(result, ["1", "0", "0", "0", "0", "0", "0"]);
     });
   });
 }

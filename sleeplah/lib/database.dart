@@ -148,7 +148,7 @@ class DB {
 
   // flower
   Future<List<String>> getFlowerList() {
-    return getList("flowers", FirebaseAuth.instance.currentUser!.uid);
+    return getList("flowers", user!.uid);
   }
 
   Future<void> addFlower(String userId, String flowerId) async {
