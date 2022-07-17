@@ -10,7 +10,7 @@ void main() {
     DB ds = DB(instanceInjection: firestore);
     test("[get coin] value should return 0", () async {
       await ds.userDoc.set({"coins": 0});
-      var result = await ds.getCoins(/* FirebaseAuth.instance.currentUser!.uid */"0");
+      var result = await ds.getCoins("0");
       expect(result, 0);
     });
   });
@@ -96,19 +96,6 @@ void main() {
       var rqlist = await ds.getFriendRequestList("4");
 
       expect(rqlist.length == 0, true);
-    });
-  });
-
-  group("Flower system test", () {
-    var firestore = FakeFirebaseFirestore();
-    DB ds = DB(instanceInjection: firestore);
-
-    test("[get FlowerList] value should return ['0', '0', '0', '0', '0', '0', '0']", () async {
-      await ds.userDoc.set({
-        'flowers': ["1", "0", "0", "0", "0", "0", "0"]
-      });
-      var result = await ds.getFlowerList();
-      expect(result, ["1", "0", "0", "0", "0", "0", "0"]);
     });
   });
 }
