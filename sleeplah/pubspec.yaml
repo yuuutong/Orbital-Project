@@ -46,6 +46,7 @@ dependencies:
   flutter_settings_screens: ^0.2.2+1
   flutter_alarm_clock: ^0.0.2
   fake_cloud_firestore: ^1.2.4
+  firebase_auth_mocks: ^0.8.4
 
 dev_dependencies:
   flutter_test:

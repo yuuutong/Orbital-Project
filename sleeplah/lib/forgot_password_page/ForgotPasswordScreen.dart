@@ -29,6 +29,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       try {
         await _auth.sendPasswordResetEmail(email: _email);
       } on FirebaseAuthException catch (e) {
+        print(e);
       }
 
       Navigator.push(
@@ -99,8 +100,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               const SizedBox(height: 20),
               ElevatedButton(
                 child: const Text('Send Email'),
-                onPressed: () {
-                  _passwordReset();
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _passwordReset();
+                  }
                 },
               ),
               TextButton(

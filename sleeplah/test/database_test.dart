@@ -2,14 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sleeplah/database.dart';
 import 'package:test/test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 void main() {
   group("coin system test", () {
     var firestore = FakeFirebaseFirestore();
     DB ds = DB(instanceInjection: firestore);
     test("[get coin] value should return 0", () async {
-      await ds.userDoc.set({"Coins": 0});
-      var result = await ds.getCoins(FirebaseAuth.instance.currentUser!.uid);
+      await ds.userDoc.set({"coins": 0});
+      var result = await ds.getCoins(/* FirebaseAuth.instance.currentUser!.uid */"0");
       expect(result, 0);
     });
   });
@@ -19,7 +20,7 @@ void main() {
     DB ds = DB(instanceInjection: firestore);
 
     test("[get friendlist] value should return ['1']", () async {
-      await ds.userDoc.update({
+      await ds.userDoc.set({
         'friends': ["1"]
       });
       var result = await ds.getFriendList("0");
@@ -102,18 +103,12 @@ void main() {
     var firestore = FakeFirebaseFirestore();
     DB ds = DB(instanceInjection: firestore);
 
-    test("[get FlowerList] value should return ['0']", () async {
-      await ds.userDoc.update({
-        'Flowers': ["0"]
+    test("[get FlowerList] value should return ['0', '0', '0', '0', '0', '0', '0']", () async {
+      await ds.userDoc.set({
+        'flowers': ["1", "0", "0", "0", "0", "0", "0"]
       });
       var result = await ds.getFlowerList();
-      expect(result, ["0"]);
-    });
-
-    test("[add Flower] value should be true", () async {
-      await ds.addFlower("0", "1");
-      var FlowerList = await ds.getFlowerList();
-      expect(FlowerList.contains("1"), true);
+      expect(result, ["1", "0", "0", "0", "0", "0", "0"]);
     });
   });
 }
