@@ -19,7 +19,7 @@ class timeChart extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                'Sleeping Distribution By Week',
+                'Sleeping Distribution In A Week',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -33,7 +33,7 @@ class timeChart extends StatelessWidget {
               ),
               sizedBox,
               const Text(
-                'Sleep Duration By Week',
+                'Sleep Duration In A Week',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class timeChart extends StatelessWidget {
               ),
               sizedBox,
               const Text(
-                'Sleeping Distribution By Month',
+                'Sleeping Distribution In A Month',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class timeChart extends StatelessWidget {
               ),
               sizedBox,
               const Text(
-                'Sleep Duration By Month',
+                'Sleep Duration In A Month',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
