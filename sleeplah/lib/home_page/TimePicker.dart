@@ -109,7 +109,7 @@ class TimePickerState extends State<TimePicker> {
             fit: FlexFit.tight, flex: 2, child: FittedBox(child: Text(title))),
         Flexible(
           fit: FlexFit.tight,
-          flex: 3,
+          flex: 4,
           child: GestureDetector(
             child: Container(
               width: double.infinity,
@@ -132,9 +132,10 @@ class TimePickerState extends State<TimePicker> {
             },
           ),
         ),
+        const Spacer(flex: 1),
         Flexible(
           fit: FlexFit.tight,
-          flex: 2,
+          flex: 3,
           child: GestureDetector(
             onTap: () {
               showDialog(context: context, builder: (_) => _alarm1Dialog());
