@@ -81,11 +81,6 @@ class DB {
         count = documentSnapshot.get("coins");
       }
     });
-    /* await userDoc.get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        count = documentSnapshot.get("coins");
-      }
-    }); */
     return count;
   }
 
@@ -96,8 +91,8 @@ class DB {
   }
 
   // pick flowers that have already been unlocked
-  Future<Flower> pickExistingFlower() async {
-    var userFlowers = await getFlowerList();
+  Future<Flower> pickExistingFlower(String uid) async {
+    var userFlowers = await getFlowerList(uid);
     List<Flower> unlockedFlowers = [];
     for (var Flower in FlowerList) {
       if (userFlowers[int.parse(Flower.id)] != "0") unlockedFlowers.add(Flower);
@@ -112,11 +107,8 @@ class DB {
   }
 
   // add 1 to a flower variant that has alr been unlocked, and add 10 coins, update num of days of sleeping
-  Future<void> claimReward(
-      //String date,
-      String userID) async {
-    // if (await check().compareTime(date)) {
-    var selectedFlower = await pickExistingFlower();
+  Future<void> claimReward(String userID) async {
+    var selectedFlower = await pickExistingFlower(userID);
     addFlower(userID, selectedFlower.id);
     int days = await getDays(user!.uid);
     if (days % 7 == 0 && days != 0) {
@@ -125,7 +117,6 @@ class DB {
     updateDays(1, userID);
     print("reward claimed");
   }
-  //print("reward never run");
 
   // days
   Future<int> getDays(String userId) async {
@@ -146,12 +137,12 @@ class DB {
   }
 
   // flower
-  Future<List<String>> getFlowerList() {
-    return getList("flowers", user!.uid);
+  Future<List<String>> getFlowerList(String uid) {
+    return getList("flowers", uid);
   }
 
   Future<void> addFlower(String userId, String flowerId) async {
-    List<String> flowerList = await getFlowerList();
+    List<String> flowerList = await getFlowerList(userId);
     var doc = userCollection.doc(userId);
     // add 1 more flower to the variant specified by ID
     flowerList[int.parse(flowerId)] =
@@ -203,10 +194,8 @@ class DB {
   // time related
   Future<Map> getDTRdoc() async {
     Map result = {};
-    DocumentReference docRef = userCollection
-        .doc(user!.uid)
-        .collection('DTRCollection')
-        .doc('DTR');
+    DocumentReference docRef =
+        userCollection.doc(user!.uid).collection('DTRCollection').doc('DTR');
     await docRef.get().then(
       (DocumentSnapshot documentSnapshot) {
         result = documentSnapshot.data() as Map;
@@ -351,12 +340,12 @@ class DB {
 
   Future<DateTimeRange> getCurrentDTR() async {
     DateTime today = DateTime.now();
-    DateTime sleepTimeSet = DateTime.parse(await DB()
-        .getUserValue(user!.uid, "sleepTimeSet"));
+    DateTime sleepTimeSet =
+        DateTime.parse(await DB().getUserValue(user!.uid, "sleepTimeSet"));
     DateTime start = DateTime(today.year, today.month, today.day,
         sleepTimeSet.hour, sleepTimeSet.minute);
-    DateTime wakeTimeSet = DateTime.parse(await DB()
-        .getUserValue(user!.uid, "wakeTimeSet"));
+    DateTime wakeTimeSet =
+        DateTime.parse(await DB().getUserValue(user!.uid, "wakeTimeSet"));
     DateTime end = DateTime(today.year, today.month, today.day,
         wakeTimeSet.hour, wakeTimeSet.minute);
     if (start.isAfter(end)) {

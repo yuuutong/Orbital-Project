@@ -113,7 +113,7 @@ class _InfoState extends State<Info> {
   }
 
   Future<void> getFlowerIDList() async {
-    List<String> flowerNumList = await DB().getFlowerList();
+    List<String> flowerNumList = await DB().getFlowerList(user!.uid);
     for (var Flower in FlowerList) {
       if (flowerNumList[int.parse(Flower.id)] != "0") {
         flowerIdList.add(Flower.id);

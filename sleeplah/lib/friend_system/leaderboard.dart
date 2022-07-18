@@ -58,7 +58,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
     if (category == "days") {
       criteria = user.days.toString();
     } else {
-      criteria = user.coins.toString();
+      List flowersList = user.flowers;
+      // flowersList.removeWhere((element) => element == "0");
+      // print("flowersLists" + flowersList.toString());
+      // criteria = flowersList.length.toString();
+      List<int> help = flowersList.map((e) => int.parse(e)).toList();
+      criteria = help.reduce((value, element) => value + element).toString();
     }
 
     return ListTile(

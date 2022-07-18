@@ -24,6 +24,7 @@ class _BodyState extends State<Body> {
   double screenWidth = SizeConfig.screenWidth!;
   String _category;
   String userProfileFlower = "0";
+  bool haveFriendRequest = false;
 
   _BodyState(this._category);
 
@@ -38,22 +39,24 @@ class _BodyState extends State<Body> {
     return Background(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: loading ? [Loading()] : [
-        Container(
-          height: screenHeight * 2 / 11,
-        ),
-        LeaderBoard(friendList, currUser, _category),
-        Container(
-          height: screenHeight * 2 / 11,
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0))),
-          child: selfInfo(currUser),
-        )
-      ],
+      children: loading
+          ? [Loading()]
+          : [
+              Container(
+                height: screenHeight * 2 / 11,
+              ),
+              LeaderBoard(friendList, currUser, _category),
+              Container(
+                height: screenHeight * 2 / 11,
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.5),
+                    shape: BoxShape.rectangle,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        topRight: Radius.circular(40.0))),
+                child: selfInfo(currUser),
+              )
+            ],
     ));
   }
 
@@ -68,7 +71,12 @@ class _BodyState extends State<Body> {
     if (_category == "days") {
       criteria = user.days.toString();
     } else {
-      criteria = user.coins.toString();
+      List flowersList = user.flowers;
+      // flowersList.removeWhere((element) => element == "0");
+      // print("flowersLists" + flowersList.toString());
+      // criteria = flowersList.length.toString();
+      List<int> help = flowersList.map((e) => int.parse(e)).toList();
+      criteria = help.reduce((value, element) => value + element).toString();
     }
 
     return loading
@@ -121,8 +129,11 @@ class _BodyState extends State<Body> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => FriendRequest()));
                   },
-                  icon: Icon(Icons.person_add_alt_1_rounded,
-                      size: defaultWidth * 0.8))
+                  icon: Icon(
+                    Icons.person_add_alt_1_rounded,
+                    size: defaultWidth * 0.8,
+                    color: haveFriendRequest ? Colors.red : Colors.black,
+                  ))
             ],
           );
   }
@@ -134,16 +145,19 @@ class _BodyState extends State<Body> {
     String name = await DB().getUserName(currUserId);
     num days = await DB().getDays(currUserId);
     num coins = await DB().getCoins(currUserId);
+    List<String> flowers = await DB().getFlowerList(currUserId);
+    haveFriendRequest = (await DB().getFriendList(currUserId)).isEmpty;
 
-    currUser = UserModel(name, "", userProfileFlower, days, coins);
+    currUser = UserModel(name, "", userProfileFlower, days, coins, flowers);
 
     for (var id in friendIdList) {
       String friendName = await DB().getUserName(id);
       num friendDays = await DB().getDays(id);
       String friendProfileFlower = await DB().getProfileFlower(id);
       num friendCoins = await DB().getCoins(id);
+      List<String> flowers = await DB().getFlowerList(id);
       friendList.add(UserModel(
-          friendName, id, friendProfileFlower, friendDays, friendCoins));
+          friendName, id, friendProfileFlower, friendDays, friendCoins, flowers));
     }
 
     setState(() {

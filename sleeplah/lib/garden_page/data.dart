@@ -30,10 +30,10 @@ class _dataState extends State<data> {
   }
 
   Future<void> getValue() async {
-    flowerList = await DB().getFlowerList();
+    flowerList = await DB().getFlowerList(user!.uid);
     numOfSunflower = int.parse(flowerList[0]);
-    numOfDays = await DB().getDays(FirebaseAuth.instance.currentUser!.uid);
-    coins = await DB().getCoins(FirebaseAuth.instance.currentUser!.uid);
+    numOfDays = await DB().getDays(user!.uid);
+    coins = await DB().getCoins(user!.uid);
     setState(() {
       loading = false;
     });

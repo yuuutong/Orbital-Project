@@ -113,7 +113,7 @@ class _MatchState extends State<Match> {
 
   //a func that pick a random Flower to unlock
   Future<Flower> pickFlower() async {
-    var userFlowers = await DB().getFlowerList();
+    var userFlowers = await DB().getFlowerList(user!.uid);
     List<Flower> uncatchFlowers = [];
     for (var Flower in FlowerList) {
       if (userFlowers[int.parse(Flower.id)] == "0") uncatchFlowers.add(Flower);
