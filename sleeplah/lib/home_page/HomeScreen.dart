@@ -5,11 +5,12 @@ import 'package:sleeplah/friend_system/friendboard_page.dart';
 import 'package:sleeplah/settings/settings.dart';
 import 'package:sleeplah/flowerCollectionHandbook/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
-import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
+import 'package:sleeplah/statistics_page/body.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/home_page/actualSleepWake.dart';
+import 'package:sleeplah/statistics_page/stats.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Statistics()));
+                        builder: (context) => stats()));
               },
             ),
             ListTile(
