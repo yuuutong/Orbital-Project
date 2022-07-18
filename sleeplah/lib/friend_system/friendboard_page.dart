@@ -17,9 +17,12 @@ class Friendboard extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           bottom: const TabBar(
+            labelStyle: TextStyle(fontSize: 19.0, fontFamily: "IndieFlower"),
+            unselectedLabelStyle:
+                TextStyle(fontSize: 17.0, fontFamily: "IndieFlower"),
             tabs: <Widget>[
               Tab(
-                text: "Consecutive Days Slept",
+                text: "Consecutive Days",
               ),
               Tab(
                 text: "Total Flowers",
@@ -28,10 +31,7 @@ class Friendboard extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
-            Body("days"),
-            Body("flowers")
-          ],
+          children: <Widget>[Body("days"), Body("flowers")],
         ),
       ),
     );
