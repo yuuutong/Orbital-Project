@@ -23,6 +23,9 @@ class _FriendRequestState extends State<FriendRequest> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           bottom: const TabBar(
+            labelStyle: TextStyle(fontSize: 19.0, fontFamily: "IndieFlower"),
+            unselectedLabelStyle:
+                TextStyle(fontSize: 17.0, fontFamily: "IndieFlower"),
             tabs: <Widget>[
               Tab(
                 text: "Send",
