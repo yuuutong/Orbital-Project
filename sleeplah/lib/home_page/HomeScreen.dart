@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               alignment: Alignment.bottomCenter,
-              height: 100,
+              height: SizeConfig.screenHeight! / 8,
               color: themePrimaryColor,
               child: const DrawerHeader(
                 child: FittedBox(child: Text('SleepLah!')),

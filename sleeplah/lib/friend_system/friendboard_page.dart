@@ -19,10 +19,10 @@ class Friendboard extends StatelessWidget {
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                text: "days",
+                text: "Consecutive Days Slept",
               ),
               Tab(
-                text: "coins",
+                text: "Total Flowers",
               ),
             ],
           ),
@@ -30,7 +30,7 @@ class Friendboard extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             Body("days"),
-            Body("coins")
+            Body("flowers")
           ],
         ),
       ),
