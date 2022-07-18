@@ -29,7 +29,7 @@ class _MatchState extends State<Match> {
         height: defaultSize * 30,
       ),
       TextButton(
-        onPressed: () => _matchDialogWidget(),
+        onPressed: () => _confirm(),
         style: TextButton.styleFrom(
             primary: primaryColor,
             backgroundColor: primaryColor,
@@ -73,9 +73,9 @@ class _MatchState extends State<Match> {
           context: context,
           builder: (_) => AlertDialog(
                 title:
-                    Text("Mystery shop owner has introduce you a new friend!"),
+                    const Text("Mystery shop owner has introduce you a new friend!"),
                 content: AnimatedContainer(
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                   padding: _bigger
                       ? EdgeInsets.all(defaultSize)
                       : EdgeInsets.all(defaultSize * 10),
@@ -91,7 +91,7 @@ class _MatchState extends State<Match> {
                         _bigger = false;
                         Navigator.of(context).pop();
                       },
-                      child: Text("Yay"))
+                      child: const Text("Yay"))
                 ],
               ));
       _bigger = true;
@@ -127,8 +127,36 @@ class _MatchState extends State<Match> {
         : uncatchFlowers[_random.nextInt(uncatchFlowers.length)];
   }
 
-  //a func that determine whether the user has enough stars
+  //a func that determine whether the user has enough coins
   Future<bool> hasEnoughCoins() async {
     return await DB().getCoins(user!.uid) >= 50;
+  }
+
+  Future<void> _confirm() {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => AlertDialog(
+              title: const Text(
+                  "Are you sure that you want to\nunlock a mysterious new flower for Shanna?"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      _bigger = false;
+                      Navigator.pop(context);
+                      setState(() {
+                        _matchDialogWidget();
+                      });
+                    },
+                    child: const Text("Yes")),
+                TextButton(
+                  onPressed: () {
+                    _bigger = false;
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Nope"),
+                ),
+              ],
+            ));
   }
 }
