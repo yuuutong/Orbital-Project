@@ -1,17 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/friend_system/friendboard_page.dart';
-import 'package:sleeplah/login_page/LoginScreen.dart';
-import 'package:sleeplah/NeighbourhoodScreen.dart';
 import 'package:sleeplah/settings/settings.dart';
 import 'package:sleeplah/flowerCollectionHandbook/collection.dart';
 import 'package:sleeplah/shop/shop_page.dart';
 import 'package:sleeplah/statistics_page/StatisticsScreen.dart';
 import 'package:sleeplah/home_page/TimePicker.dart';
 import 'package:sleeplah/garden_page/gardenStats.dart';
-import 'package:sleeplah/statistics_page/test_time_chart.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/home_page/actualSleepWake.dart';
 
@@ -84,20 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ])
       ]),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+        backgroundColor: darkColor,
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: primaryColor,
+            Container(
+              alignment: Alignment.bottomCenter,
+              height: 100,
+              color: themePrimaryColor,
+              child: const DrawerHeader(
+                child: FittedBox(child: Text('SleepLah!')),
               ),
-              child: Text('SleepLah!'),
             ),
             ListTile(
+              leading: const Icon(Icons.shopify_sharp),
               title: const Text('Flower Shop'),
               onTap: () {
                 Navigator.push(context,
@@ -105,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.info),
               title: const Text('Garden Statistics Dashboard'),
               onTap: () {
                 Navigator.push(
@@ -114,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.bed),
               title: const Text('Sleeping Statistics'),
               onTap: () {
                 Navigator.push(
@@ -123,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.leaderboard),
               title: const Text('Leaderboard'),
               onTap: () {
                 Navigator.push(context,
@@ -139,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ), */
             ListTile(
+              leading: const Icon(Icons.book),
               title: const Text('Flower Collection Handbook'),
               onTap: () {
                 Navigator.push(context,
@@ -146,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.settings),
               title: const Text('Settings'),
               onTap: () {
                 // Update the state of the app
