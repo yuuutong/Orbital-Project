@@ -35,28 +35,26 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : Background(
-            child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: screenHeight * 2 / 11,
-              ),
-              LeaderBoard(friendList, currUser, _category),
-              Container(
-                height: screenHeight * 2 / 11,
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    shape: BoxShape.rectangle,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40.0),
-                        topRight: Radius.circular(40.0))),
-                child: selfInfo(currUser),
-              )
-            ],
-          ));
+    return Background(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: loading ? [Loading()] : [
+        Container(
+          height: screenHeight * 2 / 11,
+        ),
+        LeaderBoard(friendList, currUser, _category),
+        Container(
+          height: screenHeight * 2 / 11,
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.5),
+              shape: BoxShape.rectangle,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0))),
+          child: selfInfo(currUser),
+        )
+      ],
+    ));
   }
 
   //need a function to sort the rank
@@ -144,7 +142,8 @@ class _BodyState extends State<Body> {
       num friendDays = await DB().getDays(id);
       String friendProfileFlower = await DB().getProfileFlower(id);
       num friendCoins = await DB().getCoins(id);
-      friendList.add(UserModel(friendName, id, friendProfileFlower, friendDays, friendCoins));
+      friendList.add(UserModel(
+          friendName, id, friendProfileFlower, friendDays, friendCoins));
     }
 
     setState(() {

@@ -21,7 +21,6 @@ class _profilePageState extends State<profilePage> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: Text("Profile Page"),
-          automaticallyImplyLeading: false,
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
