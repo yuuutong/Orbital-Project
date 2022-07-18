@@ -11,7 +11,6 @@ class stats extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return DefaultTabController(
-      initialIndex: 1,
       length: 2,
       child: Scaffold(
         backgroundColor: themeSecondaryColor,

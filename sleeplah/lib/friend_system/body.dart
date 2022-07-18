@@ -73,7 +73,6 @@ class _BodyState extends State<Body> {
     } else {
       List flowersList = user.flowers;
       // flowersList.removeWhere((element) => element == "0");
-      // print("flowersLists" + flowersList.toString());
       // criteria = flowersList.length.toString();
       List<int> help = flowersList.map((e) => int.parse(e)).toList();
       criteria = help.reduce((value, element) => value + element).toString();
@@ -99,7 +98,6 @@ class _BodyState extends State<Body> {
                     image: DecorationImage(
                       fit: BoxFit.contain,
                       image: AssetImage("assets/images/$userProfileFlower.png"),
-                      //AssetImage("assets/images/0.png")
                     ),
                   )),
               Container(
@@ -146,7 +144,7 @@ class _BodyState extends State<Body> {
     num days = await DB().getDays(currUserId);
     num coins = await DB().getCoins(currUserId);
     List<String> flowers = await DB().getFlowerList(currUserId);
-    haveFriendRequest = (await DB().getFriendList(currUserId)).isEmpty;
+    haveFriendRequest = (await DB().getFriendRequestList(currUserId)).isNotEmpty;
 
     currUser = UserModel(name, "", userProfileFlower, days, coins, flowers);
 
