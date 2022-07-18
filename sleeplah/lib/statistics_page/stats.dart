@@ -14,7 +14,7 @@ class stats extends StatelessWidget {
       initialIndex: 1,
       length: 2,
       child: Scaffold(
-        backgroundColor: themeSecondaryColor,
+        backgroundColor: darkColor,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: const Text('Sleeping Statistics'),
