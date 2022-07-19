@@ -27,7 +27,10 @@ class _ChoiceState extends State<Choice> {
           child: const Text(
             "Would you like a walkthrough of the app?",
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontFamily: "IndieFlower", fontWeight: FontWeight.bold),
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: "IndieFlower",
+                fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
@@ -37,7 +40,7 @@ class _ChoiceState extends State<Choice> {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             },
-            text: 'I\'m a old user. Log in straight',
+            text: 'I\'m an old user. Log in straight',
           ),
         ),
         Padding(
