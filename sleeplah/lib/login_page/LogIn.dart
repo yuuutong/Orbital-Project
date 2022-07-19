@@ -1,3 +1,4 @@
+import 'package:sleeplah/choice.dart';
 import 'package:sleeplah/configurations/background.dart';
 import 'package:sleeplah/signup_page/SignUpScreen.dart';
 import 'package:sleeplah/configurations/rounded_button.dart';
@@ -6,6 +7,7 @@ import 'package:sleeplah/configurations/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sleeplah/home_page/HomeScreen.dart';
+import 'package:sleeplah/walkthrough/walkthrough_screen.dart';
 import '../forgot_password_page/ForgotPasswordScreen.dart';
 
 class LogIn extends StatefulWidget {
@@ -26,11 +28,11 @@ class _LogInState extends State<LogIn> {
           .user;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: const Text('Signed in'),
+          content: Text('Signed in'),
         ),
       );
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => Choice()),
       );
     } catch (e) {
       print("error");
@@ -90,7 +92,7 @@ class _LogInState extends State<LogIn> {
                     const Text(
                       "Do not have an account?",
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
@@ -117,7 +119,7 @@ class _LogInState extends State<LogIn> {
                 const Text(
                   "",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white),
                 ),
                 TextButton(
                   onPressed: () {
