@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sleeplah/database.dart';
 import 'package:sleeplah/constant.dart';
 import 'package:sleeplah/SizeConfig.dart';
 import 'package:sleeplah/configurations/background.dart';
-import 'package:sleeplah/statistics_page/test_time_chart.dart';
+import 'package:sleeplah/statistics_page/TimeChart.dart';
 import 'package:sleeplah/statistics_page/stats.dart';
 import '../configurations/loading.dart';
 
@@ -35,9 +34,12 @@ class _BodyState extends State<Body> {
     for (Map sleepWakeMap in DTRDoc.values) {
       for (MapEntry sleepWakePair in sleepWakeMap.entries) {
         if (sleepWakePair.value != "" && sleepWakePair.value != true) {
-          dataList.add(DateTimeRange(
+          dataList.add(
+            DateTimeRange(
               start: DateTime.parse(sleepWakePair.key),
-              end: DateTime.parse(sleepWakePair.value)));
+              end: DateTime.parse(sleepWakePair.value),
+            ),
+          );
         }
       }
     }
@@ -54,15 +56,17 @@ class _BodyState extends State<Body> {
     return loading
         ? Loading()
         : SafeArea(
-          child: SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Theme(
-                      data: ThemeData.dark(),
-                      child: Column(children: [
-                        timeChart(dataList, "${category} distribution"),
-                        timeChart(dataList, "${category} duration")
-                      ])))),
-        );
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    timeChart(dataList, "${category} distribution"),
+                    timeChart(dataList, "${category} duration")
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }

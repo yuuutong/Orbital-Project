@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/main.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:sleeplah/SizeConfig.dart';
-import 'test_time_chart.dart';
+import 'TimeChart.dart';
 import 'package:sleeplah/statistics_page/body.dart';
 import 'package:sleeplah/constant.dart';
 

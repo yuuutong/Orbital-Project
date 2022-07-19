@@ -291,9 +291,9 @@ class DB {
     Duration marginSleep = start.difference(sleepTimeSet).abs();
     Duration marginWake = end.difference(wakeTimeSet).abs();
     bool durationCriteria =
-        (sleepDurationSet - sleepDurationActual).abs() <= Duration(minutes: 10);
-    bool keepToScheduleCriteria = marginWake <= Duration(minutes: 15) &&
-        marginSleep <= Duration(minutes: 15);
+        (sleepDurationSet - sleepDurationActual).abs() <= const Duration(minutes: 10);
+    bool keepToScheduleCriteria = marginWake <= const Duration(minutes: 15) &&
+        marginSleep <= const Duration(minutes: 15);
     if (durationCriteria || keepToScheduleCriteria) {
       if (await DB().rewardStatusUpdate(correctDTRField)) {
         await DB().claimReward(user!.uid);
