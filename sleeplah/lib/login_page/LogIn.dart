@@ -111,7 +111,7 @@ class _LogInState extends State<LogIn> {
                                   builder: (_) => SignUpScreen()));
                         }),
                   ])),
-          Padding(
+          /* Padding(
             padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -123,10 +123,6 @@ class _LogInState extends State<LogIn> {
                 ),
                 TextButton(
                   onPressed: () {
-                    /* Navigator.pushNamed(
-                      context,
-                      ForgotPassword.id,
-                    ) */
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => ForgotPassword()));
                   },
@@ -140,7 +136,7 @@ class _LogInState extends State<LogIn> {
                 )
               ],
             ),
-          ),
+          ), */
         ])));
   }
 }
