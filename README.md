@@ -1,5 +1,5 @@
 # SleepLah!
----
+
 A sleep app to help users maintain good sleeping habits in a fun way!
 
 # Documentation
@@ -11,4 +11,4 @@ A sleep app to help users maintain good sleeping habits in a fun way!
 
 - [Video](https://drive.google.com/file/d/1JXaBOCqzHVQ66lHKLgnsRsCXSdtfrl7d/view?usp=sharing)
 - Poster
-- <img src="MS3 poster.png" alt="My cool logo"/>
+<img src="MS3 poster.png" alt="My cool logo"/>
